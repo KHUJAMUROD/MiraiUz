@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Header from '@/components/Header/header';
+import Footer from '@/components/Footer/footer';
 import './page.scss';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   const slides = useMemo(() => [
     {
@@ -83,6 +85,66 @@ export default function Home() {
 
   const currentSlideData = useMemo(() => slides[currentSlide], [slides, currentSlide]);
 
+  const faqData = useMemo(() => [
+    {
+      question: "Yapon tilini bilmayman?",
+      answer: "Bu muammo emas! Bizning maktabimizda yapon tilini noldan o'rganish imkoniyati mavjud. Tajribali o'qituvchilarimiz sizga yapon tilini tez va samarali o'rganishda yordam beradi. Kurslar boshlang'ichdan boshlab, bosqichma-bosqich tuzilgan."
+    },
+    {
+      question: "Bo'lib to'lashga imkon bormi?",
+      answer: "Ha, albatta! Biz turli xil to'lov shakllarini taklif qilamiz, jumladan bo'lib to'lash imkoniyati ham mavjud. To'lov shartlari va muddatlari har bir talaba bilan individual ravishda muhokama qilinadi va moslashtiriladi."
+    },
+    {
+      question: "Yaponiyaga borgandan keyin ishlay olamanmi?",
+      answer: "Ha, o'qish davomida siz haftasiga 28 soatgacha ishlash huquqiga egasiz. Biz sizga ish topishda ham yordam ko'rsatamiz. Yaponiyada o'qish va ishlash imkoniyatlari keng, va bizning mutaxassislarimiz sizga bu jarayonda to'liq yordam ko'rsatadi."
+    },
+    {
+      question: "Sizlarga ishonsa bo'ladimi?",
+      answer: "Albatta! Biz 10 yillik tajribaga egamiz va 3000+ talabamiz muvaffaqiyatli Yaponiyada o'qish va ishlash imkoniyatiga ega bo'ldi. Bizning maktabimiz litsenziyalangan va Yaponiyaning rasmiy ta'lim muassasalari bilan hamkorlik qiladi. Barcha hujjatlar yapon mutaxassislari tomonidan tekshiriladi."
+    }
+  ], []);
+
+  const toggleFaq = useCallback((index) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  }, [openFaqIndex]);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    region: '',
+    phone: ''
+  });
+
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }, []);
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    // Здесь будет логика отправки формы
+    console.log('Form submitted:', formData);
+  }, [formData]);
+
+  const regions = [
+    'Toshkent',
+    'Samarqand',
+    'Namangan',
+    'Farg\'ona',
+    'Andijon',
+    'Qashqadaryo',
+    'Surxondaryo',
+    'Buxoro',
+    'Navoiy',
+    'Jizzax',
+    'Sirdaryo',
+    'Xorazm',
+    'Qoraqalpog\'iston'
+  ];
+
   return (
     <div className="page">
       <Header />
@@ -157,7 +219,317 @@ export default function Home() {
             </button>
           </div>
         </section>
+
+        <section className="why-japan">
+          <div className="why-japan-container">
+            <h2 className="why-japan-title">
+              <span className="why-japan-title-black">Nega</span>{' '}
+              <span className="why-japan-title-red">Yaponiya?</span>
+            </h2>
+            <p className="why-japan-subtitle">
+              Kelajagingiz uchun eng to'g'ri tanlov
+            </p>
+            
+            <div className="why-japan-grid">
+              <div className="why-japan-card why-japan-card-image">
+                <div className="card-image-wrapper">
+                  <div className="card-image-overlay"></div>
+                  <div className="card-content-overlay">
+                    <h3 className="card-title-white">Qonuniy Ishlash</h3>
+                    <p className="card-description-white">
+                      O'qish payti 28 soat/hafta ishlash huquqi
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="why-japan-card">
+                <div className="card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 3V21H21" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 16L12 11L16 15L21 10" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="card-title">Top 3 Iqtisodiyot</h3>
+                <p className="card-description">
+                  Dunyoning eng rivojlangan davlatlaridan biri
+                </p>
+              </div>
+
+              <div className="why-japan-card">
+                <div className="card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="card-title">Xavfsiz & Toza</h3>
+                <p className="card-description">
+                  Jinoyatchilik deyarli yo'q, mukammal infratuzilma
+                </p>
+              </div>
+
+              <div className="why-japan-card why-japan-card-image">
+                <div className="card-image-wrapper">
+                  <div className="card-image-overlay"></div>
+                  <div className="card-content-overlay">
+                    <h3 className="card-title-white">Boy Madaniyat</h3>
+                    <p className="card-description-white">
+                      Futuristik Tokio va qadimiy Kioto
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="why-japan-card why-japan-card-empty">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="why-studytokyo">
+          <div className="why-studytokyo-container">
+            <h2 className="why-studytokyo-title">
+              <span className="why-studytokyo-title-black">Nega</span>{' '}
+              <span className="why-studytokyo-title-red">StudyTokyo?</span>
+            </h2>
+            
+            <div className="why-studytokyo-grid">
+              <div className="studytokyo-card studytokyo-card-red">
+                <div className="studytokyo-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 2V8H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 13H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 17H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M10 9H9H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="studytokyo-card-title-white">Kafolatlangan Viza</h3>
+                <p className="studytokyo-card-description-white">
+                  Viza chiqmasa, pulingiz 100% qaytariladi. Tavakkal yo'q.
+                </p>
+                <div className="studytokyo-stat">
+                  <span className="studytokyo-stat-number">95%</span>
+                  <span className="studytokyo-stat-label">Muvaffaqiyat</span>
+                </div>
+              </div>
+
+              <div className="studytokyo-card studytokyo-card-white">
+                <div className="studytokyo-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="studytokyo-card-title">10 Yillik Tajriba</h3>
+                <p className="studytokyo-card-description">
+                  Bozor liderlari
+                </p>
+              </div>
+
+              <div className="studytokyo-card studytokyo-card-white">
+                <div className="studytokyo-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M14 2V8H20" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 13H8" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 17H8" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="studytokyo-card-title">Professional Hujjat</h3>
+                <p className="studytokyo-card-description">
+                  Yapon mutaxassislari
+                </p>
+              </div>
+
+              <div className="studytokyo-card studytokyo-card-white">
+                <div className="studytokyo-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 9V5C18 4.46957 17.7893 3.96086 17.4142 3.58579C17.0391 3.21071 16.5304 3 16 3H8C7.46957 3 6.96086 3.21071 6.58579 3.58579C6.21071 3.96086 6 4.46957 6 5V9" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M18 9H6" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M18 9V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H8C7.46957 21 6.96086 20.7893 6.58579 20.4142C6.21071 20.0391 6 19.5304 6 19V9" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 15V12" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="studytokyo-card-title">Doimiy Qo'llab-quvvatlash</h3>
+                <p className="studytokyo-card-description">
+                  Yaponiyada ishga joylashish va moslashishda yordam
+                </p>
+              </div>
+
+              <div className="studytokyo-card studytokyo-card-white">
+                <div className="studytokyo-card-icon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 11C10.6569 11 12 9.65685 12 8C12 6.34315 10.6569 5 9 5C7.34315 5 6 6.34315 6 8C6 9.65685 7.34315 11 9 11Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="studytokyo-card-title">JSS Hamkorligi</h3>
+                <p className="studytokyo-card-description">
+                  Hujjatlar Yapon mutaxassislari tomonidan tekshiriladi
+                </p>
+              </div>
+
+              <div className="studytokyo-card studytokyo-card-blue">
+                <h3 className="studytokyo-card-title-white">6 ta Filial</h3>
+                <p className="studytokyo-card-description-white studytokyo-card-cities">
+                  Toshkent • Samarqand • Namangan • Farg'ona • Andijon • Qashqadaryo
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="cta-section">
+          <div className="cta-container">
+            <div className="cta-card">
+              <h2 className="cta-title">
+                Siz ham sifatni tanlamoqchimisiz?
+              </h2>
+              <p className="cta-subtitle">
+                Unda harakatni bugundan boshlang.
+              </p>
+              <button className="cta-button">
+                Bepul konsultatsiya olish
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="faq-section">
+          <div className="faq-container">
+            <h2 className="faq-title">
+              Ko'p So'raladigan Savollar
+            </h2>
+            
+            <div className="faq-list">
+              {faqData.map((faq, index) => (
+                <div 
+                  key={index} 
+                  className={`faq-item ${openFaqIndex === index ? 'faq-item-open' : ''}`}
+                >
+                  <button 
+                    className="faq-question"
+                    onClick={() => toggleFaq(index)}
+                    aria-expanded={openFaqIndex === index}
+                  >
+                    <span className="faq-question-text">{faq.question}</span>
+                    <span className="faq-icon">
+                      {openFaqIndex === index ? (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5 12H19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      ) : (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 5V19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M5 12H19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </span>
+                  </button>
+                  <div className={`faq-answer ${openFaqIndex === index ? 'faq-answer-open' : ''}`}>
+                    <p className="faq-answer-text">{faq.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="registration-section">
+          <div className="registration-container">
+            <div className="registration-content">
+              <div className="registration-offer">
+                <div className="offer-badge">
+                  <span className="offer-badge-icon">🔥</span>
+                  <span className="offer-badge-text">Cheklangan vaqt</span>
+                </div>
+                <h2 className="offer-title">
+                  Hoziroq Ro'yxatdan O'ting va Joylar soni chegaralangan
+                </h2>
+                <p className="offer-description">
+                  Bu taklif 5 kun ichida dars boshlaydiganlar uchun amal qiladi. Joylar soni cheklangan.
+                </p>
+                <ul className="offer-benefits">
+                  <li className="offer-benefit-item">
+                    <span className="benefit-icon">✓</span>
+                    <span className="benefit-text">Bepul konsultatsiya</span>
+                  </li>
+                  <li className="offer-benefit-item">
+                    <span className="benefit-icon">✓</span>
+                    <span className="benefit-text">Viza kafolati</span>
+                  </li>
+                  <li className="offer-benefit-item">
+                    <span className="benefit-icon">✓</span>
+                    <span className="benefit-text">Bonus materiallar</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="registration-form-card">
+                <h3 className="form-title">Arizani To'ldiring</h3>
+                <form className="registration-form" onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Ismingiz"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    required
+                  />
+                  <input
+                    type="number"
+                    name="age"
+                    placeholder="Yoshingiz"
+                    value={formData.age}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    required
+                  />
+                  <select
+                    name="region"
+                    value={formData.region}
+                    onChange={handleInputChange}
+                    className="form-select"
+                    required
+                  >
+                    <option value="">Viloyatni tanlang</option>
+                    {regions.map((region) => (
+                      <option key={region} value={region}>
+                        {region}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="phone-input-wrapper">
+                    <span className="phone-prefix">+998</span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Tel: +998"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="form-input form-input-phone"
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="form-submit-button">
+                    Chegirmani Olish
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
+      
+      <Footer />
     </div>
   );
 }
