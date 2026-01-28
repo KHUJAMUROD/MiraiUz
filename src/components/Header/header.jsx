@@ -7,7 +7,7 @@ export default function Header() {
       <div className="container">
         <div className="logo">
           <div className="logo-icon">
-            <Image src="/mirai_logo_sq.png" alt="logo" width={200} height={100} />
+            <Image src="/images/logos/mirai_logo_sq.png" alt="logo" width={200} height={100} />
           </div>
           
         </div>

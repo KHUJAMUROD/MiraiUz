@@ -27,11 +27,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   padding: 0 80px;
+  @include transition(background-image 1s ease-in-out);
 }
 
 .hero-overlay {
@@ -56,6 +56,18 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-badge {
@@ -172,10 +184,18 @@
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  @include transition(background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease);
+
+  &:hover {
+    transform: scale(1.2);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
 
   &.indicator-active {
     background-color: #ffffff;
     border-color: #ffffff;
+    transform: scale(1.3);
   }
 }
 
