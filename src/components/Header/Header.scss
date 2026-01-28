@@ -21,7 +21,7 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 40px !important; // Постоянные отступы для всех размеров экрана
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,9 +83,30 @@
   }
 }
 
+// Планшеты и маленькие ноутбуки (768px - 1024px)
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container {
+    padding: 0 40px !important; // Постоянные отступы
+  }
+  
+  .nav {
+    gap: 24px;
+  }
+  
+  .nav-link {
+    font-size: 15px;
+  }
+  
+  .cta-button {
+    padding: 11px 24px;
+    font-size: 15px;
+  }
+}
+
+// Мобильные устройства (до 768px)
 @media (max-width: 768px) {
   .container {
-    padding: 0 20px;
+    padding: 0 40px !important; // Постоянные отступы для предотвращения слипания логотипа
     height: 70px;
   }
   

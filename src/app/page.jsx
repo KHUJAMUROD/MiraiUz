@@ -10,7 +10,7 @@ export default function Home() {
 
   const slides = useMemo(() => [
     {
-      background: '/images/backgrounds/school background.jpg',
+      background: '/images/backgrounds/school_background.jpg',
       badge: "JP 95% Viza ko'rsatkichi",
       title: {
         line1: "Kafolatli Viza",
@@ -20,7 +20,7 @@ export default function Home() {
       description: "3000+ o'quvchi allaqachon Yaponiyada. Orzuingizdagi o'qish va ishga biz bilan erishing."
     },
     {
-      background: '/images/backgrounds/school background.jpg',
+      background: '/images/backgrounds/school_background2.jpg',
       badge: "Yaponiyada Ta'lim",
       title: {
         line1: "Sifatli Ta'lim",
@@ -30,7 +30,7 @@ export default function Home() {
       description: "Yaponiyaning eng yaxshi universitetlarida ta'lim oling va kelajagingizni quring."
     },
     {
-      background: '/images/backgrounds/school background.jpg',
+      background: '/images/backgrounds/school_background3.jpg',
       badge: "Professional Yordam",
       title: {
         line1: "Bizning Jamoa",
@@ -54,21 +54,21 @@ export default function Home() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-    setTimeout(() => setIsTransitioning(false), 600);
+    setTimeout(() => setIsTransitioning(false), 1200);
   }, [slides.length, isTransitioning]);
 
   const prevSlide = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    setTimeout(() => setIsTransitioning(false), 600);
+    setTimeout(() => setIsTransitioning(false), 1200);
   }, [slides.length, isTransitioning]);
 
   const goToSlide = useCallback((index) => {
     if (isTransitioning || index === currentSlide) return;
     setIsTransitioning(true);
     setCurrentSlide(index);
-    setTimeout(() => setIsTransitioning(false), 600);
+    setTimeout(() => setIsTransitioning(false), 1200);
   }, [currentSlide, isTransitioning]);
 
   useEffect(() => {
@@ -88,7 +88,16 @@ export default function Home() {
       <Header />
       
       <main className="main">
-        <section className={`hero ${isTransitioning ? 'transitioning' : ''}`} style={{ backgroundImage: `url(${currentSlideData.background})` }}>
+        <section className="hero">
+          {/* Фоновые изображения для плавного перехода */}
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`hero-background ${index === currentSlide ? 'active' : ''}`}
+              style={{ backgroundImage: `url(${slide.background})` }}
+            />
+          ))}
+          
           <div className="hero-overlay"></div>
           <div className={`hero-content ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
             <div className="hero-badge">
