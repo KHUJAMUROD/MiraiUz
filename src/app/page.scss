@@ -8,6 +8,17 @@
   transition: $properties;
 }
 
+// Глобальное правило для скрытия "build with Spline"
+spline-viewer {
+  a[href*="spline"],
+  a[href*="splinetool"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
 .page {
   width: 100%;
   min-height: 100vh;
@@ -459,6 +470,15 @@
     width: 100%;
     height: 400px;
     display: block;
+
+    // Скрываем элемент "build with Spline"
+    a[href*="spline"],
+    a[href*="splinetool"],
+    ::part(branding) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
   }
 }
 

@@ -91,6 +91,47 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [slides.length, isTransitioning]);
 
+  // Скрываем элемент "build with Spline"
+  useEffect(() => {
+    const hideSplineBranding = () => {
+      const splineViewer = document.querySelector('spline-viewer');
+      if (splineViewer) {
+        // Пытаемся найти элемент через shadow DOM
+        const shadowRoot = splineViewer.shadowRoot;
+        if (shadowRoot) {
+          const brandingLinks = shadowRoot.querySelectorAll('a[href*="spline"], a[href*="splinetool"]');
+          brandingLinks.forEach(link => {
+            link.style.display = 'none';
+            link.style.visibility = 'hidden';
+            link.style.opacity = '0';
+            link.style.pointerEvents = 'none';
+          });
+        }
+        
+        // Также скрываем элементы вне shadow DOM
+        const allLinks = document.querySelectorAll('spline-viewer a[href*="spline"], spline-viewer a[href*="splinetool"]');
+        allLinks.forEach(link => {
+          link.style.display = 'none';
+          link.style.visibility = 'hidden';
+          link.style.opacity = '0';
+          link.style.pointerEvents = 'none';
+        });
+      }
+    };
+
+    // Выполняем сразу и через интервалы для надежности
+    hideSplineBranding();
+    const interval = setInterval(hideSplineBranding, 500);
+    
+    // Также слушаем события загрузки
+    window.addEventListener('load', hideSplineBranding);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('load', hideSplineBranding);
+    };
+  }, []);
+
   const currentSlideData = useMemo(() => slides[currentSlide], [slides, currentSlide]);
 
   const faqData = useMemo(() => [
