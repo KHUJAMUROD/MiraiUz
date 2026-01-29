@@ -1234,6 +1234,210 @@
   }
 }
 
+// Videos Section (YouTube Shorts carousel)
+.videos-section {
+  width: 100%;
+  padding: 80px 80px;
+  background-color: #ffffff;
+  @include flex-center;
+}
+
+.videos-container {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.videos-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0;
+}
+
+.videos-title-black {
+  color: #171717;
+}
+
+.videos-title-red {
+  color: #dc2626;
+}
+
+.videos-carousel-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.videos-carousel-btn {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #e5e5e5;
+  background-color: #ffffff;
+  color: #171717;
+  cursor: pointer;
+  @include flex-center;
+  @include transition(background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease);
+
+  &:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.videos-carousel {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.videos-track {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 8px 0;
+}
+
+.videos-card {
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  @include transition(transform 0.3s ease, box-shadow 0.3s ease);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.videos-card-iframe-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background-color: #0a0a0a;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+// Responsive styles for Videos section
+@media (max-width: 1366px) {
+  .videos-section {
+    padding: 60px 40px;
+  }
+
+  .videos-title {
+    font-size: 42px;
+  }
+
+  .videos-card {
+    width: 260px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .videos-section {
+    padding: 60px 40px;
+  }
+
+  .videos-title {
+    font-size: 36px;
+  }
+
+  .videos-carousel-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .videos-card {
+    width: 240px;
+  }
+
+  .videos-track {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .videos-section {
+    padding: 40px 24px;
+  }
+
+  .videos-container {
+    gap: 24px;
+  }
+
+  .videos-title {
+    font-size: 32px;
+  }
+
+  .videos-carousel-wrapper {
+    gap: 12px;
+  }
+
+  .videos-carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .videos-card {
+    width: 200px;
+  }
+
+  .videos-track {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .videos-section {
+    padding: 32px 16px;
+  }
+
+  .videos-title {
+    font-size: 28px;
+  }
+
+  .videos-card {
+    width: 180px;
+  }
+
+  .videos-track {
+    gap: 12px;
+  }
+}
+
 // FAQ Section
 .faq-section {
   width: 100%;

@@ -1,10 +1,17 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Script from 'next/script';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
+import videosData from '@/store/videos.json';
 import './page.scss';
+
+function getYoutubeVideoId(url) {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.match(/(?:v=|\/shorts\/|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -129,6 +136,17 @@ export default function Home() {
     // Здесь будет логика отправки формы
     console.log('Form submitted:', formData);
   }, [formData]);
+
+  const videosCarouselRef = useRef(null);
+
+  const scrollVideos = useCallback((direction) => {
+    const el = videosCarouselRef.current;
+    if (!el) return;
+    const cardWidth = el.querySelector('.videos-card')?.offsetWidth ?? 280;
+    const gap = 24;
+    const scrollAmount = (cardWidth + gap) * (direction === 'next' ? 1 : -1);
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }, []);
 
   const regions = [
     'Toshkent',
@@ -406,6 +424,68 @@ export default function Home() {
               </p>
               <button className="cta-button">
                 Bepul konsultatsiya olish
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="videos-section">
+          <div className="videos-container">
+            <h2 className="videos-title">
+              <span className="videos-title-black">MIRAI</span>{' '}
+              <span className="videos-title-red">VIDEOS</span>
+            </h2>
+            <div className="videos-carousel-wrapper">
+              <button
+                type="button"
+                className="videos-carousel-btn videos-carousel-btn-prev"
+                onClick={() => scrollVideos('prev')}
+                aria-label="Oldingi videolar"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <div
+                className="videos-carousel"
+                ref={videosCarouselRef}
+                role="region"
+                aria-label="YouTube Shorts karuseli"
+              >
+                <div className="videos-track">
+                  {videosData.map((video, index) => {
+                    const videoId = getYoutubeVideoId(video.url);
+                    if (!videoId) return null;
+                    return (
+                      <a
+                        key={`${video.url}-${index}`}
+                        href={video.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="videos-card"
+                      >
+                        <div className="videos-card-iframe-wrapper">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${videoId}?modestbranding=1`}
+                            title={video.title || `Video ${index + 1}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+              <button
+                type="button"
+                className="videos-carousel-btn videos-carousel-btn-next"
+                onClick={() => scrollVideos('next')}
+                aria-label="Keyingi videolar"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </button>
             </div>
           </div>

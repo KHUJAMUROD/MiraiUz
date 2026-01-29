@@ -8,6 +8,10 @@
   transition: $properties;
 }
 
+$header-burger-breakpoint: 992px;
+$header-height: 80px;
+$header-height-mobile: 70px;
+
 .header {
   background-color: #dfdfdf;
   width: 100%;
@@ -18,37 +22,41 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.container {
+.header__container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 40px !important; // Постоянные отступы для всех размеров экрана
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: $header-height;
+  @include transition(padding 0.2s ease);
+
+  @media (min-width: 1200px) {
+    padding: 0 40px;
+  }
 }
 
-.logo {
+.header__logo {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.logo-icon {
+.header__logo-icon {
   font-size: 32px;
   width: 40px;
   height: 40px;
   @include flex-center;
 }
 
-
-.nav {
+.header__nav {
   display: flex;
   align-items: center;
   gap: 40px;
 }
 
-.nav-link {
+.header__nav-link {
   color: #000000;
   font-size: 16px;
   font-weight: 400;
@@ -60,7 +68,7 @@
   }
 }
 
-.cta-button {
+.header__cta {
   background-color: #dc2626;
   color: #ffffff;
   border: none;
@@ -83,47 +91,233 @@
   }
 }
 
-// Планшеты и маленькие ноутбуки (768px - 1024px)
-@media (max-width: 1024px) and (min-width: 769px) {
-  .container {
-    padding: 0 40px !important; // Постоянные отступы
+// —— Burger (скрыт на desktop) ——
+.header__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1002;
+  @include transition(transform 0.2s ease);
+
+  &:hover {
+    opacity: 0.85;
   }
-  
-  .nav {
+
+  @media (max-width: $header-burger-breakpoint) {
+    display: flex;
+  }
+}
+
+.header__burger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #000;
+  border-radius: 1px;
+  @include transition(transform 0.3s ease, opacity 0.3s ease);
+}
+
+.header__burger--open .header__burger-line {
+  &:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  &:nth-child(2) {
+    opacity: 0;
+  }
+
+  &:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+// —— Desktop: скрываем бургер, показываем nav + CTA ——
+// —— Mobile: скрываем nav + CTA, показываем бургер ——
+@media (max-width: $header-burger-breakpoint) {
+  .header__nav,
+  .header__cta {
+    display: none;
+  }
+}
+
+// —— Оверлей мобильного меню ——
+.header__overlay {
+  position: fixed;
+  inset: 0;
+  top: $header-height-mobile;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  @include transition(opacity 0.3s ease, visibility 0.3s ease);
+
+  @media (max-width: $header-burger-breakpoint) {
+    display: block;
+  }
+
+  @media (min-width: $header-burger-breakpoint + 1px) {
+    display: none;
+  }
+}
+
+.header__overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+// —— Выдвижная панель мобильного меню ——
+.header__mobile {
+  position: fixed;
+  top: $header-height-mobile;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 85vw);
+  max-width: 100%;
+  background: #dfdfdf;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 24px;
+  z-index: 1001;
+  transform: translateX(100%);
+  @include transition(transform 0.3s ease);
+
+  @media (min-width: $header-burger-breakpoint + 1px) {
+    display: none;
+  }
+}
+
+.header__mobile--open {
+  transform: translateX(0);
+}
+
+.header__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header__mobile-link {
+  color: #000;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  @include transition(color 0.2s ease, background-color 0.2s ease);
+
+  &:hover {
+    color: #ff0000;
+  }
+}
+
+.header__mobile-cta {
+  margin-top: auto;
+  width: 100%;
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
+  @include transition(background-color 0.3s ease, transform 0.2s ease);
+
+  &:hover {
+    background-color: #b91c1c;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// —— Адаптив: планшеты ——
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header__container {
+    padding: 0 28px;
+  }
+
+  .header__nav {
     gap: 24px;
   }
-  
-  .nav-link {
+
+  .header__nav-link {
     font-size: 15px;
   }
-  
-  .cta-button {
+
+  .header__cta {
     padding: 11px 24px;
     font-size: 15px;
   }
 }
 
-// Мобильные устройства (до 768px)
+// —— Адаптив: мобильные ——
 @media (max-width: 768px) {
-  .container {
-    padding: 0 40px !important; // Постоянные отступы для предотвращения слипания логотипа
-    height: 70px;
+  .header__container {
+    padding: 0 16px;
+    height: $header-height-mobile;
   }
-  
-  .nav {
-    gap: 20px;
+
+  .header__logo-icon {
+    width: 36px;
+    height: 36px;
   }
-  
-  .nav-link {
-    font-size: 14px;
+
+  .header__mobile {
+    top: $header-height-mobile;
+    padding: 24px 20px;
+    width: min(300px, 90vw);
   }
-  
-  .logo-text {
-    font-size: 20px;
+
+  .header__mobile-link {
+    font-size: 16px;
+    padding: 10px 0;
   }
-  
-  .cta-button {
-    padding: 10px 20px;
-    font-size: 14px;
+
+  .header__mobile-cta {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .header__overlay {
+    top: $header-height-mobile;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__container {
+    padding: 0 12px;
+  }
+
+  .header__burger {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header__burger-line {
+    width: 20px;
+  }
+
+  .header__burger--open .header__burger-line {
+    &:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    &:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
   }
 }

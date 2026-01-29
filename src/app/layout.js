@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "STUDY TOKYO - Kafolatli Viza",
+  title: "Mirai Uzbekistan - Yaponiyaga o'qish",
   description: "3000+ o'quvchi allaqachon Yaponiyada. Orzuingizdagi o'qish va ishga biz bilan erishing.",
 };
 
