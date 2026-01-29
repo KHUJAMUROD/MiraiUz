@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import Script from 'next/script';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
 import './page.scss';
@@ -12,7 +13,7 @@ export default function Home() {
 
   const slides = useMemo(() => [
     {
-      background: '/images/backgrounds/school_background.jpg',
+      background: '/images/backgrounds/1.jpg',
       badge: "JP 95% Viza ko'rsatkichi",
       title: {
         line1: "Kafolatli Viza",
@@ -22,7 +23,7 @@ export default function Home() {
       description: "3000+ o'quvchi allaqachon Yaponiyada. Orzuingizdagi o'qish va ishga biz bilan erishing."
     },
     {
-      background: '/images/backgrounds/school_background2.jpg',
+      background: '/images/backgrounds/2.jpg',
       badge: "Yaponiyada Ta'lim",
       title: {
         line1: "Sifatli Ta'lim",
@@ -32,7 +33,7 @@ export default function Home() {
       description: "Yaponiyaning eng yaxshi universitetlarida ta'lim oling va kelajagingizni quring."
     },
     {
-      background: '/images/backgrounds/school_background3.jpg',
+      background: '/images/backgrounds/3.jpg',
       badge: "Professional Yordam",
       title: {
         line1: "Bizning Jamoa",
@@ -221,14 +222,26 @@ export default function Home() {
         </section>
 
         <section className="why-japan">
+          <Script
+            type="module"
+            src="https://unpkg.com/@splinetool/viewer@1.12.41/build/spline-viewer.js"
+            strategy="afterInteractive"
+          />
           <div className="why-japan-container">
-            <h2 className="why-japan-title">
-              <span className="why-japan-title-black">Nega</span>{' '}
-              <span className="why-japan-title-red">Yaponiya?</span>
-            </h2>
-            <p className="why-japan-subtitle">
-              Kelajagingiz uchun eng to'g'ri tanlov
-            </p>
+            <div className="why-japan-intro">
+              <div className="spline-section">
+                <spline-viewer url="https://prod.spline.design/J7TB5fEbHjp-xrUn/scene.splinecode" />
+              </div>
+              <div className="why-japan-heading">
+                <h2 className="why-japan-title">
+                  <span className="why-japan-title-black">Nega</span>{' '}
+                  <span className="why-japan-title-red">Yaponiya?</span>
+                </h2>
+                <p className="why-japan-subtitle">
+                  Kelajagingiz uchun eng to'g'ri tanlov
+                </p>
+              </div>
+            </div>
             
             <div className="why-japan-grid">
               <div className="why-japan-card why-japan-card-image">
