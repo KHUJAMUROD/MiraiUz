@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Script from 'next/script';
+import emailjs from '@emailjs/browser';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
 import videosData from '@/store/videos.json';
@@ -164,18 +165,99 @@ export default function Home() {
     phone: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
+
+  // Блокировка скролла при открытом модальном окне
+  useEffect(() => {
+    if (showThankYouModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showThankYouModal]);
+
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  }, []);
+    // Очищаем сообщение при изменении формы
+    if (submitMessage.text) {
+      setSubmitMessage({ type: '', text: '' });
+    }
+  }, [submitMessage.text]);
 
-  const handleSubmit = useCallback((e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    // Здесь будет логика отправки формы
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitMessage({ type: '', text: '' });
+
+    try {
+      // Отправка формы через EmailJS
+      // В новых версиях @emailjs/browser инициализация не требуется
+      const result = await emailjs.send(
+        'service_wi37gc6',      // Service ID
+        'template_rsg5f38',     // Template ID
+        {
+          name: formData.name,
+          age: formData.age,
+          region: formData.region,
+          phone: `+998${formData.phone}`,
+          date: new Date().toLocaleString('uz-UZ', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+        },
+        'jOeGKzCMlJk2YekDb' // Public Key передается как 4-й параметр
+      );
+
+      console.log('Email sent successfully:', result);
+      
+      // Очищаем форму
+      setFormData({
+        name: '',
+        age: '',
+        region: '',
+        phone: ''
+      });
+      
+      // Показываем модальное окно с благодарностью
+      setShowThankYouModal(true);
+
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      console.error('Error details:', {
+        text: error?.text,
+        status: error?.status,
+        message: error?.message,
+        fullError: error
+      });
+      
+      // Более детальное сообщение об ошибке
+      let errorMessage = 'Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring yoki telefon orqali bog\'laning.';
+      
+      if (error?.text) {
+        errorMessage = `Xatolik: ${error.text}`;
+      } else if (error?.message) {
+        errorMessage = `Xatolik: ${error.message}`;
+      }
+      
+      setSubmitMessage({ 
+        type: 'error', 
+        text: errorMessage
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }, [formData]);
 
   const videosCarouselRef = useRef(null);
@@ -750,6 +832,11 @@ export default function Home() {
               <div className="registration-form-card">
                 <h3 className="form-title">Arizani To'ldiring</h3>
                 <form className="registration-form" onSubmit={handleSubmit}>
+                  {submitMessage.text && (
+                    <div className={`form-message form-message-${submitMessage.type}`}>
+                      {submitMessage.text}
+                    </div>
+                  )}
                   <input
                     type="text"
                     name="name"
@@ -758,6 +845,7 @@ export default function Home() {
                     onChange={handleInputChange}
                     className="form-input"
                     required
+                    disabled={isSubmitting}
                   />
                   <input
                     type="number"
@@ -767,6 +855,7 @@ export default function Home() {
                     onChange={handleInputChange}
                     className="form-input"
                     required
+                    disabled={isSubmitting}
                   />
                   <select
                     name="region"
@@ -774,6 +863,7 @@ export default function Home() {
                     onChange={handleInputChange}
                     className="form-select"
                     required
+                    disabled={isSubmitting}
                   >
                     <option value="">Viloyatni tanlang</option>
                     {regions.map((region) => (
@@ -792,14 +882,33 @@ export default function Home() {
                       onChange={handleInputChange}
                       className="form-input form-input-phone"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
-                  <button type="submit" className="form-submit-button">
-                    Chegirmani Olish
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  <button 
+                    type="submit" 
+                    className="form-submit-button"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="form-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeDasharray="31.416" strokeDashoffset="31.416">
+                            <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416;0 31.416" repeatCount="indefinite"/>
+                            <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416;-31.416" repeatCount="indefinite"/>
+                          </circle>
+                        </svg>
+                        Yuborilmoqda...
+                      </>
+                    ) : (
+                      <>
+                        Chegirmani Olish
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </>
+                    )}
                   </button>
                 </form>
               </div>
@@ -809,6 +918,45 @@ export default function Home() {
       </main>
       
       <Footer />
+
+      {/* Модальное окно с благодарностью */}
+      {showThankYouModal && (
+        <div className="thank-you-modal-overlay" onClick={() => setShowThankYouModal(false)}>
+          <div className="thank-you-modal" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="thank-you-modal-close"
+              onClick={() => setShowThankYouModal(false)}
+              aria-label="Yopish"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <div className="thank-you-modal-content">
+              <div className="thank-you-icon">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="2" fill="#d1fae5"/>
+                  <path d="M8 12L11 15L16 9" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <h2 className="thank-you-title">Rahmat!</h2>
+              <p className="thank-you-message">
+                Arizangiz muvaffaqiyatli qabul qilindi!
+              </p>
+              <p className="thank-you-description">
+                Tez orada mutaxassislarimiz siz bilan bog'lanib, barcha savollaringizga javob beradi.
+              </p>
+              <button 
+                className="thank-you-button"
+                onClick={() => setShowThankYouModal(false)}
+              >
+                Yopish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
