@@ -9,6 +9,15 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const scrollToRegistration = (e) => {
+    e.preventDefault();
+    const registrationSection = document.getElementById('registration-form');
+    if (registrationSection) {
+      registrationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    closeMenu();
+  };
+
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
@@ -49,7 +58,7 @@ export default function Header() {
           </a>
         </nav>
 
-        <button className="header__cta" type="button">
+        <button className="header__cta" type="button" onClick={scrollToRegistration}>
           Ariza qoldirish
         </button>
 
@@ -83,7 +92,7 @@ export default function Header() {
             Natijalar
           </a>
         </nav>
-        <button className="header__mobile-cta" type="button" onClick={closeMenu}>
+        <button className="header__mobile-cta" type="button" onClick={scrollToRegistration}>
           Ariza qoldirish
         </button>
       </div>

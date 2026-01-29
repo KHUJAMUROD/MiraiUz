@@ -179,15 +179,160 @@ export default function Home() {
   }, [formData]);
 
   const videosCarouselRef = useRef(null);
+  const isScrolling = useRef(false);
+  const scrollTimeoutRef = useRef(null);
+
+  // Создаем бесконечный массив видео (дублируем в начале и конце)
+  const infiniteVideos = useMemo(() => {
+    if (!videosData || videosData.length === 0) return [];
+    // Дублируем массив 3 раза для бесконечности
+    return [...videosData, ...videosData, ...videosData];
+  }, []);
+
+  // Получаем ширину одного набора видео
+  const getSingleSetWidth = useCallback(() => {
+    const el = videosCarouselRef.current;
+    if (!el) return 0;
+    const cardWidth = el.querySelector('.videos-card')?.offsetWidth ?? 280;
+    const gap = 24;
+    return (cardWidth + gap) * videosData.length;
+  }, []);
+
+  // Инициализация позиции прокрутки
+  useEffect(() => {
+    const el = videosCarouselRef.current;
+    if (!el || infiniteVideos.length === 0) return;
+    
+    // Ждем, пока элементы отрендерятся
+    const initScroll = () => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth > 0) {
+        // Устанавливаем начальную позицию на второй набор видео (середина)
+        el.scrollLeft = singleSetWidth;
+      }
+    };
+
+    const timer = setTimeout(initScroll, 200);
+    // Также пробуем после полной загрузки
+    window.addEventListener('load', initScroll);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('load', initScroll);
+    };
+  }, [infiniteVideos.length, getSingleSetWidth]);
+
+  // Обработка бесконечной прокрутки
+  useEffect(() => {
+    const el = videosCarouselRef.current;
+    if (!el || infiniteVideos.length === 0) return;
+
+    const handleScroll = () => {
+      if (isScrolling.current) return;
+      
+      // Очищаем предыдущий таймаут
+      if (scrollTimeoutRef.current) {
+        cancelAnimationFrame(scrollTimeoutRef.current);
+      }
+
+      // Используем requestAnimationFrame для более точной проверки
+      scrollTimeoutRef.current = requestAnimationFrame(() => {
+        const singleSetWidth = getSingleSetWidth();
+        if (singleSetWidth === 0) return;
+
+        const scrollLeft = el.scrollLeft;
+        const scrollWidth = el.scrollWidth;
+        const clientWidth = el.clientWidth;
+        const threshold = singleSetWidth * 0.15; // 15% от ширины одного набора
+        
+        // Если прокрутили близко к началу (первый набор), переключаемся на последний набор
+        if (scrollLeft < singleSetWidth - threshold) {
+          isScrolling.current = true;
+          const offset = scrollLeft;
+          el.style.scrollBehavior = 'auto'; // Отключаем плавную прокрутку для мгновенного переключения
+          el.scrollLeft = singleSetWidth * 2 + offset;
+          requestAnimationFrame(() => {
+            el.style.scrollBehavior = 'smooth';
+            setTimeout(() => {
+              isScrolling.current = false;
+            }, 100);
+          });
+        }
+        // Если прокрутили близко к концу (третий набор), переключаемся на первый набор
+        // Проверяем, когда scrollLeft превышает середину третьего набора
+        else if (scrollLeft >= singleSetWidth * 2.3) {
+          isScrolling.current = true;
+          const offset = scrollLeft - singleSetWidth * 2;
+          el.style.scrollBehavior = 'auto'; // Отключаем плавную прокрутку для мгновенного переключения
+          el.scrollLeft = singleSetWidth + offset;
+          requestAnimationFrame(() => {
+            el.style.scrollBehavior = 'smooth';
+            setTimeout(() => {
+              isScrolling.current = false;
+            }, 100);
+          });
+        }
+      });
+    };
+
+    el.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        cancelAnimationFrame(scrollTimeoutRef.current);
+      }
+    };
+  }, [infiniteVideos.length, getSingleSetWidth]);
 
   const scrollVideos = useCallback((direction) => {
     const el = videosCarouselRef.current;
-    if (!el) return;
+    if (!el || infiniteVideos.length === 0) return;
+    
     const cardWidth = el.querySelector('.videos-card')?.offsetWidth ?? 280;
     const gap = 24;
-    const scrollAmount = (cardWidth + gap) * (direction === 'next' ? 1 : -1);
+    const singleCardWidth = cardWidth + gap;
+    const scrollAmount = singleCardWidth * (direction === 'next' ? 1 : -1);
+    
+    // Прокручиваем ровно на одно видео
     el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  }, []);
+    
+    // Проверяем границы после прокрутки для бесконечности
+    setTimeout(() => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth === 0) return;
+      
+      const scrollLeft = el.scrollLeft;
+      const threshold = singleSetWidth * 0.15; // 15% от ширины одного набора
+      
+      // Если прокрутили близко к началу, переключаемся на последний набор
+      if (scrollLeft < singleSetWidth - threshold) {
+        isScrolling.current = true;
+        const offset = scrollLeft;
+        el.style.scrollBehavior = 'auto';
+        el.scrollLeft = singleSetWidth * 2 + offset;
+        requestAnimationFrame(() => {
+          el.style.scrollBehavior = 'smooth';
+          setTimeout(() => {
+            isScrolling.current = false;
+          }, 100);
+        });
+      }
+      // Если прокрутили близко к концу (третий набор), переключаемся на первый набор
+      // Проверяем, когда scrollLeft превышает середину третьего набора
+      else if (scrollLeft >= singleSetWidth * 2.3) {
+        isScrolling.current = true;
+        const offset = scrollLeft - singleSetWidth * 2;
+        el.style.scrollBehavior = 'auto';
+        el.scrollLeft = singleSetWidth + offset;
+        requestAnimationFrame(() => {
+          el.style.scrollBehavior = 'smooth';
+          setTimeout(() => {
+            isScrolling.current = false;
+          }, 100);
+        });
+      }
+    }, 400); // Даем время для завершения плавной прокрутки
+  }, [infiniteVideos.length, getSingleSetWidth]);
 
   const regions = [
     'Toshkent',
@@ -494,7 +639,7 @@ export default function Home() {
                 aria-label="YouTube Shorts karuseli"
               >
                 <div className="videos-track">
-                  {videosData.map((video, index) => {
+                  {infiniteVideos.map((video, index) => {
                     const videoId = getYoutubeVideoId(video.url);
                     if (!videoId) return null;
                     return (
@@ -572,7 +717,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="registration-section">
+        <section id="registration-form" className="registration-section">
           <div className="registration-container">
             <div className="registration-content">
               <div className="registration-offer">
