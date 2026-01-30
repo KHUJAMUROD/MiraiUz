@@ -162,7 +162,9 @@ export default function Home() {
     name: '',
     age: '',
     region: '',
-    phone: ''
+    phone: '',
+    email: '',
+    comment: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -199,35 +201,66 @@ export default function Home() {
     setSubmitMessage({ type: '', text: '' });
 
     try {
-      // Отправка формы через EmailJS
-      // В новых версиях @emailjs/browser инициализация не требуется
-      const result = await emailjs.send(
+      const templateParams = {
+        name: formData.name,
+        age: formData.age,
+        region: formData.region,
+        phone: `+998${formData.phone}`,
+        email: formData.email,
+        comment: formData.comment || 'Izoh yo\'q',
+        date: new Date().toLocaleString('uz-UZ', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }),
+      };
+
+      // Отправка письма владельцу (вам)
+      const ownerResult = await emailjs.send(
         'service_wi37gc6',      // Service ID
-        'template_rsg5f38',     // Template ID
-        {
-          name: formData.name,
-          age: formData.age,
-          region: formData.region,
-          phone: `+998${formData.phone}`,
-          date: new Date().toLocaleString('uz-UZ', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          }),
-        },
-        'jOeGKzCMlJk2YekDb' // Public Key передается как 4-й параметр
+        'template_rsg5f38',     // Template ID для владельца
+        templateParams,
+        'jOeGKzCMlJk2YekDb' // Public Key
       );
 
-      console.log('Email sent successfully:', result);
+      console.log('Owner email sent successfully:', ownerResult);
+
+      // Отправка автоматического ответа пользователю
+      if (formData.email && formData.email.trim()) {
+        try {
+          const userResult = await emailjs.send(
+            'service_wi37gc6',      // Service ID
+            'template_mft8fy2',      // Template ID для автоматического ответа пользователю
+            {
+              user_name: formData.name,
+              email: formData.email.trim(), // Используем 'email' вместо 'user_email' для соответствия шаблону
+            },
+            'jOeGKzCMlJk2YekDb' // Public Key
+          );
+          console.log('User reply email sent successfully:', userResult);
+        } catch (userError) {
+          console.error('Failed to send user reply email:', userError);
+          console.error('Error details:', {
+            text: userError?.text,
+            status: userError?.status,
+            message: userError?.message,
+            fullError: userError
+          });
+          // Не показываем ошибку пользователю, если не удалось отправить ответ
+          // Письмо владельцу уже отправлено успешно
+        }
+      }
       
       // Очищаем форму
       setFormData({
         name: '',
         age: '',
         region: '',
-        phone: ''
+        phone: '',
+        email: '',
+        comment: ''
       });
       
       // Показываем модальное окно с благодарностью
@@ -263,6 +296,74 @@ export default function Home() {
   const videosCarouselRef = useRef(null);
   const isScrolling = useRef(false);
   const scrollTimeoutRef = useRef(null);
+
+  // Refs для секций для анимации при скролле
+  const whyJapanRef = useRef(null);
+  const whyStudytokyoRef = useRef(null);
+  const ctaSectionRef = useRef(null);
+  const videosSectionRef = useRef(null);
+  const faqSectionRef = useRef(null);
+  const registrationSectionRef = useRef(null);
+
+  // Состояния для отслеживания видимости секций
+  const [visibleSections, setVisibleSections] = useState({
+    whyJapan: false,
+    whyStudytokyo: false,
+    ctaSection: false,
+    videosSection: false,
+    faqSection: false,
+    registrationSection: false
+  });
+
+  // Хук для отслеживания видимости элементов при скролле
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.1
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionName = entry.target.dataset.section;
+          if (sectionName) {
+            setVisibleSections(prev => ({
+              ...prev,
+              [sectionName]: true
+            }));
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Наблюдаем за всеми секциями
+    const sections = [
+      { ref: whyJapanRef, name: 'whyJapan' },
+      { ref: whyStudytokyoRef, name: 'whyStudytokyo' },
+      { ref: ctaSectionRef, name: 'ctaSection' },
+      { ref: videosSectionRef, name: 'videosSection' },
+      { ref: faqSectionRef, name: 'faqSection' },
+      { ref: registrationSectionRef, name: 'registrationSection' }
+    ];
+
+    sections.forEach(({ ref, name }) => {
+      if (ref.current) {
+        ref.current.dataset.section = name;
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      sections.forEach(({ ref }) => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
+    };
+  }, []);
 
   // Создаем бесконечный массив видео (дублируем в начале и конце)
   const infiniteVideos = useMemo(() => {
@@ -507,7 +608,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="why-japan">
+        <section ref={whyJapanRef} className="why-japan">
           <Script
             type="module"
             src="https://unpkg.com/@splinetool/viewer@1.12.41/build/spline-viewer.js"
@@ -530,7 +631,7 @@ export default function Home() {
             </div>
             
             <div className="why-japan-grid">
-              <div className="why-japan-card why-japan-card-image">
+              <div className={`why-japan-card why-japan-card-image ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
                 <div className="card-image-wrapper">
                   <div className="card-image-overlay"></div>
                   <div className="card-content-overlay">
@@ -542,7 +643,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="why-japan-card">
+              <div className={`why-japan-card ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
                 <div className="card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 3V21H21" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -555,7 +656,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="why-japan-card">
+              <div className={`why-japan-card ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }}>
                 <div className="card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -567,7 +668,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="why-japan-card why-japan-card-image">
+              <div className={`why-japan-card why-japan-card-image ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }}>
                 <div className="card-image-wrapper">
                   <div className="card-image-overlay"></div>
                   <div className="card-content-overlay">
@@ -579,13 +680,13 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="why-japan-card why-japan-card-empty">
+              <div className={`why-japan-card why-japan-card-empty ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.5s' }}>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="why-studytokyo">
+        <section ref={whyStudytokyoRef} className="why-studytokyo">
           <div className="why-studytokyo-container">
             <h2 className="why-studytokyo-title">
               <span className="why-studytokyo-title-black">Nega</span>{' '}
@@ -593,7 +694,7 @@ export default function Home() {
             </h2>
             
             <div className="why-studytokyo-grid">
-              <div className="studytokyo-card studytokyo-card-red">
+              <div className={`studytokyo-card studytokyo-card-red ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
                 <div className="studytokyo-card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -613,7 +714,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="studytokyo-card studytokyo-card-white">
+              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
                 <div className="studytokyo-card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -626,7 +727,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="studytokyo-card studytokyo-card-white">
+              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }}>
                 <div className="studytokyo-card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -641,7 +742,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="studytokyo-card studytokyo-card-white">
+              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }}>
                 <div className="studytokyo-card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M18 9V5C18 4.46957 17.7893 3.96086 17.4142 3.58579C17.0391 3.21071 16.5304 3 16 3H8C7.46957 3 6.96086 3.21071 6.58579 3.58579C6.21071 3.96086 6 4.46957 6 5V9" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -656,7 +757,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="studytokyo-card studytokyo-card-white">
+              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.5s' }}>
                 <div className="studytokyo-card-icon">
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -671,7 +772,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="studytokyo-card studytokyo-card-blue">
+              <div className={`studytokyo-card studytokyo-card-blue ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.6s' }}>
                 <h3 className="studytokyo-card-title-white">6 ta Filial</h3>
                 <p className="studytokyo-card-description-white studytokyo-card-cities">
                   Toshkent • Samarqand • Namangan • Farg'ona • Andijon • Qashqadaryo
@@ -681,9 +782,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="cta-section">
+        <section ref={ctaSectionRef} className="cta-section">
           <div className="cta-container">
-            <div className="cta-card">
+            <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
               <h2 className="cta-title">
                 Siz ham sifatni tanlamoqchimisiz?
               </h2>
@@ -697,13 +798,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="videos-section">
+        <section ref={videosSectionRef} className="videos-section">
           <div className="videos-container">
-            <h2 className="videos-title">
+            <h2 className={`videos-title ${visibleSections.videosSection ? 'card-fade-in' : 'card-fade-out'}`}>
               <span className="videos-title-black">MIRAI</span>{' '}
               <span className="videos-title-red">VIDEOS</span>
             </h2>
-            <div className="videos-carousel-wrapper">
+            <div className={`videos-carousel-wrapper ${visibleSections.videosSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
               <button
                 type="button"
                 className="videos-carousel-btn videos-carousel-btn-prev"
@@ -759,9 +860,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="faq-section">
+        <section ref={faqSectionRef} className="faq-section">
           <div className="faq-container">
-            <h2 className="faq-title">
+            <h2 className={`faq-title ${visibleSections.faqSection ? 'card-fade-in' : 'card-fade-out'}`}>
               Ko'p So'raladigan Savollar
             </h2>
             
@@ -769,7 +870,8 @@ export default function Home() {
               {faqData.map((faq, index) => (
                 <div 
                   key={index} 
-                  className={`faq-item ${openFaqIndex === index ? 'faq-item-open' : ''}`}
+                  className={`faq-item ${openFaqIndex === index ? 'faq-item-open' : ''} ${visibleSections.faqSection ? 'card-fade-in' : 'card-fade-out'}`}
+                  style={{ transitionDelay: `${(index + 1) * 0.1}s` }}
                 >
                   <button 
                     className="faq-question"
@@ -799,10 +901,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="registration-form" className="registration-section">
+        <section id="registration-form" ref={registrationSectionRef} className="registration-section">
           <div className="registration-container">
             <div className="registration-content">
-              <div className="registration-offer">
+              <div className={`registration-offer ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
                 <div className="offer-badge">
                   <span className="offer-badge-icon">🔥</span>
                   <span className="offer-badge-text">Cheklangan vaqt</span>
@@ -829,7 +931,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="registration-form-card">
+              <div className={`registration-form-card ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
                 <h3 className="form-title">Arizani To'ldiring</h3>
                 <form className="registration-form" onSubmit={handleSubmit}>
                   {submitMessage.text && (
@@ -885,6 +987,25 @@ export default function Home() {
                       disabled={isSubmitting}
                     />
                   </div>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email manzilingiz"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    required
+                    disabled={isSubmitting}
+                  />
+                  <textarea
+                    name="comment"
+                    placeholder="Izoh yoki savolingiz (ixtiyoriy)"
+                    value={formData.comment}
+                    onChange={handleInputChange}
+                    className="form-input form-textarea"
+                    rows="4"
+                    disabled={isSubmitting}
+                  />
                   <button 
                     type="submit" 
                     className="form-submit-button"

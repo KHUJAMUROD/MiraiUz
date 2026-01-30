@@ -38,7 +38,7 @@ spline-viewer {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 80px;
+  padding: 0 120px;
   overflow: hidden;
 }
 
@@ -106,6 +106,19 @@ spline-viewer {
   }
 }
 
+// Анимация появления карточек при скролле
+.card-fade-out {
+  opacity: 0;
+  transform: translateY(40px);
+  @include transition(opacity 0.8s ease-out, transform 0.8s ease-out);
+}
+
+.card-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  @include transition(opacity 0.8s ease-out, transform 0.8s ease-out);
+}
+
 .hero-badge {
   display: inline-block;
   background-color: rgba(26, 26, 26, 0.9);
@@ -121,7 +134,7 @@ spline-viewer {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 64px;
+  font-size: 72px;
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -1px;
@@ -150,7 +163,7 @@ spline-viewer {
 
 .hero-description {
   color: #ffffff;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.6;
   font-weight: 400;
   max-width: 600px;
@@ -185,7 +198,7 @@ spline-viewer {
 .slider-controls {
   position: absolute;
   bottom: 40px;
-  right: 80px;
+  right: 120px;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -253,7 +266,7 @@ spline-viewer {
 // Планшеты и маленькие ноутбуки (768px - 1366px)
 @media (max-width: 1366px) and (min-width: 1025px) {
   .hero {
-    padding: 0 40px; // Постоянные отступы
+    padding: 0 60px; // Увеличенные отступы
   }
   
   .hero-content {
@@ -261,15 +274,15 @@ spline-viewer {
   }
   
   .hero-title {
-    font-size: 56px;
+    font-size: 60px;
   }
   
   .hero-description {
-    font-size: 17px;
+    font-size: 19px;
   }
   
   .slider-controls {
-    right: 40px; // Постоянные отступы
+    right: 60px; // Увеличенные отступы
     bottom: 35px;
   }
 }
@@ -277,7 +290,7 @@ spline-viewer {
 // Планшеты в альбомной ориентации (1024px - 1024px)
 @media (max-width: 1024px) {
   .hero {
-    padding: 0 40px; // Постоянные отступы
+    padding: 0 50px; // Увеличенные отступы
   }
   
   .hero-content {
@@ -286,12 +299,12 @@ spline-viewer {
   }
   
   .hero-title {
-    font-size: 44px;
+    font-size: 50px;
     gap: 6px;
   }
   
   .hero-description {
-    font-size: 16px;
+    font-size: 18px;
     max-width: 500px;
   }
   
@@ -301,7 +314,7 @@ spline-viewer {
   }
   
   .slider-controls {
-    right: 40px; // Постоянные отступы
+    right: 50px; // Увеличенные отступы
     bottom: 30px;
     padding: 10px 14px;
   }
@@ -310,7 +323,7 @@ spline-viewer {
 // Планшеты в портретной ориентации (768px - 1023px)
 @media (max-width: 1023px) and (min-width: 769px) {
   .hero {
-    padding: 0 40px; // Постоянные отступы
+    padding: 0 50px; // Увеличенные отступы
     justify-content: center;
   }
   
@@ -321,7 +334,7 @@ spline-viewer {
   }
   
   .hero-title {
-    font-size: 40px;
+    font-size: 46px;
     text-align: center;
   }
   
@@ -334,6 +347,7 @@ spline-viewer {
   }
   
   .hero-description {
+    font-size: 18px;
     text-align: center;
     max-width: 600px;
   }
@@ -356,7 +370,7 @@ spline-viewer {
   }
   
   .hero {
-    padding: 0 40px; // Постоянные отступы для предотвращения слипания элементов
+    padding: 0 32px; // Увеличенные отступы для предотвращения слипания элементов
     min-height: calc(100vh - 70px);
     justify-content: center;
   }
@@ -374,7 +388,7 @@ spline-viewer {
   }
   
   .hero-title {
-    font-size: 36px;
+    font-size: 42px;
     text-align: center;
     gap: 6px;
   }
@@ -388,7 +402,7 @@ spline-viewer {
   }
   
   .hero-description {
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     max-width: 100%;
   }
@@ -422,8 +436,16 @@ spline-viewer {
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding: 0 24px; // Увеличенные отступы для маленьких экранов
+  }
+  
   .hero-title {
-    font-size: 28px;
+    font-size: 32px;
+  }
+  
+  .hero-description {
+    font-size: 16px;
   }
   
   .hero-badge {
@@ -1800,7 +1822,8 @@ spline-viewer {
 }
 
 .form-input,
-.form-select {
+.form-select,
+.form-textarea {
   width: 100%;
   padding: 16px;
   border: 1px solid #e0e0e0;
@@ -1820,6 +1843,13 @@ spline-viewer {
   &::placeholder {
     color: #999999;
   }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+  line-height: 1.5;
 }
 
 .form-select {
@@ -1983,7 +2013,8 @@ spline-viewer {
   }
   
   .form-input,
-  .form-select {
+  .form-select,
+  .form-textarea {
     padding: 14px;
     font-size: 15px;
   }
@@ -2034,7 +2065,8 @@ spline-viewer {
   }
   
   .form-input,
-  .form-select {
+  .form-select,
+  .form-textarea {
     padding: 12px;
     font-size: 14px;
   }
@@ -2109,6 +2141,7 @@ spline-viewer {
 
 .form-input:disabled,
 .form-select:disabled,
+.form-textarea:disabled,
 .form-input-phone:disabled {
   opacity: 0.6;
   cursor: not-allowed;
