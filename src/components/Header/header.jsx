@@ -9,6 +9,15 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const scrollToHeader = (e) => {
+    e.preventDefault();
+    const headerEl = document.getElementById('header');
+    if (headerEl) {
+      headerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    closeMenu();
+  };
+
   const scrollToRegistration = (e) => {
     e.preventDefault();
     const registrationSection = document.getElementById('registration-form');
@@ -38,13 +47,13 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="header">
+    <header id="header" className="header">
       <div className="header__container">
-        <div className="header__logo">
+        <a href="#header" className="header__logo" onClick={scrollToHeader} aria-label="Header bo‘limiga">
           <div className="header__logo-icon">
             <Image src="/images/logos/mirai_logo_sq.png" alt="logo" width={150} height={70} />
           </div>
-        </div>
+        </a>
 
         <nav className="header__nav">
           <a href="#yaponiya" className="header__nav-link" onClick={closeMenu}>

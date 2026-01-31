@@ -970,31 +970,16 @@ export default function Home() {
                     required
                     disabled={isSubmitting}
                   />
-                  <select
-                    name="region"
-                    value={formData.region}
-                    onChange={handleInputChange}
-                    className="form-select"
-                    required
-                    disabled={isSubmitting}
-                  >
-                    <option value="">Viloyatni tanlang</option>
-                    {regions.map((region) => (
-                      <option key={region} value={region}>
-                        {region}
-                      </option>
-                    ))}
-                  </select>
+                 
                   <div className="phone-input-wrapper">
                     <span className="phone-prefix">+998</span>
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="Tel: +998"
+                      placeholder="Tel:"
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="form-input form-input-phone"
-                      required
                       disabled={isSubmitting}
                     />
                   </div>
