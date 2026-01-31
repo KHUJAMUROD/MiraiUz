@@ -424,35 +424,39 @@ export default function Home() {
         if (singleSetWidth === 0) return;
 
         const scrollLeft = el.scrollLeft;
-        const scrollWidth = el.scrollWidth;
-        const clientWidth = el.clientWidth;
-        const threshold = singleSetWidth * 0.15; // 15% от ширины одного набора
-        
-        // Если прокрутили близко к началу (первый набор), переключаемся на последний набор
-        if (scrollLeft < singleSetWidth - threshold) {
+        const thresholdStart = singleSetWidth * 0.15;
+        const thresholdEnd = singleSetWidth * 2.0; // Скачок в начале третьего набора — контент тот же, без ощущения «конца»
+
+        // Влево: вышли в первый набор — переносим в конец (третий набор)
+        if (scrollLeft < singleSetWidth - thresholdStart) {
+          if (isScrolling.current) return;
           isScrolling.current = true;
           const offset = scrollLeft;
-          el.style.scrollBehavior = 'auto'; // Отключаем плавную прокрутку для мгновенного переключения
-          el.scrollLeft = singleSetWidth * 2 + offset;
+          el.style.scrollSnapType = 'none';
+          el.style.scrollBehavior = 'auto';
           requestAnimationFrame(() => {
-            el.style.scrollBehavior = 'smooth';
-            setTimeout(() => {
-              isScrolling.current = false;
-            }, 100);
+            el.scrollLeft = singleSetWidth * 2 + offset;
+            requestAnimationFrame(() => {
+              el.style.scrollSnapType = '';
+              el.style.scrollBehavior = '';
+              setTimeout(() => { isScrolling.current = false; }, 80);
+            });
           });
         }
-        // Если прокрутили близко к концу (третий набор), переключаемся на первый набор
-        // Проверяем, когда scrollLeft превышает середину третьего набора
-        else if (scrollLeft >= singleSetWidth * 2.3) {
+        // Вправо: вошли в третий набор — переносим в первый (бесшовная петля)
+        else if (scrollLeft >= thresholdEnd) {
+          if (isScrolling.current) return;
           isScrolling.current = true;
           const offset = scrollLeft - singleSetWidth * 2;
-          el.style.scrollBehavior = 'auto'; // Отключаем плавную прокрутку для мгновенного переключения
-          el.scrollLeft = singleSetWidth + offset;
+          el.style.scrollSnapType = 'none';
+          el.style.scrollBehavior = 'auto';
           requestAnimationFrame(() => {
-            el.style.scrollBehavior = 'smooth';
-            setTimeout(() => {
-              isScrolling.current = false;
-            }, 100);
+            el.scrollLeft = singleSetWidth + offset;
+            requestAnimationFrame(() => {
+              el.style.scrollSnapType = '';
+              el.style.scrollBehavior = '';
+              setTimeout(() => { isScrolling.current = false; }, 80);
+            });
           });
         }
       });
@@ -492,26 +496,33 @@ export default function Home() {
         isScrolling.current = true;
         const offset = scrollLeft;
         el.style.scrollBehavior = 'auto';
-        el.scrollLeft = singleSetWidth * 2 + offset;
+        el.classList.add('videos-carousel-jump');
         requestAnimationFrame(() => {
-          el.style.scrollBehavior = 'smooth';
-          setTimeout(() => {
-            isScrolling.current = false;
-          }, 100);
+          requestAnimationFrame(() => {
+            el.scrollLeft = singleSetWidth * 2 + offset;
+            setTimeout(() => {
+              el.classList.remove('videos-carousel-jump');
+              el.style.scrollBehavior = 'smooth';
+              isScrolling.current = false;
+            }, 70);
+          });
         });
       }
       // Если прокрутили близко к концу (третий набор), переключаемся на первый набор
-      // Проверяем, когда scrollLeft превышает середину третьего набора
       else if (scrollLeft >= singleSetWidth * 2.3) {
         isScrolling.current = true;
         const offset = scrollLeft - singleSetWidth * 2;
         el.style.scrollBehavior = 'auto';
-        el.scrollLeft = singleSetWidth + offset;
+        el.classList.add('videos-carousel-jump');
         requestAnimationFrame(() => {
-          el.style.scrollBehavior = 'smooth';
-          setTimeout(() => {
-            isScrolling.current = false;
-          }, 100);
+          requestAnimationFrame(() => {
+            el.scrollLeft = singleSetWidth + offset;
+            setTimeout(() => {
+              el.classList.remove('videos-carousel-jump');
+              el.style.scrollBehavior = 'smooth';
+              isScrolling.current = false;
+            }, 70);
+          });
         });
       }
     }, 400); // Даем время для завершения плавной прокрутки

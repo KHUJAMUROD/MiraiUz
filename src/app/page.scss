@@ -1124,12 +1124,7 @@ spline-viewer {
 .cta-section {
   width: 100%;
   padding: 80px 80px;
-  background: linear-gradient(
-    to right,
-    rgba(235, 245, 255, 0.5) 0%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(255, 240, 245, 0.5) 100%
-  );
+  background: white ;
   @include flex-center;
 }
 
@@ -1348,6 +1343,9 @@ spline-viewer {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  contain: paint;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 
   &::-webkit-scrollbar {
     display: none;
@@ -1484,13 +1482,7 @@ spline-viewer {
 .faq-section {
   width: 100%;
   padding: 80px 80px;
-  background: linear-gradient(
-    to right,
-    rgba(235, 245, 255, 0.3) 0%,
-    rgba(248, 248, 248, 1) 20%,
-    rgba(248, 248, 248, 1) 80%,
-    rgba(255, 240, 245, 0.3) 100%
-  );
+  background:white;
   @include flex-center;
 }
 
