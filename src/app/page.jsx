@@ -5,6 +5,7 @@ import Script from 'next/script';
 import emailjs from '@emailjs/browser';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
+import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
 import videosData from '@/store/videos.json';
 import './page.scss';
 
@@ -1033,7 +1034,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      
+      <CompanyMarquee />
       <Footer />
 
       {/* Модальное окно с благодарностью */}
