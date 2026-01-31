@@ -53,6 +53,20 @@ export default function Home() {
     }
   ], []);
 
+  const emailjsConfig = {
+    serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+    templateOwner: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_OWNER,
+    templateReply: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_REPLY,
+    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+  };
+
+  // Инициализация EmailJS
+  useEffect(() => {
+    if (emailjsConfig.publicKey) {
+      emailjs.init({ publicKey: emailjsConfig.publicKey });
+    }
+  }, [emailjsConfig.publicKey]);
+
   // Предзагрузка изображений
   useEffect(() => {
     const imageUrls = slides.map(slide => slide.background);
@@ -218,27 +232,31 @@ export default function Home() {
         }),
       };
 
+      if (!emailjsConfig.serviceId || !emailjsConfig.templateOwner || !emailjsConfig.publicKey) {
+        throw new Error('EmailJS not configured. Create .env.local with NEXT_PUBLIC_EMAILJS_* variables.');
+      }
+
       // Отправка письма владельцу (вам)
       const ownerResult = await emailjs.send(
-        'service_wi37gc6',      // Service ID
-        'template_rsg5f38',     // Template ID для владельца
+        emailjsConfig.serviceId,
+        emailjsConfig.templateOwner,
         templateParams,
-        'jOeGKzCMlJk2YekDb' // Public Key
+        { publicKey: emailjsConfig.publicKey }
       );
 
       console.log('Owner email sent successfully:', ownerResult);
 
       // Отправка автоматического ответа пользователю
-      if (formData.email && formData.email.trim()) {
+      if (formData.email && formData.email.trim() && emailjsConfig.templateReply) {
         try {
           const userResult = await emailjs.send(
-            'service_wi37gc6',      // Service ID
-            'template_mft8fy2',      // Template ID для автоматического ответа пользователю
+            emailjsConfig.serviceId,
+            emailjsConfig.templateReply,
             {
               user_name: formData.name,
-              email: formData.email.trim(), // Используем 'email' вместо 'user_email' для соответствия шаблону
+              email: formData.email.trim(),
             },
-            'jOeGKzCMlJk2YekDb' // Public Key
+            { publicKey: emailjsConfig.publicKey }
           );
           console.log('User reply email sent successfully:', userResult);
         } catch (userError) {
@@ -268,21 +286,17 @@ export default function Home() {
       setShowThankYouModal(true);
 
     } catch (error) {
-      console.error('Email sending failed:', error);
-      console.error('Error details:', {
-        text: error?.text,
-        status: error?.status,
-        message: error?.message,
-        fullError: error
-      });
+      // EmailJSResponseStatus: status, text — иногда console не показывает их
+      const status = error?.status ?? error?.statusCode;
+      const text = error?.text ?? error?.message ?? (typeof error === 'string' ? error : null);
+      const errObj = { status, text, constructor: error?.constructor?.name };
+      console.error('Email sending failed. Status:', status, 'Text:', text, 'Full:', errObj);
       
-      // Более детальное сообщение об ошибке
       let errorMessage = 'Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring yoki telefon orqali bog\'laning.';
-      
-      if (error?.text) {
-        errorMessage = `Xatolik: ${error.text}`;
-      } else if (error?.message) {
-        errorMessage = `Xatolik: ${error.message}`;
+      if (text) {
+        errorMessage = `Xatolik: ${text}`;
+      } else if (status) {
+        errorMessage = `Xatolik (${status}). Iltimos, qayta urinib ko\'ring.`;
       }
       
       setSubmitMessage({ 
@@ -550,7 +564,7 @@ export default function Home() {
       <Header />
       
       <main className="main">
-        <section className="hero">
+        <section id="hero" className="hero">
           {/* Фоновые изображения для плавного перехода */}
           {slides.map((slide, index) => (
             <div

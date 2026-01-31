@@ -9,12 +9,9 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const scrollToHeader = (e) => {
+  const scrollToHero = (e) => {
     e.preventDefault();
-    const headerEl = document.getElementById('header');
-    if (headerEl) {
-      headerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     closeMenu();
   };
 
@@ -49,7 +46,7 @@ export default function Header() {
   return (
     <header id="header" className="header">
       <div className="header__container">
-        <a href="#header" className="header__logo" onClick={scrollToHeader} aria-label="Header bo‘limiga">
+        <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label="Bosh sahifaga">
           <div className="header__logo-icon">
             <Image src="/images/logos/mirai_logo_sq.png" alt="logo" width={150} height={70} />
           </div>
