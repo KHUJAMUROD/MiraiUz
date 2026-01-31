@@ -3,12 +3,12 @@
 import React, { memo, useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import './CompanyMarquee.scss';
 
-// Логотип Mirai для бегущей строки
-import MiraiLogo from '../../../public/images/companyLogos/mirai_logo_sq.png';
+// Логотип Mirai для бегущей строки (путь из public — избегаем импорт для корректной работы на хостинге)
+const MIRAI_LOGO_SRC = '/images/companyLogos/mirai_logo_sq.png';
 
 const COMPANIES = Array.from({ length: 10 }, () => ({
   name: 'Mirai',
-  Logo: MiraiLogo,
+  Logo: MIRAI_LOGO_SRC,
   category: 'Education',
   isUnitSchool: false,
 }));

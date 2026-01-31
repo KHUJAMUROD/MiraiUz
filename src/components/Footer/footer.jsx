@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="footer-logo">
               <div className="footer-logo-icon">
                 <Image 
-                  src="/images/logos/mirai_logo_sq.png" 
+                  src="/images/companyLogos/mirai_logo_sq.png" 
                   alt="Mirai Logo" 
                   width={60} 
                   height={60}

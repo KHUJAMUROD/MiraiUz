@@ -968,7 +968,7 @@ export default function Home() {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Ismingiz"
+                    placeholder="I.F.O"
                     value={formData.name}
                     onChange={handleInputChange}
                     className="form-input"

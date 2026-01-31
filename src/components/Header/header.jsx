@@ -48,7 +48,7 @@ export default function Header() {
       <div className="header__container">
         <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label="Bosh sahifaga">
           <div className="header__logo-icon">
-            <Image src="/images/logos/mirai_logo_sq.png" alt="logo" width={150} height={70} />
+            <Image src="/images/companyLogos/mirai_logo_sq.png" alt="logo" width={150} height={70} />
           </div>
         </a>
 
