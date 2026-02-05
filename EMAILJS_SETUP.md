@@ -347,7 +347,7 @@ Rahmat! Sizning arizangiz qabul qilindi - MIRAI
           ⏰ Keyingi qadamlar:
         </div>
         <ul style="margin: 10px 0 0 20px; padding: 0;">
-          <li style="margin: 8px 0;">Bizning mutaxassislarimiz siz bilan 24 soat ichida bog'lanadi</li>
+          <li style="margin: 8px 0;">Bizning mutaxassislarimiz siz bilan 3 ish kuni ichida bog'lanadi</li>
           <li style="margin: 8px 0;">Bepul konsultatsiya va barcha savollaringizga javob olasiz</li>
           <li style="margin: 8px 0;">Viza jarayoni va ta'lim haqida batafsil ma'lumot beramiz</li>
         </ul>
@@ -359,9 +359,11 @@ Rahmat! Sizning arizangiz qabul qilindi - MIRAI
       
       <div class="contact-info">
         <h3>📞 Biz bilan bog'lanish</h3>
-        <p><strong>Telefon:</strong> +998 XX XXX XX XX</p>
-        <p><strong>Email:</strong> info@mirai.uz</p>
-        <p><strong>Veb-sayt:</strong> www.mirai.uz</p>
+        <p><strong>Telefon:</strong> <a href="tel:+998888930888" style="color: #dc2626; text-decoration: none;">+998 88-893-08-88</a></p>
+        <p><strong>Email:</strong> <a href="mailto:languagecentermirai.uz@gmail.com" style="color: #dc2626; text-decoration: none;">languagecentermirai.uz@gmail.com</a></p>
+        <p><strong>Instagram:</strong> <a href="https://www.instagram.com/mirai_uz/" style="color: #dc2626; text-decoration: none;">@mirai_uz</a></p>
+        <p><strong>Telegram:</strong> <a href="https://t.me/mirai_uzyapontilicenter" style="color: #dc2626; text-decoration: none;">@mirai_uzyapontilicenter</a></p>
+        <p><strong>Veb-sayt:</strong> <a href="https://www.mirai.uz" style="color: #dc2626; text-decoration: none;">www.mirai.uz</a></p>
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
@@ -370,15 +372,15 @@ Rahmat! Sizning arizangiz qabul qilindi - MIRAI
     </div>
     
     <div class="footer">
-      <p>Hurmat bilan,<br><strong>MIRAI Jamoa</strong></p>
+      <p>Hurmat bilan,<br><strong>MIRAI Jamoasi</strong></p>
       <p style="margin-top: 10px; font-size: 12px; color: #999;">
-        © 2024 MIRAI - Yaponiyada Ta'lim<br>
+        © 2023 MIRAI - Yaponiyada Ta'lim<br>
         Bu xabar avtomatik yuborilgan. Iltimos, bu xabarga javob bermang.
       </p>
     </div>
-  </div>
-</body>
-</html>
+
+
+
 ```
 
 ### 3.3 Переменные шаблона для пользователя
