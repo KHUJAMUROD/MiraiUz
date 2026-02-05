@@ -37,13 +37,19 @@ const DEFAULT_SLIDES = [
 ];
 
 const AUTO_ADVANCE_INTERVAL_MS = 5000;
-const AUTO_FADEOUT_DURATION_MS = 550;
+const BACKGROUND_TRANSITION_MS = 1200;
+const AUTO_FADEOUT_DURATION_MS = BACKGROUND_TRANSITION_MS;
 
 export default function HeroCarousel({ slides = DEFAULT_SLIDES, onConsultationClick }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
   const autoAdvanceTimeoutRef = useRef(null);
+  const isTransitioningRef = useRef(false);
+  const isAutoAdvancingRef = useRef(false);
+
+  isTransitioningRef.current = isTransitioning;
+  isAutoAdvancingRef.current = isAutoAdvancing;
 
   const currentSlideData = useMemo(() => slides[currentSlide], [slides, currentSlide]);
 
@@ -80,7 +86,7 @@ export default function HeroCarousel({ slides = DEFAULT_SLIDES, onConsultationCl
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isTransitioning || isAutoAdvancing) return;
+      if (isTransitioningRef.current || isAutoAdvancingRef.current) return;
       setIsAutoAdvancing(true);
       autoAdvanceTimeoutRef.current = setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -93,7 +99,7 @@ export default function HeroCarousel({ slides = DEFAULT_SLIDES, onConsultationCl
         clearTimeout(autoAdvanceTimeoutRef.current);
       }
     };
-  }, [slides.length, isTransitioning, isAutoAdvancing]);
+  }, [slides.length]);
 
   return (
     <section id="hero" className="hero-carousel">

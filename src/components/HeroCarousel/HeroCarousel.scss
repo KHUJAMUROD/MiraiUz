@@ -63,13 +63,13 @@
   &.fade-in {
     opacity: 1;
     transform: translateY(0);
-    animation: heroCarouselFadeIn 0.25s ease-out;
+    animation: heroCarouselFadeIn 1.2s ease-in-out;
   }
 
   &.fade-out {
     opacity: 0;
     transform: translateY(-12px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
   }
 }
 
