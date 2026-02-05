@@ -6,6 +6,7 @@ import emailjs from '@emailjs/browser';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
 import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
+import HeroCarousel from '@/components/HeroCarousel/HeroCarousel';
 import videosData from '@/store/videos.json';
 import './page.scss';
 
@@ -16,42 +17,7 @@ function getYoutubeVideoId(url) {
 }
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
-
-  const slides = useMemo(() => [
-    {
-      background: '/images/backgrounds/1.jpg',
-      badge: "JP 95% Viza ko'rsatkichi",
-      title: {
-        line1: "Kafolatli Viza",
-        line2: { white: "Yoki", red: "Pulingiz" },
-        line3: { red: "Qaytariladi" }
-      },
-      description: "3000+ o'quvchi allaqachon Yaponiyada. Orzuingizdagi o'qish va ishga biz bilan erishing."
-    },
-    {
-      background: '/images/backgrounds/2.jpg',
-      badge: "Yaponiyada Ta'lim",
-      title: {
-        line1: "Sifatli Ta'lim",
-        line2: { white: "Va", red: "Karyera" },
-        line3: { red: "Imkoniyatlari" }
-      },
-      description: "Yaponiyaning eng yaxshi universitetlarida ta'lim oling va kelajagingizni quring."
-    },
-    {
-      background: '/images/backgrounds/3.jpg',
-      badge: "Professional Yordam",
-      title: {
-        line1: "Bizning Jamoa",
-        line2: { white: "Sizga", red: "Yordam" },
-        line3: { red: "Beradi" }
-      },
-      description: "Tajribali mutaxassislarimiz sizga viza va ta'lim jarayonida to'liq yordam ko'rsatadi."
-    }
-  ], []);
 
   const emailjsConfig = {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -66,46 +32,6 @@ export default function Home() {
       emailjs.init({ publicKey: emailjsConfig.publicKey });
     }
   }, [emailjsConfig.publicKey]);
-
-  // Предзагрузка изображений
-  useEffect(() => {
-    const imageUrls = slides.map(slide => slide.background);
-    imageUrls.forEach(url => {
-      const img = new Image();
-      img.src = url;
-    });
-  }, [slides]);
-
-  const nextSlide = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-    setTimeout(() => setIsTransitioning(false), 1200);
-  }, [slides.length, isTransitioning]);
-
-  const prevSlide = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    setTimeout(() => setIsTransitioning(false), 1200);
-  }, [slides.length, isTransitioning]);
-
-  const goToSlide = useCallback((index) => {
-    if (isTransitioning || index === currentSlide) return;
-    setIsTransitioning(true);
-    setCurrentSlide(index);
-    setTimeout(() => setIsTransitioning(false), 1200);
-  }, [currentSlide, isTransitioning]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isTransitioning) {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [slides.length, isTransitioning]);
 
   // Скрываем элемент "build with Spline"
   useEffect(() => {
@@ -147,8 +73,6 @@ export default function Home() {
       window.removeEventListener('load', hideSplineBranding);
     };
   }, []);
-
-  const currentSlideData = useMemo(() => slides[currentSlide], [slides, currentSlide]);
 
   const faqData = useMemo(() => [
     {
@@ -564,75 +488,7 @@ export default function Home() {
       <Header />
       
       <main className="main">
-        <section id="hero" className="hero">
-          {/* Фоновые изображения для плавного перехода */}
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`hero-background ${index === currentSlide ? 'active' : ''}`}
-              style={{ backgroundImage: `url(${slide.background})` }}
-            />
-          ))}
-          
-          <div className="hero-overlay"></div>
-          <div className={`hero-content ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
-            <div className="hero-badge">
-              {currentSlideData.badge}
-            </div>
-            
-            <h1 className="hero-title">
-              <span className="title-line-1">{currentSlideData.title.line1}</span>
-              <span className="title-line-2">
-                <span className="title-white">{currentSlideData.title.line2.white}</span>{' '}
-                <span className="title-red">{currentSlideData.title.line2.red}</span>
-              </span>
-              <span className="title-line-3">
-                <span className="title-red">{currentSlideData.title.line3.red}</span>
-              </span>
-            </h1>
-            
-            <p className="hero-description">
-              {currentSlideData.description}
-            </p>
-            
-            <button className="hero-button">
-              Bepul Konsultatsiya
-            </button>
-          </div>
-          
-          <div className="slider-controls">
-            <button 
-              className="slider-button" 
-              onClick={prevSlide} 
-              disabled={isTransitioning}
-              aria-label="Previous slide"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <div className="slider-indicators">
-              {slides.map((_, index) => (
-                <span
-                  key={index}
-                  className={`indicator ${index === currentSlide ? 'indicator-active' : ''} ${isTransitioning ? 'disabled' : ''}`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-            <button 
-              className="slider-button" 
-              onClick={nextSlide} 
-              disabled={isTransitioning}
-              aria-label="Next slide"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
-        </section>
+        <HeroCarousel />
 
         <section ref={whyJapanRef} className="why-japan">
           <Script
