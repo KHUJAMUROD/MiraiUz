@@ -1,11 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Header.scss';
 import Image from 'next/image';
 
+const MOBILE_BREAKPOINT = 992;
+const SCROLL_DOWN_THRESHOLD = 60;
+const SCROLL_UP_MIN_DELTA = 8;
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const isMobile = useRef(false);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -37,14 +44,47 @@ export default function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 992) closeMenu();
+      isMobile.current = window.innerWidth <= MOBILE_BREAKPOINT;
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        closeMenu();
+        setHeaderHidden(false);
+      }
     };
+    isMobile.current = window.innerWidth <= MOBILE_BREAKPOINT;
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          ticking = false;
+          if (!isMobile.current) return;
+          const y = window.scrollY;
+          if (y <= SCROLL_DOWN_THRESHOLD) {
+            setHeaderHidden(false);
+          } else if (y > lastScrollY.current) {
+            setHeaderHidden(true);
+            setMenuOpen(false);
+          } else if (lastScrollY.current - y >= SCROLL_UP_MIN_DELTA) {
+            setHeaderHidden(false);
+          }
+          lastScrollY.current = y;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header id="header" className="header">
+    <header
+      id="header"
+      className={`header ${headerHidden ? 'header--hidden' : ''}`}
+    >
       <div className="header__container">
         <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label="Bosh sahifaga">
           <div className="header__logo-icon">
