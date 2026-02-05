@@ -5,10 +5,8 @@
     position: relative;
     background: #fff;
 
-    // Enhanced CSS containment for better performance isolation
-    contain: strict;
-    // Content visibility for off-screen optimization
-    content-visibility: auto;
+    // Light containment to avoid layout thrashing; avoid strict so animation runs reliably
+    contain: layout style;
     // Optimize for hardware acceleration
     transform: translate3d(0, 0, 0);
 

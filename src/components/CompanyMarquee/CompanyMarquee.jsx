@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { memo, useMemo, useRef, useEffect, useLayoutEffect, useState } from 'react';
 import './CompanyMarquee.scss';
 
 // Логотип Mirai для бегущей строки (путь из public — избегаем импорт для корректной работы на хостинге)
@@ -64,56 +64,53 @@ const CompanyMarquee = memo(() => {
   const contentRef = useRef(null);
   const observerRef = useRef(null);
   const animationStartedRef = useRef(false);
+  const isVisibleRef = useRef(false);
+  const startTimeoutRef = useRef(null);
 
-  // Tab visibility detection - pause animation when tab is not active
+  isVisibleRef.current = isVisible;
+
+  // Tab visibility: pause when tab hidden, resume when tab visible (always use ref to avoid stale closure)
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (contentRef.current) {
-        if (document.hidden) {
-          contentRef.current.style.animationPlayState = 'paused';
-        } else if (isVisible) {
-          contentRef.current.style.animationPlayState = 'running';
+      const content = contentRef.current;
+      if (!content) return;
+      if (document.hidden) {
+        content.style.animationPlayState = 'paused';
+      } else {
+        if (isVisibleRef.current) {
+          content.style.animationPlayState = 'running';
         }
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [isVisible]);
+  // Intersection Observer: use useLayoutEffect so ref is set and we observe immediately after mount
+  useLayoutEffect(() => {
+    const el = marqueeRef.current;
+    if (!el) return;
 
-  // Optimized Intersection Observer with disconnect after first visibility
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !animationStartedRef.current) {
-          // Add delay before starting animation to reduce initial load impact
-          setTimeout(() => {
-            setIsVisible(true);
-            animationStartedRef.current = true;
-            // Disconnect observer after first visibility to reduce ongoing cost
-            if (observerRef.current) {
-              observerRef.current.disconnect();
-            }
-          }, 300);
-        }
+        if (!entry.isIntersecting || animationStartedRef.current) return;
+        animationStartedRef.current = true;
+        startTimeoutRef.current = setTimeout(() => {
+          setIsVisible(true);
+          observer.disconnect();
+        }, 300);
       },
-      {
-        threshold: 0.3, // Start animation later for better performance
-        rootMargin: '0px' // Remove preloading margin
-      }
+      { threshold: 0.2, rootMargin: '50px 0px' }
     );
 
-    if (marqueeRef.current) {
-      observerRef.current.observe(marqueeRef.current);
-    }
+    observer.observe(el);
+    observerRef.current = observer;
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
+      if (startTimeoutRef.current) clearTimeout(startTimeoutRef.current);
+      observer.disconnect();
+      observerRef.current = null;
     };
   }, []);
 

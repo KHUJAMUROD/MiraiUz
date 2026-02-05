@@ -499,7 +499,9 @@ export default function Home() {
           <div className="why-japan-container">
             <div className="why-japan-intro">
               <div className="spline-section">
-                <spline-viewer url="https://prod.spline.design/J7TB5fEbHjp-xrUn/scene.splinecode" />
+                <div className="spline-viewer-wrap">
+                  <spline-viewer url="https://prod.spline.design/J7TB5fEbHjp-xrUn/scene.splinecode" />
+                </div>
               </div>
               <div className="why-japan-heading">
                 <h2 className="why-japan-title">
