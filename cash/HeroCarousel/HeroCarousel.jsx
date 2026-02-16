@@ -25,7 +25,7 @@ const DEFAULT_SLIDES = [
     description: "Yaponiyaning eng yaxshi universitetlarida ta'lim oling va kelajagingizni quring."
   },
   {
-    background: '/images/backgrounds/3.jpg',
+    background: '/images/backgrounds/3.webp',
     badge: "Professional Yordam",
     title: {
       line1: "Bizning Jamoa",

@@ -1,14 +1,22 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import Script from 'next/script';
 import emailjs from '@emailjs/browser';
 import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
 import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
-import HeroCarousel from '@/components/HeroCarousel/HeroCarousel';
+import HeroPage from '@/components/HeroPage/HeroPage';
 import videosData from '@/store/videos.json';
 import './page.scss';
+
+
+const natijalarCertificateImages = [
+  '/images/results/oquvchilar-natijalari.png'
+];
+
+const natijalarVisaImages = [
+  '/images/results/oquvchilar-vizalari.png'
+];
 
 function getYoutubeVideoId(url) {
   if (!url || typeof url !== 'string') return null;
@@ -17,8 +25,6 @@ function getYoutubeVideoId(url) {
 }
 
 export default function Home() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(null);
-
   const emailjsConfig = {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
     templateOwner: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_OWNER,
@@ -32,70 +38,6 @@ export default function Home() {
       emailjs.init({ publicKey: emailjsConfig.publicKey });
     }
   }, [emailjsConfig.publicKey]);
-
-  // Скрываем элемент "build with Spline"
-  useEffect(() => {
-    const hideSplineBranding = () => {
-      const splineViewer = document.querySelector('spline-viewer');
-      if (splineViewer) {
-        // Пытаемся найти элемент через shadow DOM
-        const shadowRoot = splineViewer.shadowRoot;
-        if (shadowRoot) {
-          const brandingLinks = shadowRoot.querySelectorAll('a[href*="spline"], a[href*="splinetool"]');
-          brandingLinks.forEach(link => {
-            link.style.display = 'none';
-            link.style.visibility = 'hidden';
-            link.style.opacity = '0';
-            link.style.pointerEvents = 'none';
-          });
-        }
-        
-        // Также скрываем элементы вне shadow DOM
-        const allLinks = document.querySelectorAll('spline-viewer a[href*="spline"], spline-viewer a[href*="splinetool"]');
-        allLinks.forEach(link => {
-          link.style.display = 'none';
-          link.style.visibility = 'hidden';
-          link.style.opacity = '0';
-          link.style.pointerEvents = 'none';
-        });
-      }
-    };
-
-    // Выполняем сразу и через интервалы для надежности
-    hideSplineBranding();
-    const interval = setInterval(hideSplineBranding, 500);
-    
-    // Также слушаем события загрузки
-    window.addEventListener('load', hideSplineBranding);
-    
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('load', hideSplineBranding);
-    };
-  }, []);
-
-  const faqData = useMemo(() => [
-    {
-      question: "Yapon tilini bilmayman?",
-      answer: "Bu muammo emas! Bizning maktabimizda yapon tilini noldan o'rganish imkoniyati mavjud. Tajribali o'qituvchilarimiz sizga yapon tilini tez va samarali o'rganishda yordam beradi. Kurslar boshlang'ichdan boshlab, bosqichma-bosqich tuzilgan."
-    },
-    {
-      question: "Bo'lib to'lashga imkon bormi?",
-      answer: "Ha, albatta! Biz turli xil to'lov shakllarini taklif qilamiz, jumladan bo'lib to'lash imkoniyati ham mavjud. To'lov shartlari va muddatlari har bir talaba bilan individual ravishda muhokama qilinadi va moslashtiriladi."
-    },
-    {
-      question: "Yaponiyaga borgandan keyin ishlay olamanmi?",
-      answer: "Ha, o'qish davomida siz haftasiga 28 soatgacha ishlash huquqiga egasiz. Biz sizga ish topishda ham yordam ko'rsatamiz. Yaponiyada o'qish va ishlash imkoniyatlari keng, va bizning mutaxassislarimiz sizga bu jarayonda to'liq yordam ko'rsatadi."
-    },
-    {
-      question: "Sizlarga ishonsa bo'ladimi?",
-      answer: "Albatta! Biz 10 yillik tajribaga egamiz va 3000+ talabamiz muvaffaqiyatli Yaponiyada o'qish va ishlash imkoniyatiga ega bo'ldi. Bizning maktabimiz litsenziyalangan va Yaponiyaning rasmiy ta'lim muassasalari bilan hamkorlik qiladi. Barcha hujjatlar yapon mutaxassislari tomonidan tekshiriladi."
-    }
-  ], []);
-
-  const toggleFaq = useCallback((index) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index);
-  }, [openFaqIndex]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -239,18 +181,22 @@ export default function Home() {
   // Refs для секций для анимации при скролле
   const whyJapanRef = useRef(null);
   const whyStudytokyoRef = useRef(null);
+  const teachersSectionRef = useRef(null);
   const ctaSectionRef = useRef(null);
+  const konsaltingCoursesSectionRef = useRef(null);
+  const natijalarSectionRef = useRef(null);
   const videosSectionRef = useRef(null);
-  const faqSectionRef = useRef(null);
   const registrationSectionRef = useRef(null);
 
   // Состояния для отслеживания видимости секций
   const [visibleSections, setVisibleSections] = useState({
     whyJapan: false,
     whyStudytokyo: false,
+    teachersSection: false,
     ctaSection: false,
+    konsaltingCoursesSection: false,
+    natijalarSection: false,
     videosSection: false,
-    faqSection: false,
     registrationSection: false
   });
 
@@ -282,9 +228,11 @@ export default function Home() {
     const sections = [
       { ref: whyJapanRef, name: 'whyJapan' },
       { ref: whyStudytokyoRef, name: 'whyStudytokyo' },
+      { ref: teachersSectionRef, name: 'teachersSection' },
       { ref: ctaSectionRef, name: 'ctaSection' },
+      { ref: konsaltingCoursesSectionRef, name: 'konsaltingCoursesSection' },
+      { ref: natijalarSectionRef, name: 'natijalarSection' },
       { ref: videosSectionRef, name: 'videosSection' },
-      { ref: faqSectionRef, name: 'faqSection' },
       { ref: registrationSectionRef, name: 'registrationSection' }
     ];
 
@@ -301,6 +249,39 @@ export default function Home() {
           observer.unobserve(ref.current);
         }
       });
+    };
+  }, []);
+
+  // Принудительно перезапускаем анимацию при переходе из хедера
+  useEffect(() => {
+    const timeouts = [];
+
+    const handleSectionNavigate = (event) => {
+      const sectionId = event?.detail?.sectionId;
+      if (!sectionId) return;
+
+      if (sectionId === 'about') {
+        setVisibleSections(prev => ({ ...prev, whyJapan: false }));
+        const t = window.setTimeout(() => {
+          setVisibleSections(prev => ({ ...prev, whyJapan: true }));
+        }, 120);
+        timeouts.push(t);
+      }
+
+      if (sectionId === 'asoschilar-va-ustozlar') {
+        setVisibleSections(prev => ({ ...prev, whyStudytokyo: false, teachersSection: false }));
+        const t = window.setTimeout(() => {
+          setVisibleSections(prev => ({ ...prev, whyStudytokyo: true }));
+        }, 120);
+        timeouts.push(t);
+      }
+    };
+
+    window.addEventListener('section:navigate', handleSectionNavigate);
+
+    return () => {
+      window.removeEventListener('section:navigate', handleSectionNavigate);
+      timeouts.forEach(timeoutId => window.clearTimeout(timeoutId));
     };
   }, []);
 
@@ -467,200 +448,115 @@ export default function Home() {
     }, 400); // Даем время для завершения плавной прокрутки
   }, [infiniteVideos.length, getSingleSetWidth]);
 
-  const regions = [
-    'Toshkent',
-    'Samarqand',
-    'Namangan',
-    'Farg\'ona',
-    'Andijon',
-    'Qashqadaryo',
-    'Surxondaryo',
-    'Buxoro',
-    'Navoiy',
-    'Jizzax',
-    'Sirdaryo',
-    'Xorazm',
-    'Qoraqalpog\'iston'
-  ];
 
   return (
     <div className="page">
       <Header />
       
       <main className="main">
-        <HeroCarousel />
+        <HeroPage />
 
-        <section ref={whyJapanRef} className="why-japan">
-          <Script
-            type="module"
-            src="https://unpkg.com/@splinetool/viewer@1.12.41/build/spline-viewer.js"
-            strategy="afterInteractive"
-          />
+        <section id="about" ref={whyJapanRef} className="about">
           <div className="why-japan-container">
-            <div className="why-japan-intro">
-              <div className="spline-section">
-                <div className="spline-viewer-wrap">
-                  <spline-viewer url="https://prod.spline.design/J7TB5fEbHjp-xrUn/scene.splinecode" />
-                </div>
-              </div>
-              <div className="why-japan-heading">
-                <h2 className="why-japan-title">
-                  <span className="why-japan-title-black">Nega</span>{' '}
-                  <span className="why-japan-title-red">Yaponiya?</span>
-                </h2>
-                <p className="why-japan-subtitle">
-                  Kelajagingiz uchun eng to'g'ri tanlov
+            <div className={`about-mirai-main ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`}>
+              <div className="about-mirai-hero-photo" role="img" aria-label="Mirai jamoasi rasmi" />
+              <div className="about-mirai-content">
+                <h2 className="about-mirai-title">Biz haqimizda</h2>
+                <p className="about-mirai-text">
+                  Mirai yoshlar uchun xalqaro ta'lim va rivojlanish imkoniyatlarini ochish maqsadida tashkil etilgan.
+                  Bizning asosiy maqsadimiz - talabalarni to'g'ri yo'naltirish, ularning maqsadiga aniq reja bilan
+                  olib borish va xorijda muvaffaqiyatli start berishdir.
+                </p>
+                <p className="about-mirai-text">
+                  Ushbu bo'limdagi matnni keyinchalik o'zingizga mos tarzda to'liq yangilashingiz mumkin.
                 </p>
               </div>
             </div>
-            
-            <div className="why-japan-grid">
-              <div className={`why-japan-card why-japan-card-image ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="card-image-wrapper">
-                  <div className="card-image-overlay"></div>
-                  <div className="card-content-overlay">
-                    <h3 className="card-title-white">Qonuniy Ishlash</h3>
-                    <p className="card-description-white">
-                      O'qish payti 28 soat/hafta ishlash huquqi
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              <div className={`why-japan-card ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
-                <div className="card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 3V21H21" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M7 16L12 11L16 15L21 10" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3 className="card-title">Top 3 Iqtisodiyot</h3>
-                <p className="card-description">
-                  Dunyoning eng rivojlangan davlatlaridan biri
-                </p>
-              </div>
-
-              <div className={`why-japan-card ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }}>
-                <div className="card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3 className="card-title">Xavfsiz & Toza</h3>
-                <p className="card-description">
-                  Jinoyatchilik deyarli yo'q, mukammal infratuzilma
-                </p>
-              </div>
-
-              <div className={`why-japan-card why-japan-card-image ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }}>
-                <div className="card-image-wrapper">
-                  <div className="card-image-overlay"></div>
-                  <div className="card-content-overlay">
-                    <h3 className="card-title-white">Boy Madaniyat</h3>
-                    <p className="card-description-white">
-                      Futuristik Tokio va qadimiy Kioto
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`why-japan-card why-japan-card-empty ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.5s' }}>
-              </div>
+            <div className="about-mirai-gallery">
+              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }} />
+              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }} />
+              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }} />
+              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }} />
             </div>
           </div>
         </section>
 
-        <section ref={whyStudytokyoRef} className="why-studytokyo">
+        <section id="asoschilar-va-ustozlar" ref={whyStudytokyoRef} className="why-studytokyo">
           <div className="why-studytokyo-container">
-            <h2 className="why-studytokyo-title">
-              <span className="why-studytokyo-title-black">Nega</span>{' '}
-              <span className="why-studytokyo-title-red">StudyTokyo?</span>
+            <h2 className={`founders-section-title ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`}>
+              Asoschilar va Ustozlar
             </h2>
-            
-            <div className="why-studytokyo-grid">
-              <div className={`studytokyo-card studytokyo-card-red ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="studytokyo-card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M14 2V8H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 13H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 17H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M10 9H9H8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3 className="studytokyo-card-title-white">Kafolatlangan Viza</h3>
-                <p className="studytokyo-card-description-white">
-                  Viza chiqmasa, pulingiz 100% qaytariladi. Tavakkal yo'q.
-                </p>
-                <div className="studytokyo-stat">
-                  <span className="studytokyo-stat-number">95%</span>
-                  <span className="studytokyo-stat-label">Muvaffaqiyat</span>
-                </div>
-              </div>
 
-              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
-                <div className="studytokyo-card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+            <div className="founders-list">
+              <article className={`founder-card founder-motion-left ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.1s' }}>
+                <div className="founder-avatar founder-avatar-one" role="img" aria-label="Asoschi 1 fotosurati" />
+                <div className="founder-content">
+                  <p className="founder-label">Asoschilar</p>
+                  <h3 className="founder-name">Azizbek Rahimov</h3>
+                  <p className="founder-role">Mirai asoschisi va strategik rahbar</p>
+                  <p className="founder-bio">
+                    Azizbek ta'lim loyihalari ustida ko'p yillik tajribaga ega bo'lgan mutaxassis sifatida Mirai'ni
+                    yoshlarning global salohiyatini ochish uchun yo'lga qo'ygan. Uning maqsadi - har bir talabaga
+                    aniq reja, ishonchli yo'nalish va kuchli natija beradigan tizim yaratish.
+                  </p>
                 </div>
-                <h3 className="studytokyo-card-title">10 Yillik Tajriba</h3>
-                <p className="studytokyo-card-description">
-                  Bozor liderlari
-                </p>
-              </div>
+              </article>
 
-              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }}>
-                <div className="studytokyo-card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M14 2V8H20" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 13H8" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 17H8" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+              <article className={`founder-card founder-card-second founder-motion-right ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.4s' }}>
+                <div className="founder-avatar founder-avatar-two" role="img" aria-label="Asoschi 2 fotosurati" />
+                <div className="founder-content">
+                  <p className="founder-label">Asoschilar</p>
+                  <h3 className="founder-name">Madina Qodirova</h3>
+                  <p className="founder-role">Akademik direktor va mentor</p>
+                  <p className="founder-bio">
+                    Madina xalqaro ta'lim dasturlarini boshqarish tajribasi bilan Mirai ichida akademik sifat va
+                    metodik yo'nalishni nazorat qiladi. U talabalarning moslashuvi, til rivoji va shaxsiy
+                    o'sishiga xizmat qiladigan amaliy o'quv konsepsiyalarini ishlab chiqadi.
+                  </p>
                 </div>
-                <h3 className="studytokyo-card-title">Professional Hujjat</h3>
-                <p className="studytokyo-card-description">
-                  Yapon mutaxassislari
-                </p>
-              </div>
+              </article>
+            </div>
 
-              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }}>
-                <div className="studytokyo-card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 9V5C18 4.46957 17.7893 3.96086 17.4142 3.58579C17.0391 3.21071 16.5304 3 16 3H8C7.46957 3 6.96086 3.21071 6.58579 3.58579C6.21071 3.96086 6 4.46957 6 5V9" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M18 9H6" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M18 9V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H8C7.46957 21 6.96086 20.7893 6.58579 20.4142C6.21071 20.0391 6 19.5304 6 19V9" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M12 15V12" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3 className="studytokyo-card-title">Doimiy Qo'llab-quvvatlash</h3>
-                <p className="studytokyo-card-description">
-                  Yaponiyada ishga joylashish va moslashishda yordam
-                </p>
-              </div>
+            <div ref={teachersSectionRef} className="teachers-section">
+              <h3 className={`teachers-title ${visibleSections.teachersSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.05s' }}>
+                O'qituvchilar
+              </h3>
+              <div className="teachers-grid">
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
+                  <div className="teacher-avatar teacher-avatar-1" role="img" aria-label="Ustoz 1 fotosurati" />
+                  <h4 className="teacher-name">Dilshod Karimov</h4>
+                  <p className="teacher-role">Yapon tili ustoz</p>
+                  <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                </article>
 
-              <div className={`studytokyo-card studytokyo-card-white ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.5s' }}>
-                <div className="studytokyo-card-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M9 11C10.6569 11 12 9.65685 12 8C12 6.34315 10.6569 5 9 5C7.34315 5 6 6.34315 6 8C6 9.65685 7.34315 11 9 11Z" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3 className="studytokyo-card-title">JSS Hamkorligi</h3>
-                <p className="studytokyo-card-description">
-                  Hujjatlar Yapon mutaxassislari tomonidan tekshiriladi
-                </p>
-              </div>
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
+                  <div className="teacher-avatar teacher-avatar-2" role="img" aria-label="Ustoz 2 fotosurati" />
+                  <h4 className="teacher-name">Nilufar Saidova</h4>
+                  <p className="teacher-role">Akademik maslahatchi</p>
+                  <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
+                </article>
 
-              <div className={`studytokyo-card studytokyo-card-blue ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.6s' }}>
-                <h3 className="studytokyo-card-title-white">6 ta Filial</h3>
-                <p className="studytokyo-card-description-white studytokyo-card-cities">
-                  Toshkent • Samarqand • Namangan • Farg'ona • Andijon • Qashqadaryo
-                </p>
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
+                  <div className="teacher-avatar teacher-avatar-3" role="img" aria-label="Ustoz 3 fotosurati" />
+                  <h4 className="teacher-name">Javohir Ergashev</h4>
+                  <p className="teacher-role">Karyera mentori</p>
+                  <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
+                </article>
+
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
+                  <div className="teacher-avatar teacher-avatar-4" role="img" aria-label="Ustoz 4 fotosurati" />
+                  <h4 className="teacher-name">Shahnoza Aliyeva</h4>
+                  <p className="teacher-role">Til amaliyoti murabbiyi</p>
+                  <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                </article>
+
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.6s' }}>
+                  <div className="teacher-avatar teacher-avatar-5" role="img" aria-label="Ustoz 5 fotosurati" />
+                  <h4 className="teacher-name">Bekzod Hamidov</h4>
+                  <p className="teacher-role">Student support koordinatori</p>
+                  <p className="teacher-text">Talabalar uchun moslashuv jarayonida tezkor va aniq ko'mak ko'rsatadi.</p>
+                </article>
               </div>
             </div>
           </div>
@@ -678,6 +574,96 @@ export default function Home() {
               <button className="cta-button">
                 Bepul konsultatsiya olish
               </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="konsalting-courses-section" ref={konsaltingCoursesSectionRef} className="konsalting-courses-section">
+          <div className="konsalting-courses-container">
+            <h2 className={`konsalting-courses-title ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`}>
+              Konsalting va kurslar
+            </h2>
+
+            <div className={`konsalting-block ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
+              <h3 className="konsalting-block-title">Konsalting</h3>
+              <p className="konsalting-block-placeholder">
+                Bu joy konsalting xizmati haqida batafsil ma'lumot uchun ajratilgan.
+              </p>
+            </div>
+
+            <div id="courses-block" className={`courses-block ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
+              <h3 className="courses-block-title">Yapon tili kurslari</h3>
+              <div className="courses-grid">
+                <article className="course-card">
+                  <h4 className="course-card-title">Ertalabgi guruh</h4>
+                  <div className="course-card-time">9:00 - 11:00</div>
+                  <ul className="course-card-list">
+                    <li>Haftada 3 kun dars</li>
+                    <li>Haftada 5 kun dars</li>
+                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                  </ul>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                </article>
+
+                <article className="course-card">
+                  <h4 className="course-card-title">Kunduzgi guruh</h4>
+                  <div className="course-card-time">14:00 - 16:00</div>
+                  <ul className="course-card-list">
+                    <li>Haftada 3 kun dars</li>
+                    <li>Haftada 5 kun dars</li>
+                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                  </ul>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                </article>
+
+                <article className="course-card">
+                  <h4 className="course-card-title">Kechgi guruh</h4>
+                  <div className="course-card-time">17:00 - 19:00</div>
+                  <ul className="course-card-list">
+                    <li>Haftada 3 kun dars</li>
+                    <li>Haftada 5 kun dars</li>
+                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                  </ul>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="natijalar-section" ref={natijalarSectionRef} className="natijalar-section">
+          <div className="natijalar-container">
+            <h2 className={`natijalar-title ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`}>
+              NATIJALAR
+            </h2>
+
+            <div className={`natijalar-marquee-block ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
+              <h3 className="natijalar-marquee-title">O'quvchilarimiz natijalari</h3>
+              <div className="natijalar-marquee natijalar-marquee-left" aria-label="O'quvchilarimiz sertifikatlari karuseli">
+                <div className="natijalar-marquee-track">
+                  {[...natijalarCertificateImages, ...natijalarCertificateImages].map((imageSrc, index) => (
+                    <div className="natijalar-marquee-item" key={`${imageSrc}-${index}`}>
+                      <img src={imageSrc} alt={`O'quvchi sertifikati ${index + 1}`} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={`natijalar-marquee-block ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
+              <h3 className="natijalar-marquee-title">O'quvchilarimiz vizalari</h3>
+              <div className="natijalar-marquee natijalar-marquee-right" aria-label="O'quvchilarimiz vizalari karuseli">
+                <div className="natijalar-marquee-track">
+                  {[...natijalarVisaImages, ...natijalarVisaImages].map((imageSrc, index) => (
+                    <div className="natijalar-marquee-item" key={`${imageSrc}-${index}`}>
+                      <img src={imageSrc} alt={`O'quvchi vizasi ${index + 1}`} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -740,47 +726,6 @@ export default function Home() {
                   <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-            </div>
-          </div>
-        </section>
-
-        <section ref={faqSectionRef} className="faq-section">
-          <div className="faq-container">
-            <h2 className={`faq-title ${visibleSections.faqSection ? 'card-fade-in' : 'card-fade-out'}`}>
-              Ko'p So'raladigan Savollar
-            </h2>
-            
-            <div className="faq-list">
-              {faqData.map((faq, index) => (
-                <div 
-                  key={index} 
-                  className={`faq-item ${openFaqIndex === index ? 'faq-item-open' : ''} ${visibleSections.faqSection ? 'card-fade-in' : 'card-fade-out'}`}
-                  style={{ transitionDelay: `${(index + 1) * 0.1}s` }}
-                >
-                  <button 
-                    className="faq-question"
-                    onClick={() => toggleFaq(index)}
-                    aria-expanded={openFaqIndex === index}
-                  >
-                    <span className="faq-question-text">{faq.question}</span>
-                    <span className="faq-icon">
-                      {openFaqIndex === index ? (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5 12H19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      ) : (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 5V19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M5 12H19" stroke="#333333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      )}
-                    </span>
-                  </button>
-                  <div className={`faq-answer ${openFaqIndex === index ? 'faq-answer-open' : ''}`}>
-                    <p className="faq-answer-text">{faq.answer}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>

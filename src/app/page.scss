@@ -8,17 +8,6 @@
   transition: $properties;
 }
 
-// Глобальное правило для скрытия "build with Spline"
-spline-viewer {
-  a[href*="spline"],
-  a[href*="splinetool"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
-
 .page {
   width: 100%;
   min-height: 100vh;
@@ -51,774 +40,619 @@ spline-viewer {
   }
 }
 
-// Why Japan Section
-.why-japan {
+// Biz haqimizda Section
+.about {
   width: 100%;
-  padding: 80px 80px;
+  padding: 80px 8px;
   background-color: #ffffff;
+  background-image: url('/images/backgrounds/abot.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   @include flex-center;
 }
 
 .why-japan-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1700px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 24px;
+}
+
+.about-mirai-main {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.95fr);
   gap: 32px;
 }
 
-.why-japan-intro {
+.about-mirai-hero-photo {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 48px;
-  margin-bottom: 16px;
+  min-height: 520px;
+  border-radius: 20px;
+  background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.spline-section {
-  flex: 0 0 auto;
-  width: 50%;
-  min-width: 320px;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: white;
-
-  .spline-viewer-wrap {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  spline-viewer {
-    width: 100%;
-    height: 400px;
-    display: block;
-
-    // Скрываем элемент "build with Spline"
-    a[href*="spline"],
-    a[href*="splinetool"],
-    ::part(branding) {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-  }
-}
-
-.why-japan-heading {
-  flex: 1;
+.about-mirai-content {
+  width: 100%;
+  min-height: 520px;
+  border-radius: 20px;
+  padding: 40px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 16px;
-  min-width: 0;
 }
 
-.why-japan-title {
+.about-mirai-title {
+  margin: 0;
   font-size: 48px;
-  font-weight: 700;
   line-height: 1.2;
-  text-align: left;
-  margin: 0;
-}
-
-.why-japan-title-black {
+  font-weight: 700;
   color: #171717;
 }
 
-.why-japan-title-red {
-  color: #dc2626;
-}
-
-.why-japan-subtitle {
+.about-mirai-text {
+  margin: 0;
   font-size: 18px;
-  color: #171717;
-  text-align: left;
-  margin: 0;
+  line-height: 1.7;
   font-weight: 400;
+  color: #334155;
 }
 
-.why-japan-grid {
+.about-mirai-gallery {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.why-japan-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  min-height: 280px;
+.about-mirai-gallery-item {
+  width: 100%;
+  min-height: 220px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 28px rgba(2, 6, 23, 0.16);
   }
 }
 
-.why-japan-card-image {
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 280px;
+.about-mirai-gallery-item:nth-child(1) {
+  background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80');
 }
 
-.why-japan-grid .why-japan-card:nth-child(1).why-japan-card-image {
-  background-image: url('/images/backgrounds/school_background.jpg');
+.about-mirai-gallery-item:nth-child(2) {
+  background-image: url('https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1000&q=80');
 }
 
-.why-japan-grid .why-japan-card:nth-child(4).why-japan-card-image {
-  background-image: url('/images/backgrounds/school_background2.jpg');
+.about-mirai-gallery-item:nth-child(3) {
+  background-image: url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=80');
 }
 
-.card-image-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  min-height: 280px;
-  display: flex;
-  align-items: flex-end;
+.about-mirai-gallery-item:nth-child(4) {
+  background-image: url('https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=1000&q=80');
 }
 
-.card-image-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
-}
-
-.card-content-overlay {
-  position: relative;
-  z-index: 2;
-  padding: 24px;
-  width: 100%;
-}
-
-.card-title-white {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
-}
-
-.card-description-white {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.card-icon {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.card-title {
-  color: #171717;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-}
-
-.card-description {
-  color: #171717;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  line-height: 1.5;
-  flex: 1;
-}
-
-.why-japan-card-empty {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-// Grid positioning for 5 cards layout
-.why-japan-grid {
-  .why-japan-card:nth-child(1) {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  
-  .why-japan-card:nth-child(2) {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  
-  .why-japan-card:nth-child(3) {
-    grid-column: 3;
-    grid-row: 1;
-  }
-  
-  .why-japan-card:nth-child(4) {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  
-  .why-japan-card:nth-child(5) {
-    grid-column: 3;
-    grid-row: 2;
-  }
-}
-
-// Responsive styles for Why Japan section
 @media (max-width: 1366px) {
-  .why-japan {
-    padding: 60px 40px;
+  .about {
+    padding: 60px 8px;
   }
-  
-  .why-japan-title {
+
+  .about-mirai-title {
     font-size: 42px;
-  }
-  
-  .why-japan-intro {
-    gap: 32px;
-  }
-  
-  .spline-section spline-viewer {
-    height: 360px;
   }
 }
 
 @media (max-width: 1024px) {
-  .why-japan {
-    padding: 60px 40px;
+  .about {
+    padding: 56px 6px;
   }
-  
-  .why-japan-intro {
-    flex-direction: column;
-    align-items: stretch;
+
+  .about-mirai-main {
+    grid-template-columns: 1fr;
     gap: 24px;
   }
-  
-  .spline-section {
-    width: 100%;
-    min-width: 0;
-  }
-  
-  .why-japan-heading {
-    text-align: center;
-  }
-  
-  .why-japan-title {
+
+  .about-mirai-title {
     font-size: 36px;
-    text-align: center;
   }
-  
-  .why-japan-subtitle {
+
+  .about-mirai-text {
     font-size: 16px;
-    text-align: center;
   }
-  
-  .why-japan-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+
+  .about-mirai-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  
-  .why-japan-grid {
-    .why-japan-card:nth-child(1) {
-      grid-column: 1;
-      grid-row: 1;
-    }
-    
-    .why-japan-card:nth-child(2) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    
-    .why-japan-card:nth-child(3) {
-      grid-column: 1;
-      grid-row: 2;
-    }
-    
-    .why-japan-card:nth-child(4) {
-      grid-column: 2;
-      grid-row: 2;
-    }
-    
-    .why-japan-card:nth-child(5) {
-      grid-column: 1;
-      grid-row: 3;
-    }
-  }
-  
-  .why-japan-card {
-    min-height: 240px;
-  }
-  
-  .card-image-wrapper {
-    min-height: 240px;
+
+  .about-mirai-hero-photo,
+  .about-mirai-content {
+    min-height: 360px;
   }
 }
 
 @media (max-width: 768px) {
-  .why-japan {
-    padding: 40px 24px;
+  .about {
+    padding: 40px 4px;
   }
-  
-  .why-japan-intro {
-    gap: 20px;
-  }
-  
-  .spline-section {
-    padding-top: 28px;
 
-    .spline-viewer-wrap {
-      overflow: hidden;
-      border-radius: 12px;
-      min-height: 400px;
-      backface-visibility: hidden;
-      transform: translateZ(0);
-    }
-
-    spline-viewer {
-      height: 400px;
-      min-height: 400px;
-      object-fit: contain;
-    }
+  .about-mirai-content {
+    padding: 28px;
   }
-  
-  .why-japan-title {
+
+  .about-mirai-title {
     font-size: 32px;
   }
-  
-  .why-japan-subtitle {
-    font-size: 15px;
-  }
-  
-  .why-japan-grid {
+
+  .about-mirai-gallery {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
-  
-  .why-japan-grid {
-    .why-japan-card:nth-child(n) {
-      grid-column: 1;
-    }
-    
-    .why-japan-card:nth-child(1) {
-      grid-row: 1;
-    }
-    
-    .why-japan-card:nth-child(2) {
-      grid-row: 2;
-    }
-    
-    .why-japan-card:nth-child(3) {
-      grid-row: 3;
-    }
-    
-    .why-japan-card:nth-child(4) {
-      grid-row: 4;
-    }
-    
-    .why-japan-card:nth-child(5) {
-      grid-row: 5;
-    }
-  }
-  
-  .why-japan-card {
-    min-height: 220px;
-  }
-  
-  .card-image-wrapper {
-    min-height: 220px;
-  }
-  
-  .card-title {
-    font-size: 20px;
-  }
-  
-  .card-title-white {
-    font-size: 20px;
-  }
-  
-  .card-description,
-  .card-description-white {
-    font-size: 14px;
+
+  .about-mirai-gallery-item {
+    min-height: 210px;
   }
 }
 
 @media (max-width: 480px) {
-  .spline-section {
-    padding-top: 24px;
+  .about-mirai-hero-photo,
+  .about-mirai-content {
+    min-height: 300px;
+  }
 
-    .spline-viewer-wrap {
-      min-height: 360px;
-    }
+  .about-mirai-content {
+    padding: 22px;
+  }
 
-    spline-viewer {
-      height: 360px;
-      min-height: 360px;
-    }
+  .about-mirai-title {
+    font-size: 28px;
+  }
+
+  .about-mirai-text {
+    font-size: 15px;
   }
 }
 
 // Why StudyTokyo Section
 .why-studytokyo {
-  width: 100%;
-  padding: 80px 80px;
-  background-color: #f5f7fa;
-  @include flex-center;
-}
-
-.why-studytokyo-container {
-  width: 100%;
-  max-width: 1400px;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-}
-
-.why-studytokyo-title {
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin: 0;
-  text-align: left;
-}
-
-.why-studytokyo-title-black {
-  color: #171717;
-}
-
-.why-studytokyo-title-red {
-  color: #dc2626;
-}
-
-.why-studytokyo-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 24px;
-}
-
-.studytokyo-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  min-height: 280px;
   position: relative;
-  @include transition(transform 0.3s ease, box-shadow 0.3s ease);
+  width: 100%;
+  padding: 80px 8px;
+  background-color: #f8fafc;
+  overflow: hidden;
+  isolation: isolate;
+  @include flex-center;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/backgrounds/abot.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scaleX(-1) scale(1.08);
+    transform-origin: center;
+    opacity: 0.45;
+    z-index: 0;
+    pointer-events: none;
   }
 }
 
-.studytokyo-card-red {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  color: #ffffff;
-}
-
-.studytokyo-card-white {
-  background-color: #ffffff;
-  color: #171717;
-}
-
-.studytokyo-card-blue {
-  background-color: #1e293b;
-  color: #ffffff;
-}
-
-.studytokyo-card-icon {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.studytokyo-card-title {
-  color: #171717;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-}
-
-.studytokyo-card-title-white {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-}
-
-.studytokyo-card-description {
-  color: #171717;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  line-height: 1.5;
-  flex: 1;
-}
-
-.studytokyo-card-description-white {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 400;
-  margin: 0;
-  line-height: 1.5;
-  flex: 1;
-}
-
-.studytokyo-stat {
-  margin-top: 24px;
+.why-studytokyo-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1700px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 24px;
 }
 
-.studytokyo-stat-number {
-  color: #ffffff;
+.founders-section-title {
   font-size: 48px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.15;
+  margin: 0;
+  text-align: center;
+  color: #dc2626;
 }
 
-.studytokyo-stat-label {
-  color: #ffffff;
+.founders-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.founder-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #dbe3ee;
+  border-radius: 22px;
+  padding-block: clamp(22px, 2.6vw, 32px);
+  padding-inline: clamp(22px, 3vw, 44px);
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+  gap: clamp(20px, 2.8vw, 48px);
+  align-items: center;
+  @include transition(transform 0.3s ease, box-shadow 0.3s ease);
+}
+
+.founder-card-reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+}
+
+.founder-card-second {
+  .founder-content {
+    padding-left: 20px;
+  }
+}
+
+.founder-motion-left,
+.founder-motion-right,
+.teacher-motion {
+  will-change: transform, opacity;
+  @include transition(opacity 2.15s cubic-bezier(0.16, 1, 0.3, 1), transform 2.15s cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.founder-motion-left.is-hidden {
+  opacity: 0;
+  transform: translateX(-110px);
+}
+
+.founder-motion-right.is-hidden {
+  opacity: 0;
+  transform: translateX(110px);
+}
+
+.teacher-motion.is-hidden {
+  opacity: 0;
+  transform: translateY(56px) scale(0.97);
+}
+
+.founder-motion-left.is-visible,
+.founder-motion-right.is-visible,
+.teacher-motion.is-visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+.founder-avatar {
+  width: clamp(220px, 28vw, 340px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  justify-self: center;
+  background-size: cover;
+  background-position: center 20%;
+  background-repeat: no-repeat;
+  border: 4px solid #ffffff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+}
+
+.founder-avatar-one {
+  background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80');
+}
+
+.founder-avatar-two {
+  background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80');
+}
+
+.founder-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 72ch;
+}
+
+.founder-content-end {
+  margin-left: auto;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.founder-label {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #dc2626;
+}
+
+.founder-name {
+  margin: 0;
+  font-size: clamp(30px, 2.6vw, 38px);
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.founder-role {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.founder-bio {
+  margin: 0;
   font-size: 16px;
+  line-height: 1.72;
   font-weight: 400;
+  color: #334155;
 }
 
-.studytokyo-card-cities {
-  font-size: 16px;
-  line-height: 1.6;
+.teachers-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.teachers-title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.teachers-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.teacher-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  @include transition(transform 0.3s ease, box-shadow 0.3s ease);
+}
+
+.teacher-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center 22%;
+  background-repeat: no-repeat;
+  border: 3px solid #ffffff;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+}
+
+.teacher-avatar-1 {
+  background-image: url('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80');
+}
+
+.teacher-avatar-2 {
+  background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80');
+}
+
+.teacher-avatar-3 {
+  background-image: url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80');
+}
+
+.teacher-avatar-4 {
+  background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80');
+}
+
+.teacher-avatar-5 {
+  background-image: url('https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=crop&w=900&q=80');
+}
+
+.teacher-name {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #111827;
+}
+
+.teacher-role {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #dc2626;
+}
+
+.teacher-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #4b5563;
 }
 
 // Responsive styles for Why StudyTokyo section
 @media (max-width: 1366px) {
   .why-studytokyo {
-    padding: 60px 40px;
+    padding: 60px 8px;
   }
-  
-  .why-studytokyo-title {
+
+  .founders-section-title {
     font-size: 42px;
+  }
+
+  .founder-name {
+    font-size: 30px;
+  }
+
+  .teachers-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 1024px) {
   .why-studytokyo {
-    padding: 60px 40px;
+    padding: 56px 6px;
   }
-  
-  .why-studytokyo-title {
+
+  .founders-section-title {
     font-size: 36px;
   }
-  
-  .why-studytokyo-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+
+  .founder-card,
+  .founder-card-reverse {
+    grid-template-columns: 1fr;
   }
-  
-  .why-studytokyo-grid {
-    .studytokyo-card:nth-child(1) {
-      grid-column: 1;
-      grid-row: 1;
-    }
-    
-    .studytokyo-card:nth-child(2) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    
-    .studytokyo-card:nth-child(3) {
-      grid-column: 1;
-      grid-row: 2;
-    }
-    
-    .studytokyo-card:nth-child(4) {
-      grid-column: 2;
-      grid-row: 2;
-    }
-    
-    .studytokyo-card:nth-child(5) {
-      grid-column: 1;
-      grid-row: 3;
-    }
-    
-    .studytokyo-card:nth-child(6) {
-      grid-column: 2;
-      grid-row: 3;
-    }
+
+  .founder-card-second .founder-content {
+    padding-left: 14px;
   }
-  
-  .studytokyo-card {
-    min-height: 240px;
+
+  .founder-card-reverse .founder-avatar {
+    order: -1;
   }
-  
-  .studytokyo-stat-number {
-    font-size: 40px;
+
+  .founder-content-end {
+    margin-left: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .founder-avatar {
+    width: clamp(220px, 42vw, 320px);
+  }
+
+  .teachers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   .why-studytokyo {
-    padding: 32px 20px;
+    padding: 36px 4px;
   }
-  
+
   .why-studytokyo-container {
     gap: 24px;
   }
-  
-  .why-studytokyo-title {
-    font-size: 28px;
-    text-align: center;
-  }
-  
-  .why-studytokyo-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  
-  .why-studytokyo-grid {
-    .studytokyo-card:nth-child(n) {
-      grid-column: 1;
-    }
-    
-    .studytokyo-card:nth-child(1) {
-      grid-row: 1;
-    }
-    
-    .studytokyo-card:nth-child(2) {
-      grid-row: 2;
-    }
-    
-    .studytokyo-card:nth-child(3) {
-      grid-row: 3;
-    }
-    
-    .studytokyo-card:nth-child(4) {
-      grid-row: 4;
-    }
-    
-    .studytokyo-card:nth-child(5) {
-      grid-row: 5;
-    }
-    
-    .studytokyo-card:nth-child(6) {
-      grid-row: 6;
-    }
-  }
-  
-  .studytokyo-card {
-    min-height: 0;
-    padding: 18px 16px;
-  }
-  
-  .studytokyo-card-icon {
-    margin-bottom: 12px;
 
-    svg {
-      width: 40px;
-      height: 40px;
-    }
+  .founders-section-title {
+    font-size: 28px;
   }
-  
-  .studytokyo-card-title,
-  .studytokyo-card-title-white {
-    font-size: 17px;
-    margin-bottom: 8px;
+
+  .founder-card {
+    padding-block: 20px;
+    padding-inline: 20px;
   }
-  
-  .studytokyo-card-description,
-  .studytokyo-card-description-white {
-    font-size: 13px;
-    line-height: 1.45;
+
+  .founder-card-second .founder-content {
+    padding-left: 0;
   }
-  
-  .studytokyo-stat {
-    margin-top: 14px;
-    gap: 2px;
+
+  .founder-avatar {
+    width: min(72vw, 280px);
   }
-  
-  .studytokyo-stat-number {
-    font-size: 32px;
+
+  .founder-name {
+    font-size: 26px;
   }
-  
-  .studytokyo-stat-label {
-    font-size: 13px;
+
+  .founder-role {
+    font-size: 16px;
   }
-  
-  .studytokyo-card-cities {
-    font-size: 13px;
-    line-height: 1.5;
+
+  .founder-bio {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .teachers-title {
+    font-size: 26px;
+  }
+
+  .teachers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-avatar {
+    width: 92px;
+    height: 92px;
   }
 }
 
 @media (max-width: 480px) {
   .why-studytokyo {
-    padding: 24px 16px;
+    padding: 30px 4px;
   }
-  
+
   .why-studytokyo-container {
-    gap: 20px;
+    gap: 18px;
   }
-  
-  .why-studytokyo-title {
+
+  .founders-section-title {
     font-size: 24px;
   }
-  
-  .why-studytokyo-grid {
-    gap: 12px;
-  }
-  
-  .studytokyo-card {
-    padding: 14px 14px;
-  }
-  
-  .studytokyo-card-icon {
-    margin-bottom: 10px;
 
-    svg {
-      width: 36px;
-      height: 36px;
-    }
+  .founder-card {
+    padding-block: 16px;
+    padding-inline: 16px;
+    gap: 14px;
   }
-  
-  .studytokyo-card-title,
-  .studytokyo-card-title-white {
+
+  .founder-card-second .founder-content {
+    padding-left: 0;
+  }
+
+  .founder-avatar {
+    width: min(76vw, 250px);
+  }
+
+  .founder-name {
+    font-size: 22px;
+  }
+
+  .founder-role {
+    font-size: 14px;
+  }
+
+  .founder-bio {
+    font-size: 13px;
+  }
+
+  .teachers-title {
+    font-size: 22px;
+  }
+
+  .teacher-card {
+    padding: 14px;
+  }
+
+  .teacher-avatar {
+    width: 84px;
+    height: 84px;
+  }
+
+  .teacher-name {
     font-size: 16px;
-    margin-bottom: 6px;
   }
-  
-  .studytokyo-card-description,
-  .studytokyo-card-description-white {
-    font-size: 12px;
+
+  .teacher-role {
+    font-size: 13px;
   }
-  
-  .studytokyo-stat-number {
-    font-size: 28px;
-  }
-  
-  .studytokyo-stat-label {
-    font-size: 12px;
-  }
-  
-  .studytokyo-card-cities {
+
+  .teacher-text {
     font-size: 12px;
   }
 }
@@ -971,6 +805,553 @@ spline-viewer {
   .cta-button {
     padding: 14px 32px;
     font-size: 15px;
+  }
+}
+
+// Konsalting va kurslar Section
+.konsalting-courses-section {
+  width: 100%;
+  padding: 80px 80px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(220, 38, 38, 0.08) 0%, transparent 16%),
+    radial-gradient(circle at 88% 10%, rgba(190, 24, 93, 0.08) 0%, transparent 18%),
+    linear-gradient(180deg, #fff7f8 0%, #ffffff 100%);
+  @include flex-center;
+}
+
+.konsalting-courses-container {
+  width: 100%;
+  max-width: 1700px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.konsalting-courses-title {
+  margin: 0;
+  color: #171717;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.konsalting-block {
+  border-radius: 20px;
+  border: 2px dashed #fca5a5;
+  background-color: #ffffff;
+  padding: 34px 36px;
+}
+
+.konsalting-block-title {
+  margin: 0 0 12px 0;
+  color: #171717;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.konsalting-block-placeholder {
+  margin: 0;
+  color: #52525b;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.courses-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 2px solid #b64536;
+  background:
+    radial-gradient(circle at 10% 22%, rgba(255, 209, 220, 0.3) 0%, rgba(255, 209, 220, 0) 28%),
+    radial-gradient(circle at 88% 12%, rgba(255, 214, 214, 0.34) 0%, rgba(255, 214, 214, 0) 28%),
+    linear-gradient(180deg, #fff7f2 0%, #fffdf9 100%);
+  box-shadow: 0 14px 30px rgba(143, 49, 39, 0.12);
+  padding: 70px 28px 34px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    top: 30px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(118, 36, 26, 0.8) 0%, rgba(163, 52, 37, 0.96) 50%, rgba(118, 36, 26, 0.8) 100%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -30px;
+    height: 110px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/2/28/Seigaiha.svg') repeat-x center bottom;
+    background-size: 180px 180px;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+}
+
+.courses-block-title {
+  margin: 0 0 30px 0;
+  color: #602019;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.course-card {
+  position: relative;
+  overflow: visible;
+  width: 74%;
+  max-width: 500px;
+  margin: 0 auto;
+  min-height: 540px;
+  border: 3px solid #a8362a;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 231, 228, 0.4) 0%, rgba(255, 231, 228, 0) 36%),
+    linear-gradient(180deg, #fffdfa 0%, #fff6ed 100%);
+  padding: 34px 20px 22px;
+  box-shadow: 0 8px 20px rgba(126, 43, 32, 0.16), inset 0 0 0 2px rgba(255, 255, 255, 0.74);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  @include transition(transform 0.25s ease, box-shadow 0.25s ease);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(126, 43, 32, 0.24), inset 0 0 0 2px rgba(255, 255, 255, 0.78);
+  }
+}
+
+.course-card-title {
+  margin: 0;
+  color: #2d1a18;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.course-card-time {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(107, 28, 28, 0.4);
+  background: linear-gradient(180deg, #d63232 0%, #a81d1d 100%);
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(60, 12, 12, 0.4);
+  box-shadow: 0 6px 10px rgba(120, 30, 30, 0.24);
+}
+
+.course-card-list {
+  list-style: disc;
+  margin: 0;
+  margin-top: 8px;
+  padding-left: 22px;
+  color: #171717;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.45;
+
+  li + li {
+    margin-top: 4px;
+  }
+}
+
+.course-card-list + .course-card-price {
+  margin-top: 6px;
+}
+
+.course-card-price {
+  margin: 0;
+  color: #2b2625;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  background: rgba(239, 223, 204, 0.7);
+  border-radius: 12px;
+  padding: 9px 10px;
+}
+
+.course-card-price:last-child {
+  margin-top: auto;
+}
+
+@media (max-width: 1366px) {
+  .konsalting-courses-section {
+    padding: 60px 40px;
+  }
+
+  .konsalting-courses-title {
+    font-size: 42px;
+  }
+
+  .konsalting-block-title,
+  .courses-block-title {
+    font-size: 34px;
+  }
+
+  .course-card-title {
+    font-size: 30px;
+  }
+
+  .course-card-time {
+    font-size: 26px;
+  }
+
+  .course-card-list {
+    font-size: 19px;
+  }
+
+  .course-card-price {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .konsalting-courses-section {
+    padding: 60px 40px;
+  }
+
+  .konsalting-courses-title {
+    font-size: 36px;
+  }
+
+  .courses-block {
+    padding: 64px 24px 28px;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .konsalting-block-title,
+  .courses-block-title {
+    font-size: 30px;
+  }
+
+  .course-card {
+    width: 100%;
+    max-width: none;
+    min-height: 500px;
+    padding: 30px 18px 20px;
+  }
+
+  .course-card-title {
+    font-size: 26px;
+  }
+
+  .course-card-time {
+    font-size: 24px;
+  }
+
+  .course-card-list {
+    font-size: 17px;
+  }
+
+  .course-card-price {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .konsalting-courses-section {
+    padding: 40px 24px;
+  }
+
+  .konsalting-courses-container {
+    gap: 22px;
+  }
+
+  .konsalting-courses-title {
+    font-size: 32px;
+  }
+
+  .konsalting-block {
+    padding: 24px;
+  }
+
+  .konsalting-block-title,
+  .courses-block-title {
+    font-size: 26px;
+  }
+
+  .konsalting-block-placeholder {
+    font-size: 16px;
+  }
+
+  .courses-block {
+    padding: 20px 14px;
+  }
+
+  .course-card {
+    min-height: 0;
+    border-radius: 16px;
+    padding: 24px 14px 16px;
+  }
+
+  .course-card-title {
+    font-size: 22px;
+  }
+
+  .course-card-time {
+    font-size: 20px;
+  }
+
+  .course-card-list {
+    font-size: 15px;
+    padding-left: 18px;
+  }
+
+  .course-card-price {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .konsalting-courses-section {
+    padding: 32px 16px;
+  }
+
+  .konsalting-courses-title {
+    font-size: 28px;
+  }
+
+  .konsalting-block-title,
+  .courses-block-title {
+    font-size: 22px;
+  }
+
+  .course-card-title {
+    font-size: 19px;
+  }
+
+  .course-card-time {
+    font-size: 17px;
+  }
+
+  .course-card-list {
+    font-size: 14px;
+    line-height: 1.45;
+    padding-left: 16px;
+  }
+
+  .course-card-price {
+    font-size: 14px;
+  }
+}
+
+// Natijalar Section
+.natijalar-section {
+  width: 100%;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #f4f0f4;
+  background-image: url('/images/backgrounds/3.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.natijalar-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.62);
+}
+
+.natijalar-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+  @include flex-center;
+}
+
+.natijalar-title {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #171717;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.natijalar-marquee-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.natijalar-marquee-title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+}
+
+.natijalar-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.natijalar-marquee-track {
+  width: max-content;
+  display: flex;
+  gap: 24px;
+  animation: natijalar-scroll-right 40s linear infinite;
+}
+
+.natijalar-marquee-right .natijalar-marquee-track {
+  animation-name: natijalar-scroll-left;
+}
+
+.natijalar-marquee:hover .natijalar-marquee-track {
+  animation-play-state: paused;
+}
+
+.natijalar-marquee-item {
+  flex: 0 0 auto;
+  width: min(86vw, 1000px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 34px rgba(15, 23, 42, 0.14);
+  border: 1px solid rgba(71, 85, 105, 0.22);
+  background-color: rgba(255, 255, 255, 0.65);
+  @include transition(transform 0.3s ease, box-shadow 0.3s ease);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+@keyframes natijalar-scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+@keyframes natijalar-scroll-right {
+  from {
+    transform: translateX(calc(-50% - 12px));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1366px) {
+  .natijalar-section {
+    padding: 64px 0;
+  }
+
+  .natijalar-title {
+    font-size: 44px;
+  }
+
+  .natijalar-marquee-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .natijalar-section {
+    padding: 56px 0;
+  }
+
+  .natijalar-title {
+    font-size: 36px;
+  }
+
+  .natijalar-marquee-title {
+    font-size: 30px;
+  }
+
+  .natijalar-marquee-track {
+    gap: 18px;
+    animation-duration: 34s;
+  }
+
+  .natijalar-marquee-item {
+    width: min(92vw, 900px);
+  }
+}
+
+@media (max-width: 768px) {
+  .natijalar-section {
+    padding: 44px 0;
+  }
+
+  .natijalar-container {
+    gap: 24px;
+  }
+
+  .natijalar-title {
+    font-size: 32px;
+  }
+
+  .natijalar-marquee-title {
+    font-size: 24px;
+    padding: 0 16px;
+  }
+
+  .natijalar-marquee-track {
+    gap: 14px;
+    animation-duration: 28s;
+  }
+}
+
+@media (max-width: 480px) {
+  .natijalar-title {
+    font-size: 28px;
+  }
+
+  .natijalar-marquee-title {
+    font-size: 20px;
+  }
+
+  .natijalar-marquee-item {
+    width: calc(100vw - 24px);
   }
 }
 
@@ -1178,231 +1559,6 @@ spline-viewer {
 
   .videos-track {
     gap: 12px;
-  }
-}
-
-// FAQ Section
-.faq-section {
-  width: 100%;
-  padding: 80px 80px;
-  background:white;
-  @include flex-center;
-}
-
-.faq-container {
-  width: 100%;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
-}
-
-.faq-title {
-  color: #212529;
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  margin: 0;
-}
-
-.faq-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.faq-item {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  @include transition(box-shadow 0.3s ease, border-color 0.3s ease);
-
-  &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    border-color: #d0d0d0;
-  }
-
-  &.faq-item-open {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: #dc2626;
-  }
-}
-
-.faq-question {
-  width: 100%;
-  padding: 24px 32px;
-  background: transparent;
-  border: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  text-align: left;
-  @include transition(background-color 0.2s ease);
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-}
-
-.faq-question-text {
-  color: #333333;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.5;
-  flex: 1;
-  padding-right: 16px;
-}
-
-.faq-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  @include transition(transform 0.3s ease);
-
-  svg {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.faq-item-open .faq-icon {
-  transform: rotate(180deg);
-}
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  @include transition(max-height 0.4s ease, padding 0.4s ease);
-}
-
-.faq-answer-open {
-  max-height: 500px;
-  padding: 0 32px 24px 32px;
-}
-
-.faq-answer-text {
-  color: #555555;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.6;
-  margin: 0;
-  padding-top: 8px;
-}
-
-// Responsive styles for FAQ section
-@media (max-width: 1366px) {
-  .faq-section {
-    padding: 60px 40px;
-  }
-  
-  .faq-title {
-    font-size: 36px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .faq-section {
-    padding: 60px 40px;
-  }
-  
-  .faq-container {
-    gap: 40px;
-  }
-  
-  .faq-title {
-    font-size: 32px;
-  }
-  
-  .faq-question {
-    padding: 20px 28px;
-  }
-  
-  .faq-answer-open {
-    padding: 0 28px 20px 28px;
-  }
-}
-
-@media (max-width: 768px) {
-  .faq-section {
-    padding: 40px 24px;
-  }
-  
-  .faq-container {
-    gap: 32px;
-  }
-  
-  .faq-title {
-    font-size: 28px;
-  }
-  
-  .faq-list {
-    gap: 12px;
-  }
-  
-  .faq-question {
-    padding: 18px 24px;
-  }
-  
-  .faq-question-text {
-    font-size: 16px;
-  }
-  
-  .faq-answer-open {
-    padding: 0 24px 18px 24px;
-  }
-  
-  .faq-answer-text {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .faq-section {
-    padding: 32px 20px;
-  }
-  
-  .faq-title {
-    font-size: 24px;
-  }
-  
-  .faq-question {
-    padding: 16px 20px;
-  }
-  
-  .faq-question-text {
-    font-size: 15px;
-    padding-right: 12px;
-  }
-  
-  .faq-icon {
-    width: 20px;
-    height: 20px;
-    
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-  
-  .faq-answer-open {
-    padding: 0 20px 16px 20px;
-  }
-  
-  .faq-answer-text {
-    font-size: 14px;
   }
 }
 

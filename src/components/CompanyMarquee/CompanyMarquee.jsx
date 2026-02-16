@@ -66,6 +66,7 @@ const CompanyMarquee = memo(() => {
   const animationStartedRef = useRef(false);
   const isVisibleRef = useRef(false);
   const startTimeoutRef = useRef(null);
+  const fallbackStartRef = useRef(null);
 
   isVisibleRef.current = isVisible;
 
@@ -101,14 +102,24 @@ const CompanyMarquee = memo(() => {
           observer.disconnect();
         }, 300);
       },
-      { threshold: 0.2, rootMargin: '50px 0px' }
+      { threshold: 0.01, rootMargin: '220px 0px' }
     );
 
     observer.observe(el);
     observerRef.current = observer;
 
+    // Fallback: если observer по какой-то причине не сработал, запускаем анимацию принудительно
+    fallbackStartRef.current = setTimeout(() => {
+      if (!animationStartedRef.current) {
+        animationStartedRef.current = true;
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, 1200);
+
     return () => {
       if (startTimeoutRef.current) clearTimeout(startTimeoutRef.current);
+      if (fallbackStartRef.current) clearTimeout(fallbackStartRef.current);
       observer.disconnect();
       observerRef.current = null;
     };
