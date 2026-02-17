@@ -18,6 +18,31 @@ const natijalarVisaImages = [
   '/images/results/oquvchilar-vizalari.png'
 ];
 
+const ABOUT_GALLERY_IMAGES = [
+  '/images/about_photos/1.jpg',
+  '/images/about_photos/3.jpg',
+  '/images/about_photos/4.jpg',
+  '/images/about_photos/5.jpg',
+  '/images/about_photos/6.jpg',
+  '/images/about_photos/7.jpg',
+];
+
+const FOUNDERS_IMAGES = [
+  '/images/founders/ASOSCHILAR _OTABEK.jpg',
+  '/images/founders/ASOSCHILAR_TIMUR.JPG',
+];
+
+const TEACHERS_IMAGES = [
+  '/images/teachers/FERUZA.jpg',
+  "/images/teachers/O'G'ILOY.JPG",
+  '/images/teachers/OTABEK.jpg',
+  '/images/teachers/SHOXRUH.jpg',
+];
+
+function getImageUrl(path) {
+  return path.split('/').map(part => encodeURIComponent(part)).join('/');
+}
+
 function getYoutubeVideoId(url) {
   if (!url || typeof url !== 'string') return null;
   const match = url.match(/(?:v=|\/shorts\/|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/);
@@ -51,10 +76,21 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setLightboxImage(null);
+    };
+    if (lightboxImage) {
+      document.addEventListener('keydown', handleEscape);
+    }
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [lightboxImage]);
 
   // Блокировка скролла при открытом модальном окне
   useEffect(() => {
-    if (showThankYouModal) {
+    if (showThankYouModal || lightboxImage) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -62,7 +98,7 @@ export default function Home() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [showThankYouModal]);
+  }, [showThankYouModal, lightboxImage]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -474,10 +510,24 @@ export default function Home() {
             </div>
 
             <div className="about-mirai-gallery">
-              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }} />
-              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }} />
-              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.3s' }} />
-              <div className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.4s' }} />
+              {ABOUT_GALLERY_IMAGES.map((src, index) => (
+                <button
+                  key={src}
+                  type="button"
+                  className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`}
+                  style={{ backgroundImage: `url(${src})`, transitionDelay: `${0.1 + index * 0.1}s` }}
+                  onClick={() => setLightboxImage(src)}
+                  aria-label="Rasmni kattalashtirish"
+                >
+                  <span className="about-mirai-gallery-zoom" aria-hidden="true">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M21 21L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M11 8V14M8 11H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </section>
@@ -490,7 +540,7 @@ export default function Home() {
 
             <div className="founders-list">
               <article className={`founder-card founder-motion-left ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="founder-avatar founder-avatar-one" role="img" aria-label="Asoschi 1 fotosurati" />
+                <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label="Asoschi 1 fotosurati" />
                 <div className="founder-content">
                   <p className="founder-label">Asoschilar</p>
                   <h3 className="founder-name">Azizbek Rahimov</h3>
@@ -504,7 +554,7 @@ export default function Home() {
               </article>
 
               <article className={`founder-card founder-card-second founder-motion-right ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.4s' }}>
-                <div className="founder-avatar founder-avatar-two" role="img" aria-label="Asoschi 2 fotosurati" />
+                <div className="founder-avatar founder-avatar-two" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[1])}")` }} role="img" aria-label="Asoschi 2 fotosurati" />
                 <div className="founder-content">
                   <p className="founder-label">Asoschilar</p>
                   <h3 className="founder-name">Madina Qodirova</h3>
@@ -524,35 +574,35 @@ export default function Home() {
               </h3>
               <div className="teachers-grid">
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
-                  <div className="teacher-avatar teacher-avatar-1" role="img" aria-label="Ustoz 1 fotosurati" />
+                  <div className="teacher-avatar teacher-avatar-1" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Ustoz 1 fotosurati" />
                   <h4 className="teacher-name">Dilshod Karimov</h4>
                   <p className="teacher-role">Yapon tili ustoz</p>
                   <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
-                  <div className="teacher-avatar teacher-avatar-2" role="img" aria-label="Ustoz 2 fotosurati" />
+                  <div className="teacher-avatar teacher-avatar-2" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
                   <h4 className="teacher-name">Nilufar Saidova</h4>
                   <p className="teacher-role">Akademik maslahatchi</p>
                   <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
-                  <div className="teacher-avatar teacher-avatar-3" role="img" aria-label="Ustoz 3 fotosurati" />
+                  <div className="teacher-avatar teacher-avatar-3" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
                   <h4 className="teacher-name">Javohir Ergashev</h4>
                   <p className="teacher-role">Karyera mentori</p>
                   <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
-                  <div className="teacher-avatar teacher-avatar-4" role="img" aria-label="Ustoz 4 fotosurati" />
+                  <div className="teacher-avatar teacher-avatar-4" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
                   <h4 className="teacher-name">Shahnoza Aliyeva</h4>
                   <p className="teacher-role">Til amaliyoti murabbiyi</p>
                   <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.6s' }}>
-                  <div className="teacher-avatar teacher-avatar-5" role="img" aria-label="Ustoz 5 fotosurati" />
+                  <div className="teacher-avatar teacher-avatar-5" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 5 fotosurati" />
                   <h4 className="teacher-name">Bekzod Hamidov</h4>
                   <p className="teacher-role">Student support koordinatori</p>
                   <p className="teacher-text">Talabalar uchun moslashuv jarayonida tezkor va aniq ko'mak ko'rsatadi.</p>
@@ -853,6 +903,32 @@ export default function Home() {
       </main>
       <CompanyMarquee />
       <Footer />
+
+      {/* Лайтбокс для фотографий галереи */}
+      {lightboxImage && (
+        <div
+          className="about-gallery-lightbox"
+          onClick={() => setLightboxImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Rasmni kattalashtirish"
+        >
+          <button
+            type="button"
+            className="about-gallery-lightbox-close"
+            onClick={() => setLightboxImage(null)}
+            aria-label="Yopish"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={lightboxImage} alt="Mirai rasmi" className="about-gallery-lightbox-img" />
+          </div>
+        </div>
+      )}
 
       {/* Модальное окно с благодарностью */}
       {showThankYouModal && (
