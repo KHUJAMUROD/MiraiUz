@@ -1,10 +1,23 @@
+'use client';
+
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import './Footer.scss';
 import Image from 'next/image';
+
+const PdfModal = dynamic(
+  () => import('@/components/PdfModal/PdfModal'),
+  { ssr: false }
+);
 
 const MAP_URL = 'https://yandex.uz/maps/org/108643038759/';
 const MAP_EMBED_URL = 'https://yandex.uz/map-widget/v1/?mode=search&oid=108643038759&ol=biz&z=16.5';
 
+const PDF_LITSENZIYA = '/docs/MIRAI_LITSENZIYA.pdf';
+const PDF_GUVOHNOMA = '/docs/MIRAI_GUVOHNOMA.pdf';
+
 export default function Footer() {
+  const [pdfModal, setPdfModal] = useState(null);
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -26,12 +39,20 @@ export default function Footer() {
             </div>
 
             <div className="footer-docs">
-              <a href="#" className="footer-doc-button">
+              <button
+                type="button"
+                className="footer-doc-button"
+                onClick={() => setPdfModal('litsenziya')}
+              >
                 Lisenziya
-              </a>
-              <a href="#" className="footer-doc-button">
+              </button>
+              <button
+                type="button"
+                className="footer-doc-button"
+                onClick={() => setPdfModal('guvohnoma')}
+              >
                 Guvohnoma
-              </a>
+              </button>
             </div>
           </div>
 
@@ -91,6 +112,23 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {pdfModal === 'litsenziya' && (
+        <PdfModal
+          isOpen={true}
+          onClose={() => setPdfModal(null)}
+          pdfSrc={PDF_LITSENZIYA}
+          title="Lisenziya"
+        />
+      )}
+      {pdfModal === 'guvohnoma' && (
+        <PdfModal
+          isOpen={true}
+          onClose={() => setPdfModal(null)}
+          pdfSrc={PDF_GUVOHNOMA}
+          title="Guvohnoma"
+        />
+      )}
     </footer>
   );
 }

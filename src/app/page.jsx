@@ -562,21 +562,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={ctaSectionRef} className="cta-section">
-          <div className="cta-container">
-            <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
-              <h2 className="cta-title">
-                Siz ham sifatni tanlamoqchimisiz?
-              </h2>
-              <p className="cta-subtitle">
-                Unda harakatni bugundan boshlang.
-              </p>
-              <button className="cta-button">
-                Bepul konsultatsiya olish
-              </button>
-            </div>
-          </div>
-        </section>
+
 
         <section id="konsalting-courses-section" ref={konsaltingCoursesSectionRef} className="konsalting-courses-section">
           <div className="konsalting-courses-container">
@@ -633,7 +619,21 @@ export default function Home() {
             </div>
           </div>
         </section>
-
+        <section ref={ctaSectionRef} className="cta-section">
+          <div className="cta-container">
+            <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
+              <h2 className="cta-title">
+                Siz ham sifatni tanlamoqchimisiz?
+              </h2>
+              <p className="cta-subtitle">
+                Unda harakatni bugundan boshlang.
+              </p>
+              <button className="cta-button">
+                Bepul konsultatsiya olish
+              </button>
+            </div>
+          </div>
+        </section>
         <section id="natijalar-section" ref={natijalarSectionRef} className="natijalar-section">
           <div className="natijalar-container">
             <h2 className={`natijalar-title ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`}>
