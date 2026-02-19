@@ -194,6 +194,35 @@
   }
 }
 
+.about-gallery-lightbox-prev,
+.about-gallery-lightbox-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10;
+  @include flex-center;
+  @include transition(background-color 0.25s ease, transform 0.2s ease);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.about-gallery-lightbox-prev {
+  left: 24px;
+}
+
+.about-gallery-lightbox-next {
+  right: 24px;
+}
+
 .about-gallery-lightbox-content {
   max-width: 95vw;
   max-height: 95vh;
@@ -223,6 +252,20 @@
     right: 16px;
     width: 44px;
     height: 44px;
+  }
+
+  .about-gallery-lightbox-prev,
+  .about-gallery-lightbox-next {
+    width: 44px;
+    height: 44px;
+  }
+
+  .about-gallery-lightbox-prev {
+    left: 12px;
+  }
+
+  .about-gallery-lightbox-next {
+    right: 12px;
   }
 }
 

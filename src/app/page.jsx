@@ -95,15 +95,27 @@ export default function Home() {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(null);
 
+  const lightboxIndex = lightboxImage ? ABOUT_GALLERY_IMAGES.indexOf(lightboxImage) : -1;
+  const lightboxPrev = useCallback(() => {
+    if (lightboxIndex <= 0) return;
+    setLightboxImage(ABOUT_GALLERY_IMAGES[lightboxIndex - 1]);
+  }, [lightboxIndex]);
+  const lightboxNext = useCallback(() => {
+    if (lightboxIndex < 0 || lightboxIndex >= ABOUT_GALLERY_IMAGES.length - 1) return;
+    setLightboxImage(ABOUT_GALLERY_IMAGES[lightboxIndex + 1]);
+  }, [lightboxIndex]);
+
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleKey = (e) => {
       if (e.key === 'Escape') setLightboxImage(null);
+      if (e.key === 'ArrowLeft') lightboxPrev();
+      if (e.key === 'ArrowRight') lightboxNext();
     };
     if (lightboxImage) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleKey);
     }
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [lightboxImage]);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [lightboxImage, lightboxPrev, lightboxNext]);
 
   // Блокировка скролла при открытом модальном окне
   useEffect(() => {
@@ -943,6 +955,30 @@ export default function Home() {
               <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
+          {lightboxIndex > 0 && (
+            <button
+              type="button"
+              className="about-gallery-lightbox-prev"
+              onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+              aria-label="Oldingi rasm"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          )}
+          {lightboxIndex >= 0 && lightboxIndex < ABOUT_GALLERY_IMAGES.length - 1 && (
+            <button
+              type="button"
+              className="about-gallery-lightbox-next"
+              onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+              aria-label="Keyingi rasm"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          )}
           <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img src={lightboxImage} alt="Mirai rasmi" className="about-gallery-lightbox-img" />
           </div>
