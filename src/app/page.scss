@@ -51,7 +51,7 @@
   width: 100%;
   padding: 80px 8px;
   background-color: #ffffff;
-  background-image: url('/images/backgrounds/abot.jpg');
+  background-image: url('/images/backgrounds/abot.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -323,7 +323,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/images/backgrounds/abot.jpg');
+    background-image: url('/images/backgrounds/abot.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -490,31 +490,40 @@
 .teachers-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .teacher-card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 0;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 }
 
-.teacher-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+.teacher-card-photo {
+  width:170px;
+  min-width: 100px;
+  height: 170px;
+  border-radius: 12px 0 0 12px;
   background-size: cover;
   background-position: center 22%;
   background-repeat: no-repeat;
-  border: 3px solid #ffffff;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+  flex-shrink: 0;
+}
+
+.teacher-card-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
 }
 
 .teacher-name {
@@ -556,7 +565,7 @@
   }
 
   .teachers-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -644,9 +653,22 @@
     grid-template-columns: 1fr;
   }
 
-  .teacher-avatar {
-    width: 92px;
-    height: 92px;
+  .teacher-card-photo {
+    width: 88px;
+    min-width: 88px;
+    height: 88px;
+  }
+
+  .teacher-name {
+    font-size: 18px;
+  }
+
+  .teacher-role {
+    font-size: 14px;
+  }
+
+  .teacher-text {
+    font-size: 13px;
   }
 }
 
@@ -693,25 +715,26 @@
     font-size: 22px;
   }
 
-  .teacher-card {
-    padding: 14px;
+  .teacher-card-photo {
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
   }
 
-  .teacher-avatar {
-    width: 84px;
-    height: 84px;
+  .teacher-card-info {
+    padding: 10px 12px;
   }
 
   .teacher-name {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .teacher-role {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .teacher-text {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 

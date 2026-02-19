@@ -6,7 +6,7 @@ const HERO_CONTENT = {
   title: 'Mirai sizning kelajagingiz',
   subtitle: 'Biz bilan kelajakni quring',
   description: "Ilhom, sifat va natija — Mirai bilan yangi bosqichni boshlang.",
-  image: '/images/backgrounds/school_background.jpg',
+  image: '/images/backgrounds/school_background.webp',
   imageAlt: 'Mirai students learning'
 };
 

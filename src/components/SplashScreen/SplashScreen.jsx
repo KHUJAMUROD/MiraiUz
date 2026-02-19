@@ -5,14 +5,14 @@ import './SplashScreen.scss';
 
 // Все изображения для предзагрузки
 const IMAGES_TO_PRELOAD = [
-  '/images/backgrounds/school_background.jpg',
-  '/images/backgrounds/abot.jpg',
+  '/images/backgrounds/school_background.webp',
+  '/images/backgrounds/abot.webp',
   '/images/about_photos/1.jpg',
   '/images/about_photos/2.jpg',
   '/images/about_photos/3.jpg',
   '/images/about_photos/4.jpg',
   '/images/about_photos/5.jpg',
-  '/images/about_photos/6.jpg',
+  '/images/about_photos/123.jpg',
   '/images/about_photos/7.jpg',
   '/images/founders/ASOSCHILAR _OTABEK.jpg',
   '/images/founders/ASOSCHILAR_TIMUR.JPG',

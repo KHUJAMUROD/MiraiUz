@@ -64,7 +64,7 @@ export default function Footer() {
                   <path d="M5 4H9L11 9L8.5 10.5C9.59 12.71 11.29 14.41 13.5 15.5L15 13L20 15V19C20 19.55 19.55 20 19 20C10.72 20 4 13.28 4 5C4 4.45 4.45 4 5 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </span>
-              +998(88)893-08-88
+              +998 (88) 893-08-88
             </a>
             <a href="tel:+998915470991" className="footer-contact-link">
               <span className="footer-contact-icon" aria-hidden="true">
@@ -72,7 +72,7 @@ export default function Footer() {
                   <path d="M5 4H9L11 9L8.5 10.5C9.59 12.71 11.29 14.41 13.5 15.5L15 13L20 15V19C20 19.55 19.55 20 19 20C10.72 20 4 13.28 4 5C4 4.45 4.45 4 5 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </span>
-              +998(91)547-09-91
+              +998 (91) 547-09-91
             </a>  
 
             <div className="footer-links-row">
@@ -113,6 +113,15 @@ export default function Footer() {
                 Location
               </a>
             </div>
+            <a href="mailto:languagecentermirai.uz@gmail.com" className="footer-email-link">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M22 6L12 13L2 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+              languagecentermirai.uz@gmail.com
+            </a>
           </div>
 
           <div className="footer-map" aria-label="Mirai location map">

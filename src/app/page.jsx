@@ -24,20 +24,20 @@ const ABOUT_GALLERY_IMAGES = [
   '/images/about_photos/3.jpg',
   '/images/about_photos/4.jpg',
   '/images/about_photos/5.jpg',
-  '/images/about_photos/6.jpg',
+  '/images/about_photos/123.jpg',
   '/images/about_photos/7.jpg',
 ];
 
 const FOUNDERS_IMAGES = [
-  '/images/founders/ASOSCHILAR _OTABEK.jpg',
-  '/images/founders/ASOSCHILAR_TIMUR.JPG',
+  '/images/founders/ASOSCHILAR _OTABEK.webp',
+  '/images/founders/ASOSCHILAR_TIMUR.webp',
 ];
 
 const TEACHERS_IMAGES = [
-  "/images/teachers/O'G'ILOY.JPG",
-  '/images/teachers/OTABEK.jpg',
-  '/images/teachers/FERUZA.jpg',
-  '/images/teachers/SHOXRUH.jpg',
+  '/images/teachers/OTABEK.webp',
+  "/images/teachers/O'G'ILOY.webp",
+  '/images/teachers/FERUZA.webp',
+  '/images/teachers/SHOXRUH.webp',
 ];
 
 function getImageUrl(path) {
@@ -592,31 +592,39 @@ export default function Home() {
               </h3>
               <div className="teachers-grid">
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
-                  <div className="teacher-avatar teacher-avatar-1" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Ustoz 1 fotosurati" />
-                  <h4 className="teacher-name">Saftarov Otabek</h4>
-                  <p className="teacher-role">Akademik maslahatchi</p>
-                  <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Ustoz 1 fotosurati" />
+                  <div className="teacher-card-info">
+                    <h4 className="teacher-name">Saftarov Otabek</h4>
+                    <p className="teacher-role">Akademik maslahatchi</p>
+                    <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
+                  </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
-                  <div className="teacher-avatar teacher-avatar-2" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
-                  <h4 className="teacher-name">Oblaqulova O’g’iloy</h4>
-                  <p className="teacher-role">Karyera mentori</p>
-                  <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
+                  <div className="teacher-card-info">
+                    <h4 className="teacher-name">Oblaqulova O’g’iloy</h4>
+                    <p className="teacher-role">Karyera mentori</p>
+                    <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
+                  </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
-                  <div className="teacher-avatar teacher-avatar-3" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
-                  <h4 className="teacher-name">Bobojanova Feruza</h4>
-                  <p className="teacher-role">Yapon tili ustoz</p>
-                  <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
+                  <div className="teacher-card-info">
+                    <h4 className="teacher-name">Bobojanova Feruza</h4>
+                    <p className="teacher-role">Yapon tili ustoz</p>
+                    <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                  </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
-                  <div className="teacher-avatar teacher-avatar-4" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
-                  <h4 className="teacher-name">Mahkamov Shohrux</h4>
-                  <p className="teacher-role">Til amaliyoti murabbiyi</p>
-                  <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
+                  <div className="teacher-card-info">
+                    <h4 className="teacher-name">Mahkamov Shohrux</h4>
+                    <p className="teacher-role">Til amaliyoti murabbiyi</p>
+                    <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                  </div>
                 </article>
               </div>
             </div>
