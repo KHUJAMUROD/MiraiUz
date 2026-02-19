@@ -34,9 +34,9 @@ const FOUNDERS_IMAGES = [
 ];
 
 const TEACHERS_IMAGES = [
-  '/images/teachers/FERUZA.jpg',
   "/images/teachers/O'G'ILOY.JPG",
   '/images/teachers/OTABEK.jpg',
+  '/images/teachers/FERUZA.jpg',
   '/images/teachers/SHOXRUH.jpg',
 ];
 
@@ -561,8 +561,8 @@ export default function Home() {
                 <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label="Asoschi 1 fotosurati" />
                 <div className="founder-content">
                   <p className="founder-label">Asoschilar</p>
-                  <h3 className="founder-name">Azizbek Rahimov</h3>
-                  <p className="founder-role">Mirai asoschisi va strategik rahbar</p>
+                  <h3 className="founder-name">SAFTAROV OTABEK</h3>
+                  <p className="founder-role">Co-Founder & CEO</p>
                   <p className="founder-bio">
                     Azizbek ta'lim loyihalari ustida ko'p yillik tajribaga ega bo'lgan mutaxassis sifatida Mirai'ni
                     yoshlarning global salohiyatini ochish uchun yo'lga qo'ygan. Uning maqsadi - har bir talabaga
@@ -575,8 +575,8 @@ export default function Home() {
                 <div className="founder-avatar founder-avatar-two" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[1])}")` }} role="img" aria-label="Asoschi 2 fotosurati" />
                 <div className="founder-content">
                   <p className="founder-label">Asoschilar</p>
-                  <h3 className="founder-name">Madina Qodirova</h3>
-                  <p className="founder-role">Akademik direktor va mentor</p>
+                  <h3 className="founder-name">TIMURKHON KHUSENZADE</h3>
+                  <p className="founder-role">Co-Founder & Director</p>
                   <p className="founder-bio">
                     Madina xalqaro ta'lim dasturlarini boshqarish tajribasi bilan Mirai ichida akademik sifat va
                     metodik yo'nalishni nazorat qiladi. U talabalarning moslashuvi, til rivoji va shaxsiy
@@ -593,37 +593,30 @@ export default function Home() {
               <div className="teachers-grid">
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
                   <div className="teacher-avatar teacher-avatar-1" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Ustoz 1 fotosurati" />
-                  <h4 className="teacher-name">Dilshod Karimov</h4>
-                  <p className="teacher-role">Yapon tili ustoz</p>
-                  <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
-                </article>
-
-                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
-                  <div className="teacher-avatar teacher-avatar-2" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
-                  <h4 className="teacher-name">Nilufar Saidova</h4>
+                  <h4 className="teacher-name">Saftarov Otabek</h4>
                   <p className="teacher-role">Akademik maslahatchi</p>
                   <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
                 </article>
 
-                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
-                  <div className="teacher-avatar teacher-avatar-3" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
-                  <h4 className="teacher-name">Javohir Ergashev</h4>
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
+                  <div className="teacher-avatar teacher-avatar-2" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
+                  <h4 className="teacher-name">Oblaqulova O’g’iloy</h4>
                   <p className="teacher-role">Karyera mentori</p>
                   <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
                 </article>
 
-                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
-                  <div className="teacher-avatar teacher-avatar-4" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
-                  <h4 className="teacher-name">Shahnoza Aliyeva</h4>
-                  <p className="teacher-role">Til amaliyoti murabbiyi</p>
-                  <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
+                  <div className="teacher-avatar teacher-avatar-3" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
+                  <h4 className="teacher-name">Bobojanova Feruza</h4>
+                  <p className="teacher-role">Yapon tili ustoz</p>
+                  <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
                 </article>
 
-                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.6s' }}>
-                  <div className="teacher-avatar teacher-avatar-5" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 5 fotosurati" />
-                  <h4 className="teacher-name">Bekzod Hamidov</h4>
-                  <p className="teacher-role">Student support koordinatori</p>
-                  <p className="teacher-text">Talabalar uchun moslashuv jarayonida tezkor va aniq ko'mak ko'rsatadi.</p>
+                <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
+                  <div className="teacher-avatar teacher-avatar-4" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
+                  <h4 className="teacher-name">Mahkamov Shohrux</h4>
+                  <p className="teacher-role">Til amaliyoti murabbiyi</p>
+                  <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
                 </article>
               </div>
             </div>

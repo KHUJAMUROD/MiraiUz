@@ -498,17 +498,17 @@
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
-  padding: 18px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   align-items: flex-start;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 }
 
 .teacher-avatar {
-  width: 96px;
-  height: 96px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-size: cover;
   background-position: center 22%;
@@ -519,7 +519,7 @@
 
 .teacher-name {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.3;
   font-weight: 700;
   color: #111827;
@@ -527,7 +527,7 @@
 
 .teacher-role {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.3;
   font-weight: 600;
   color: #dc2626;
@@ -535,7 +535,7 @@
 
 .teacher-text {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   font-weight: 400;
   color: #4b5563;
