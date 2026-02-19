@@ -151,6 +151,34 @@
     border-color: #0e4ed8;
     transform: translateY(-1px);
   }
+
+  &--telegram {
+    color: #0088cc;
+    border-color: #0088cc;
+
+    &:hover {
+      color: #006699;
+      border-color: #006699;
+    }
+  }
+
+  &--instagram {
+    border-color: #d62976;
+
+    &:hover {
+      border-color: #bc1888;
+    }
+  }
+
+  &--whatsapp {
+    color: #25d366;
+    border-color: #25d366;
+
+    &:hover {
+      color: #1da851;
+      border-color: #1da851;
+    }
+  }
 }
 
 .footer-location-link {

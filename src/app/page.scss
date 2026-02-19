@@ -12,6 +12,12 @@
   width: 100%;
   min-height: 100vh;
   position: relative;
+  
+  // Блокировка скролла во время splash screen
+  &.splash-active {
+    overflow: hidden;
+    height: 100vh;
+  }
 }
 
 .main {
@@ -1407,7 +1413,7 @@
   }
 }
 
-// Videos Section (YouTube Shorts carousel)
+// Videos Section (Instagram Reels carousel)
 .videos-section {
   width: 100%;
   padding: 80px 80px;

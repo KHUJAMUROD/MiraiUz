@@ -6,6 +6,7 @@ import Header from '@/components/Header/header';
 import Footer from '@/components/Footer/footer';
 import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
 import HeroPage from '@/components/HeroPage/HeroPage';
+import SplashScreen from '@/components/SplashScreen/SplashScreen';
 import videosData from '@/store/videos.json';
 import './page.scss';
 
@@ -43,9 +44,10 @@ function getImageUrl(path) {
   return path.split('/').map(part => encodeURIComponent(part)).join('/');
 }
 
-function getYoutubeVideoId(url) {
+function getInstagramReelId(url) {
   if (!url || typeof url !== 'string') return null;
-  const match = url.match(/(?:v=|\/shorts\/|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  // Поддерживаем форматы: /reel/VIDEO_ID/, /p/VIDEO_ID/, /reels/VIDEO_ID/
+  const match = url.match(/(?:\/reel\/|\/p\/|\/reels\/)([a-zA-Z0-9_-]+)/);
   return match ? match[1] : null;
 }
 
@@ -57,12 +59,27 @@ export default function Home() {
     publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
   };
 
+  // Состояние для splash screen
+  const [isSplashVisible, setIsSplashVisible] = useState(true);
+
   // Инициализация EmailJS
   useEffect(() => {
     if (emailjsConfig.publicKey) {
       emailjs.init({ publicKey: emailjsConfig.publicKey });
     }
   }, [emailjsConfig.publicKey]);
+
+  const handleSplashLoaded = useCallback(() => {
+    setIsSplashVisible(false);
+    document.body.style.overflow = '';
+  }, []);
+
+  // Блокировка скролла пока показывается splash screen
+  useEffect(() => {
+    if (isSplashVisible) {
+      document.body.style.overflow = 'hidden';
+    }
+  }, [isSplashVisible]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -486,7 +503,8 @@ export default function Home() {
 
 
   return (
-    <div className="page">
+    <div className={`page ${isSplashVisible ? 'splash-active' : ''}`}>
+      {isSplashVisible && <SplashScreen onLoaded={handleSplashLoaded} />}
       <Header />
       
       <main className="main">
@@ -739,12 +757,12 @@ export default function Home() {
                 className="videos-carousel"
                 ref={videosCarouselRef}
                 role="region"
-                aria-label="YouTube Shorts karuseli"
+                aria-label="Instagram Reels karuseli"
               >
                 <div className="videos-track">
                   {infiniteVideos.map((video, index) => {
-                    const videoId = getYoutubeVideoId(video.url);
-                    if (!videoId) return null;
+                    const reelId = getInstagramReelId(video.url);
+                    if (!reelId) return null;
                     return (
                       <a
                         key={`${video.url}-${index}`}
@@ -755,9 +773,9 @@ export default function Home() {
                       >
                         <div className="videos-card-iframe-wrapper">
                           <iframe
-                            src={`https://www.youtube.com/embed/${videoId}?modestbranding=1`}
-                            title={video.title || `Video ${index + 1}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            src={`https://www.instagram.com/reel/${reelId}/embed/?autoplay=1`}
+                            title={video.title || `Reel ${index + 1}`}
+                            allow="encrypted-media; autoplay; fullscreen"
                             allowFullScreen
                           />
                         </div>
