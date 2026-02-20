@@ -112,7 +112,7 @@ export default function SplashScreen({ onLoaded }) {
           />
         </div>
         <div className="splash-screen__title">Mirai</div>
-        <div className="splash-screen__subtitle">Japan Language Centre</div>
+        <div className="splash-screen__subtitle">Japanese language center</div>
         <div className="splash-screen__progress">
           <div className="splash-screen__progress-bar">
             <div 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import './Footer.scss';
 import Image from 'next/image';
@@ -16,8 +16,17 @@ const MAP_EMBED_URL = 'https://yandex.uz/map-widget/v1/?mode=search&oid=10864303
 const PDF_LITSENZIYA = '/docs/MIRAI_LITSENZIYA.pdf';
 const PDF_GUVOHNOMA = '/docs/MIRAI_GUVOHNOMA.pdf';
 
+function preloadPdf(url) {
+  fetch(url, { method: 'GET', mode: 'same-origin' }).catch(() => {});
+}
+
 export default function Footer() {
   const [pdfModal, setPdfModal] = useState(null);
+
+  useEffect(() => {
+    preloadPdf(PDF_LITSENZIYA);
+    preloadPdf(PDF_GUVOHNOMA);
+  }, []);
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -44,7 +53,7 @@ export default function Footer() {
                 className="footer-doc-button"
                 onClick={() => setPdfModal('litsenziya')}
               >
-                Lisenziya
+                Litsenziya
               </button>
               <button
                 type="button"
@@ -149,7 +158,7 @@ export default function Footer() {
           isOpen={true}
           onClose={() => setPdfModal(null)}
           pdfSrc={PDF_LITSENZIYA}
-          title="Lisenziya"
+          title="Litsenziya"
         />
       )}
       {pdfModal === 'guvohnoma' && (
