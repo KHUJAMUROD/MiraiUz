@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import SplitText from '@/components/SplitText/SplitText';
 import './SplashScreen.scss';
 
 // Все изображения для предзагрузки
@@ -111,8 +112,30 @@ export default function SplashScreen({ onLoaded }) {
             className="splash-screen__logo-img"
           />
         </div>
-        <div className="splash-screen__title">Mirai</div>
-        <div className="splash-screen__subtitle">Japanese language center</div>
+        <SplitText
+          text="Mirai"
+          className="splash-screen__title"
+          tag="div"
+          splitType="chars"
+          delay={60}
+          duration={1}
+          from={{ opacity: 0, y: 30 }}
+          to={{ opacity: 1, y: 0 }}
+          useScrollTrigger={false}
+          textAlign="center"
+        />
+        <SplitText
+          text="Japanese language center"
+          className="splash-screen__subtitle"
+          tag="div"
+          splitType="words"
+          delay={40}
+          duration={0.9}
+          from={{ opacity: 0, y: 24 }}
+          to={{ opacity: 1, y: 0 }}
+          useScrollTrigger={false}
+          textAlign="center"
+        />
         <div className="splash-screen__progress">
           <div className="splash-screen__progress-bar">
             <div 

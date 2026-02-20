@@ -709,7 +709,14 @@ export default function Home() {
               <p className="cta-subtitle">
                 Unda harakatni bugundan boshlang.
               </p>
-              <button className="cta-button">
+              <button
+                type="button"
+                className="cta-button"
+                onClick={() => {
+                  const el = document.getElementById('registration-form');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
                 Bepul konsultatsiya olish
               </button>
             </div>

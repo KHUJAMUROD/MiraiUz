@@ -52,7 +52,15 @@
   font-weight: 700;
   color: #171717;
   letter-spacing: 2px;
-  animation: splash-fade-in 0.6s ease-out;
+}
+
+.splash-screen__title .split-char,
+.splash-screen__subtitle .split-word {
+  opacity: 0;
+}
+
+.splash-screen__title .split-char {
+  letter-spacing: 2px;
 }
 
 .splash-screen__subtitle {
@@ -60,7 +68,6 @@
   font-weight: 400;
   color: #64748b;
   letter-spacing: 1px;
-  animation: splash-fade-in 0.8s ease-out;
 }
 
 .splash-screen__progress {
