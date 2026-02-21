@@ -607,6 +607,49 @@
   color: #4b5563;
 }
 
+.teacher-cert {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 1px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(185, 28, 28, 0.25);
+}
+
+.teacher-edu {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e2e8f0;
+
+  .teacher-edu-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #64748b;
+  }
+
+  li {
+    margin-bottom: 2px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 // Responsive styles for Why StudyTokyo section
 @media (max-width: 1366px) {
   .why-studytokyo {
@@ -732,6 +775,24 @@
   .teacher-text {
     font-size: 13px;
   }
+
+  .teacher-cert {
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+
+  .teacher-edu {
+    margin-top: 6px;
+    padding-top: 6px;
+
+    .teacher-edu-label {
+      font-size: 11px;
+    }
+
+    ul {
+      font-size: 11px;
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -802,6 +863,24 @@
 
   .teacher-text {
     font-size: 13px;
+  }
+
+  .teacher-cert {
+    padding: 1px 5px;
+    font-size: 10px;
+  }
+
+  .teacher-edu {
+    margin-top: 6px;
+    padding-top: 6px;
+
+    .teacher-edu-label {
+      font-size: 11px;
+    }
+
+    ul {
+      font-size: 11px;
+    }
   }
 }
 

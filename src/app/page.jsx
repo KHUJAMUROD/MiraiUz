@@ -34,8 +34,8 @@ const FOUNDERS_IMAGES = [
 ];
 
 const TEACHERS_IMAGES = [
-  '/images/teachers/OTABEK.webp',
   "/images/teachers/O'G'ILOY.webp",
+  '/images/teachers/OTABEK.webp',
   '/images/teachers/FERUZA.webp',
   '/images/teachers/SHOXRUH.webp',
 ];
@@ -647,38 +647,67 @@ export default function Home() {
               </h3>
               <div className="teachers-grid">
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Ustoz 1 fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Oboloqulova O'g'iloy fotosurati" />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Saftarov Otabek</h4>
-                    <p className="teacher-role">Akademik maslahatchi</p>
-                    <p className="teacher-text">Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam beradi.</p>
+                    <h4 className="teacher-name">Oboloqulova O'g'iloy</h4>
+                    <p className="teacher-role">Karyera mentori</p>
+                    <p className="teacher-text">Hozirda <span className="teacher-cert">JLPT N1</span> va <span className="teacher-cert">CEFR C1</span> darajaga ega Yapon tili o'qituvchisi.</p>
+                    <div className="teacher-edu">
+                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <ul>
+                        <li>«Samarqand Davlat chet tillar Instituti» 2016–2020 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
+                        <li>«O'zbekiston Davlat jahon tillar Universiteti» 2020–2022 — Lingvistika (Yapon tili), magistratura</li>
+                      </ul>
+                    </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Ustoz 2 fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Saftarov Otabek fotosurati" />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Oblaqulova O’g’iloy</h4>
-                    <p className="teacher-role">Karyera mentori</p>
-                    <p className="teacher-text">Yaponiyada ishga moslashish va intervyu tayyorgarligini olib boradi.</p>
+                    <h4 className="teacher-name">Saftarov Otabek</h4>
+                    <p className="teacher-role">Akademik maslahatchi</p>
+                    <p className="teacher-text">Osaka Gakuin University (大阪学院大学) da 4 yil ta'lim olgan, hozirda <span className="teacher-cert">JLPT N1</span> darajaga ega. Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam berib keladi.</p>
+                    <div className="teacher-edu">
+                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <ul>
+                        <li>Osaka Gakuin University 大阪学院大学 — 4 yil</li>
+                        <li><span className="teacher-cert">JLPT N1</span></li>
+                      </ul>
+                    </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Ustoz 3 fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Bobojonova Feruza fotosurati" />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Bobojanova Feruza</h4>
+                    <h4 className="teacher-name">Bobojonova Feruza</h4>
                     <p className="teacher-role">Yapon tili ustoz</p>
-                    <p className="teacher-text">JLPT tayyorgarligi va amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                    <p className="teacher-text"><span className="teacher-cert">JLPT</span> va <span className="teacher-cert">NAT-TEST</span> tayyorgarligi hamda amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                    <div className="teacher-edu">
+                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <ul>
+                        <li>«Samarqand Davlat chet tillar Instituti» 2021–2025 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
+                        <li>Hozirda <span className="teacher-cert">NAT-TEST N2</span> darajaga ega</li>
+                      </ul>
+                    </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Ustoz 4 fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Mahkamov Shohrux fotosurati" />
                   <div className="teacher-card-info">
                     <h4 className="teacher-name">Mahkamov Shohrux</h4>
                     <p className="teacher-role">Til amaliyoti murabbiyi</p>
                     <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                    <div className="teacher-edu">
+                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <ul>
+                        <li>«Samarqand Davlat chet tillar Instituti» 2021–2025 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
+                        <li>Yapon tili bilim darajasi <span className="teacher-cert">JLPT N2</span></li>
+                        <li>Tsukuba Universitetida 2024–2025 yillarda grant asosida 1 yil ta'lim olgan</li>
+                      </ul>
+                    </div>
                   </div>
                 </article>
               </div>
