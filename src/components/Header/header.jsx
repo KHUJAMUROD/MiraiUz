@@ -122,7 +122,7 @@ export default function Header() {
             <a href="#konsalting-courses-section" className="header__nav-link" onClick={scrollToSection('konsalting-courses-section')}>
               Konsalting va kurslar
             </a>
-            <a href="#natijalar" className="header__nav-link" onClick={closeMenu}>
+            <a href="#natijalar-section" className="header__nav-link" onClick={scrollToSection('natijalar-section')}>
               Natijalar
             </a>
           </nav>
@@ -169,7 +169,7 @@ export default function Header() {
           <a href="#konsalting-courses-section" className="header__mobile-link" onClick={scrollToSection('konsalting-courses-section')}>
             Konsalting va kurslar
           </a>
-          <a href="#natijalar" className="header__mobile-link" onClick={closeMenu}>
+          <a href="#natijalar-section" className="header__mobile-link" onClick={scrollToSection('natijalar-section')}>
             Natijalar
           </a>
         </nav>
