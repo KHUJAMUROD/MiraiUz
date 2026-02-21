@@ -744,10 +744,10 @@ export default function Home() {
                   <ul className="course-card-list">
                     <li>Haftada 3 kun dars</li>
                     <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
                   </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
                 </article>
 
                 <article className="course-card">
@@ -756,10 +756,10 @@ export default function Home() {
                   <ul className="course-card-list">
                     <li>Haftada 3 kun dars</li>
                     <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
                   </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
                 </article>
 
                 <article className="course-card">
@@ -768,10 +768,10 @@ export default function Home() {
                   <ul className="course-card-list">
                     <li>Haftada 3 kun dars</li>
                     <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga shaxsiy akount ochib beriladi</li>
+                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
                   </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars - oylik to'lov 500 000 so'm</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars - oylik to'lov 600 000 so'm</p>
+                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
+                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
                 </article>
               </div>
             </div>

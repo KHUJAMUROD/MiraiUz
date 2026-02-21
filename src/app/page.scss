@@ -1086,40 +1086,36 @@
   line-height: 1.65;
 }
 
+// --- Yapon tili kurslari: блок и заголовок ---
 .courses-block {
   position: relative;
   overflow: visible;
-  border-radius: 28px;
-  border: 2px solid #b64536;
-  background:
-    radial-gradient(circle at 10% 22%, rgba(255, 209, 220, 0.3) 0%, rgba(255, 209, 220, 0) 28%),
-    radial-gradient(circle at 88% 12%, rgba(255, 214, 214, 0.34) 0%, rgba(255, 214, 214, 0) 28%),
-    linear-gradient(180deg, #fff7f2 0%, #fffdf9 100%);
+  border-radius: 32px;
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  background-image:
+    linear-gradient(180deg, rgba(254, 250, 246, 0.58) 0%, rgba(253, 246, 239, 0.62) 50%, rgba(250, 242, 232, 0.68) 100%),
+    url('/images/courses/courses.webp');
+  background-position: top, top;
+  background-size: auto, cover;
+  background-repeat: no-repeat, no-repeat;
   box-shadow:
-    0 14px 30px rgba(143, 49, 39, 0.12),
-    0 0 40px rgba(220, 38, 38, 0.15),
-    0 0 80px rgba(185, 28, 28, 0.08),
-    inset 0 0 60px rgba(254, 202, 202, 0.06);
-  padding: 70px 28px 34px;
-  transition: box-shadow 0.4s ease;
-
-  &:hover {
-    box-shadow:
-      0 14px 30px rgba(143, 49, 39, 0.12),
-      0 0 50px rgba(220, 38, 38, 0.2),
-      0 0 100px rgba(185, 28, 28, 0.1),
-      inset 0 0 80px rgba(254, 202, 202, 0.08);
-  }
+    0 4px 24px rgba(88, 47, 42, 0.08),
+    0 24px 56px rgba(88, 47, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 56px 32px 44px;
+  @include transition(box-shadow 0.4s ease);
 
   &::before {
     content: '';
     position: absolute;
-    left: 24px;
-    right: 24px;
-    top: 30px;
-    height: 3px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, rgba(118, 36, 26, 0.8) 0%, rgba(163, 52, 37, 0.96) 50%, rgba(118, 36, 26, 0.8) 100%);
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    border-radius: 0 0 4px 4px;
+    background: linear-gradient(90deg, transparent, #dc2626 20%, #b91c1c 50%, #dc2626 80%, transparent);
+    opacity: 0.85;
     pointer-events: none;
   }
 
@@ -1128,53 +1124,78 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -30px;
-    height: 110px;
+    bottom: -24px;
+    height: 90px;
     background: url('https://upload.wikimedia.org/wikipedia/commons/2/28/Seigaiha.svg') repeat-x center bottom;
-    background-size: 180px 180px;
-    opacity: 0.28;
+    background-size: 160px 160px;
+    opacity: 0.18;
     pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow:
+      0 8px 32px rgba(88, 47, 42, 0.1),
+      0 32px 64px rgba(88, 47, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
   }
 }
 
 .courses-block-title {
-  margin: 0 0 30px 0;
-  color: #602019;
-  font-size: 38px;
+  margin: 0 0 36px 0;
+  color: #4a2822;
+  font-size: 36px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   text-align: center;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 3px;
+    margin: 14px auto 0;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #dc2626, transparent);
+  }
 }
 
 .courses-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
+  gap: 28px;
 }
 
+// --- Карточки курсов ---
 .course-card {
   --glow-x: 50%;
   --glow-y: 50%;
   --glow-intensity: 0;
-  --glow-radius: 280px;
+  --glow-radius: 260px;
   position: relative;
   overflow: hidden;
-  width: 74%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 380px;
   margin: 0 auto;
-  min-height: 540px;
-  border: 3px solid #a8362a;
-  border-radius: 22px;
+  min-height: 480px;
+  border: 1px solid rgba(220, 38, 38, 0.28);
+  border-radius: 20px;
   background:
-    radial-gradient(circle at 20% 12%, rgba(255, 231, 228, 0.4) 0%, rgba(255, 231, 228, 0) 36%),
-    linear-gradient(180deg, #fffdfa 0%, #fff6ed 100%);
-  padding: 34px 20px 22px;
-  box-shadow: 0 8px 20px rgba(126, 43, 32, 0.16), inset 0 0 0 2px rgba(255, 255, 255, 0.74);
+    linear-gradient(180deg, #fffefc 0%, #fef9f4 50%, #fcf6ef 100%);
+  padding: 28px 20px 24px;
+  box-shadow:
+    0 2px 12px rgba(70, 40, 35, 0.06),
+    0 12px 28px rgba(70, 40, 35, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  @include transition(transform 0.25s ease, box-shadow 0.25s ease);
+  gap: 14px;
+  @include transition(transform 0.3s ease, box-shadow 0.3s ease, border-color 0.25s ease);
 
   &::after {
     content: '';
@@ -1183,13 +1204,13 @@
     border-radius: inherit;
     background: radial-gradient(
       var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-      rgba(220, 38, 38, calc(var(--glow-intensity) * 0.18)) 0%,
-      rgba(248, 113, 113, calc(var(--glow-intensity) * 0.08)) 35%,
-      transparent 60%
+      rgba(220, 38, 38, calc(var(--glow-intensity) * 0.12)) 0%,
+      rgba(248, 113, 113, calc(var(--glow-intensity) * 0.06)) 40%,
+      transparent 65%
     );
     pointer-events: none;
     opacity: 1;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.2s ease;
     z-index: 0;
   }
 
@@ -1199,70 +1220,114 @@
   }
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 30px rgba(126, 43, 32, 0.24), inset 0 0 0 2px rgba(255, 255, 255, 0.78);
+    transform: translateY(-6px);
+    border-color: rgba(220, 38, 38, 0.4);
+    box-shadow:
+      0 8px 24px rgba(70, 40, 35, 0.1),
+      0 20px 44px rgba(70, 40, 35, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 }
 
 .course-card-title {
   margin: 0;
-  color: #2d1a18;
-  font-size: 32px;
+  color: #3d231e;
+  font-size: 26px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
 }
 
 .course-card-time {
   width: fit-content;
   margin: 0 auto;
-  padding: 9px 18px;
+  padding: 10px 20px;
   border-radius: 999px;
-  border: 1px solid rgba(107, 28, 28, 0.4);
-  background: linear-gradient(180deg, #d63232 0%, #a81d1d 100%);
-  color: #ffffff;
-  font-size: 30px;
+  border: 1px solid rgba(185, 28, 28, 0.35);
+  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+  color: #fff;
+  font-size: 22px;
   font-weight: 700;
   line-height: 1;
-  text-shadow: 0 1px 1px rgba(60, 12, 12, 0.4);
-  box-shadow: 0 6px 10px rgba(120, 30, 30, 0.24);
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 4px 12px rgba(185, 28, 28, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  @include transition(transform 0.2s ease, box-shadow 0.2s ease);
+
+  &:hover {
+    box-shadow:
+      0 6px 16px rgba(185, 28, 28, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
 }
 
 .course-card-list {
-  list-style: disc;
+  list-style: none;
   margin: 0;
-  margin-top: 8px;
-  padding-left: 22px;
-  color: #171717;
-  font-size: 20px;
+  margin-top: 4px;
+  padding-left: 0;
+  color: #2c201d;
+  font-size: 17px;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.5;
+
+  li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 6px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #dc2626;
+      opacity: 0.85;
+    }
+  }
 
   li + li {
-    margin-top: 4px;
+    margin-top: 2px;
   }
 }
 
 .course-card-list + .course-card-price {
-  margin-top: 6px;
+  margin-top: 10px;
 }
 
 .course-card-price {
   margin: 0;
-  color: #2b2625;
-  font-size: 18px;
+  color: #3d2e2a;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
   text-align: center;
-  background: rgba(239, 223, 204, 0.7);
-  border-radius: 12px;
-  padding: 9px 10px;
+  background: rgba(245, 237, 228, 0.9);
+  border: 1px solid rgba(220, 38, 38, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid #dc2626;
+  @include transition(background 0.2s ease, border-color 0.2s ease);
+
+  &:hover {
+    background: rgba(250, 242, 234, 0.95);
+    border-color: rgba(220, 38, 38, 0.2);
+  }
 }
 
 .course-card-price:last-child {
   margin-top: auto;
+}
+
+.course-card-price + .course-card-price {
+  margin-top: 8px;
 }
 
 @media (max-width: 1366px) {
@@ -1276,23 +1341,38 @@
 
   .konsalting-block-title,
   .courses-block-title {
-    font-size: 34px;
+    font-size: 32px;
+  }
+
+  .courses-block {
+    padding: 48px 24px 36px;
+  }
+
+  .courses-grid {
+    gap: 24px;
+  }
+
+  .course-card {
+    min-height: 460px;
+    padding: 24px 18px 20px;
   }
 
   .course-card-title {
-    font-size: 30px;
+    font-size: 24px;
   }
 
   .course-card-time {
-    font-size: 26px;
+    font-size: 20px;
+    padding: 8px 16px;
   }
 
   .course-card-list {
-    font-size: 19px;
+    font-size: 16px;
   }
 
   .course-card-price {
-    font-size: 17px;
+    font-size: 14px;
+    padding: 8px 10px;
   }
 }
 
@@ -1315,30 +1395,45 @@
 
   .konsalting-block-title,
   .courses-block-title {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  .courses-block {
+    padding: 40px 20px 32px;
+  }
+
+  .courses-grid {
+    gap: 20px;
   }
 
   .course-card {
     width: 100%;
     max-width: none;
-    min-height: 500px;
-    padding: 30px 18px 20px;
+    min-height: 0;
+    padding: 26px 20px 22px;
   }
 
   .course-card-title {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .course-card-time {
-    font-size: 24px;
+    font-size: 19px;
+    padding: 8px 14px;
   }
 
   .course-card-list {
-    font-size: 17px;
+    font-size: 15px;
+  }
+
+  .course-card-list li::before {
+    width: 5px;
+    height: 5px;
   }
 
   .course-card-price {
-    font-size: 16px;
+    font-size: 14px;
+    padding: 9px 10px;
   }
 }
 
@@ -1361,7 +1456,7 @@
 
   .konsalting-block-title,
   .courses-block-title {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .konsalting-block-placeholder {
@@ -1369,30 +1464,51 @@
   }
 
   .courses-block {
-    padding: 20px 14px;
+    padding: 28px 16px 24px;
+    border-radius: 24px;
+  }
+
+  .courses-block-title::after {
+    width: 48px;
+    margin-top: 10px;
+  }
+
+  .courses-grid {
+    gap: 18px;
   }
 
   .course-card {
     min-height: 0;
     border-radius: 16px;
-    padding: 24px 14px 16px;
+    padding: 22px 16px 18px;
   }
 
   .course-card-title {
-    font-size: 22px;
-  }
-
-  .course-card-time {
     font-size: 20px;
   }
 
+  .course-card-time {
+    font-size: 17px;
+    padding: 7px 12px;
+  }
+
   .course-card-list {
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  .course-card-list li {
     padding-left: 18px;
   }
 
+  .course-card-list li::before {
+    width: 5px;
+    height: 5px;
+  }
+
   .course-card-price {
-    font-size: 14px;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 8px;
   }
 }
 
@@ -1407,25 +1523,33 @@
 
   .konsalting-block-title,
   .courses-block-title {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  .courses-block {
+    padding: 24px 12px 20px;
+  }
+
+  .course-card {
+    padding: 20px 14px 16px;
   }
 
   .course-card-title {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   .course-card-time {
-    font-size: 17px;
+    font-size: 15px;
+    padding: 6px 10px;
   }
 
   .course-card-list {
-    font-size: 14px;
-    line-height: 1.45;
-    padding-left: 16px;
+    font-size: 13px;
   }
 
   .course-card-price {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 7px 8px;
   }
 }
 
