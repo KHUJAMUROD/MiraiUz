@@ -724,10 +724,23 @@ export default function Home() {
             </h2>
 
             <div className={`konsalting-block ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-              <h3 className="konsalting-block-title">Konsalting</h3>
-              <p className="konsalting-block-placeholder">
-                Bu joy konsalting xizmati haqida batafsil ma'lumot uchun ajratilgan.
+              <h3 className="konsalting-block-title">Mirai JPN – Student Viza Consalting Xizmatlari</h3>
+              <p className="konsalting-intro">
+                &quot;Mirai JPN&quot; Yapon tili o&apos;quv markazi talabalarga Yaponiyaning til maktablariga o&apos;qishga kirish va student viza olish jarayonida to&apos;liq consalting xizmatini taqdim etadi.
               </p>
+              <p className="konsalting-services-title">Bizning xizmatlarimiz quyidagilarni o&apos;z ichiga oladi:</p>
+              <ol className="konsalting-list">
+                <li className="konsalting-list-item">Hujjatlarni Yapon standartlariga mos ravishda tayyorlash va tekshirish</li>
+                <li className="konsalting-list-item">Hujjatlarni o&apos;zbek tilidan yapon tiliga professional va aniq tarjima qilish</li>
+                <li className="konsalting-list-item">Hujjatlarni Yapon maktablariga topshirish va rasmiylashtirish</li>
+                <li className="konsalting-list-item">Hujjatlarni Yaponiyaga pochta orqali yuborish</li>
+                <li className="konsalting-list-item">Student viza uchun hujjatlarni tayyorlash va barcha tegishli ishlarni tashkil etish</li>
+                <li className="konsalting-list-item">Viza tasdiqlangandan so&apos;ng Yaponiyaning elchixonasidan viza stikeri olish xizmatlari</li>
+              </ol>
+              <div className="konsalting-result">
+                <span className="konsalting-result-label">Natija:</span>{' '}
+                Talabalarimiz uchun barcha murakkab jarayonlar oson, tez va ishonchli amalga oshiriladi.
+              </div>
             </div>
 
             <div
