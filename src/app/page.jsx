@@ -11,12 +11,29 @@ import videosData from '@/store/videos.json';
 import './page.scss';
 
 
+// Сертификаты CFR (O'quvchilarimiz natijalari) — бесконечная карусель
 const natijalarCertificateImages = [
-  '/images/results/oquvchilar-natijalari.png'
+  '/certificates/cfr/DUSILAYEVA_SABINA.webp',
+  '/certificates/cfr/GULCHIRA_SENSEI.webp',
+  '/certificates/cfr/img476.webp',
+  '/certificates/cfr/IMG_0001.webp',
+  '/certificates/cfr/JLPT_N2.webp',
+  '/certificates/cfr/MALIKA.webp',
+  '/certificates/cfr/SAFAROVA_BAKHORA.webp',
 ];
 
+// Визы (O'quvchilarimiz vizalari) — бесконечная карусель
 const natijalarVisaImages = [
-  '/images/results/oquvchilar-vizalari.png'
+  '/certificates/viza/1.webp',
+  '/certificates/viza/2.webp',
+  '/certificates/viza/3.webp',
+  '/certificates/viza/4.webp',
+  '/certificates/viza/5.webp',
+  '/certificates/viza/6.webp',
+  '/certificates/viza/7.webp',
+  '/certificates/viza/8.webp',
+  '/certificates/viza/9.webp',
+  '/certificates/viza/10.webp',
 ];
 
 const ABOUT_GALLERY_IMAGES = [
@@ -94,6 +111,7 @@ export default function Home() {
   const [submitMessage, setSubmitMessage] = useState({ type: '', text: '' });
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(null);
+  const [natijalarLightbox, setNatijalarLightbox] = useState(null); // URL открытого сертификата/визы
 
   const lightboxIndex = lightboxImage ? ABOUT_GALLERY_IMAGES.indexOf(lightboxImage) : -1;
   const lightboxPrev = useCallback(() => {
@@ -107,19 +125,23 @@ export default function Home() {
 
   useEffect(() => {
     const handleKey = (e) => {
+      if (natijalarLightbox) {
+        if (e.key === 'Escape') setNatijalarLightbox(null);
+        return;
+      }
       if (e.key === 'Escape') setLightboxImage(null);
       if (e.key === 'ArrowLeft') lightboxPrev();
       if (e.key === 'ArrowRight') lightboxNext();
     };
-    if (lightboxImage) {
+    if (lightboxImage || natijalarLightbox) {
       document.addEventListener('keydown', handleKey);
     }
     return () => document.removeEventListener('keydown', handleKey);
-  }, [lightboxImage, lightboxPrev, lightboxNext]);
+  }, [lightboxImage, lightboxPrev, lightboxNext, natijalarLightbox]);
 
   // Блокировка скролла при открытом модальном окне
   useEffect(() => {
-    if (showThankYouModal || lightboxImage) {
+    if (showThankYouModal || lightboxImage || natijalarLightbox) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -127,7 +149,7 @@ export default function Home() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [showThankYouModal, lightboxImage]);
+  }, [showThankYouModal, lightboxImage, natijalarLightbox]);
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -819,9 +841,23 @@ export default function Home() {
               <h3 className="natijalar-marquee-title">O'quvchilarimiz natijalari</h3>
               <div className="natijalar-marquee natijalar-marquee-left" aria-label="O'quvchilarimiz sertifikatlari karuseli">
                 <div className="natijalar-marquee-track">
-                  {[...natijalarCertificateImages, ...natijalarCertificateImages].map((imageSrc, index) => (
-                    <div className="natijalar-marquee-item" key={`${imageSrc}-${index}`}>
-                      <img src={imageSrc} alt={`O'quvchi sertifikati ${index + 1}`} loading="lazy" />
+                  {[...natijalarCertificateImages, ...natijalarCertificateImages, ...natijalarCertificateImages].map((imageSrc, index) => (
+                    <div
+                      className="natijalar-marquee-item"
+                      key={`cert-${imageSrc}-${index}`}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setNatijalarLightbox(imageSrc)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
+                      aria-label="Sertifikatni kattalashtirish"
+                    >
+                      <img src={imageSrc} alt={`O'quvchi sertifikati ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
+                      <span className="natijalar-marquee-item-zoom" aria-hidden="true">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -832,9 +868,23 @@ export default function Home() {
               <h3 className="natijalar-marquee-title">O'quvchilarimiz vizalari</h3>
               <div className="natijalar-marquee natijalar-marquee-right" aria-label="O'quvchilarimiz vizalari karuseli">
                 <div className="natijalar-marquee-track">
-                  {[...natijalarVisaImages, ...natijalarVisaImages].map((imageSrc, index) => (
-                    <div className="natijalar-marquee-item" key={`${imageSrc}-${index}`}>
-                      <img src={imageSrc} alt={`O'quvchi vizasi ${index + 1}`} loading="lazy" />
+                  {[...natijalarVisaImages, ...natijalarVisaImages, ...natijalarVisaImages].map((imageSrc, index) => (
+                    <div
+                      className="natijalar-marquee-item"
+                      key={`viza-${imageSrc}-${index}`}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setNatijalarLightbox(imageSrc)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
+                      aria-label="Vizani kattalashtirish"
+                    >
+                      <img src={imageSrc} alt={`O'quvchi vizasi ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />
+                      <span className="natijalar-marquee-item-zoom" aria-hidden="true">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -1075,6 +1125,32 @@ export default function Home() {
           )}
           <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img src={lightboxImage} alt="Mirai rasmi" className="about-gallery-lightbox-img" />
+          </div>
+        </div>
+      )}
+
+      {/* Лайтбокс для сертификатов и виз (Natijalar) — только просмотр, без переключения */}
+      {natijalarLightbox && (
+        <div
+          className="about-gallery-lightbox"
+          onClick={() => setNatijalarLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Sertifikat yoki vizani kattalashtirish"
+        >
+          <button
+            type="button"
+            className="about-gallery-lightbox-close"
+            onClick={() => setNatijalarLightbox(null)}
+            aria-label="Yopish"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={natijalarLightbox} alt="Sertifikat yoki viza" className="about-gallery-lightbox-img" />
           </div>
         </div>
       )}

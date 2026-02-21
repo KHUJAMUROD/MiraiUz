@@ -1802,38 +1802,66 @@
 
 .natijalar-marquee-item {
   flex: 0 0 auto;
-  width: min(86vw, 1000px);
+  width: min(75vw, 200px);
+  position: relative;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 10px 34px rgba(15, 23, 42, 0.14);
   border: 1px solid rgba(71, 85, 105, 0.22);
   background-color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+
+    .natijalar-marquee-item-zoom {
+      opacity: 1;
+    }
   }
 
   img {
     width: 100%;
     height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    object-position: top;
     display: block;
   }
 }
 
+.natijalar-marquee-item-zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  opacity: 0;
+  @include transition(opacity 0.25s ease);
+
+  svg {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+}
+
+/* Бесшовный цикл: 3 копии контента, сдвиг на 1/3 ширины трека */
 @keyframes natijalar-scroll-left {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(calc(-50% - 12px));
+    transform: translateX(-33.333%);
   }
 }
 
 @keyframes natijalar-scroll-right {
   from {
-    transform: translateX(calc(-50% - 12px));
+    transform: translateX(-33.333%);
   }
   to {
     transform: translateX(0);
@@ -1873,7 +1901,11 @@
   }
 
   .natijalar-marquee-item {
-    width: min(92vw, 900px);
+    width: min(80vw, 340px);
+
+    img {
+      max-height: 240px;
+    }
   }
 }
 
@@ -1899,6 +1931,14 @@
     gap: 14px;
     animation-duration: 28s;
   }
+
+  .natijalar-marquee-item {
+    width: min(72vw, 300px);
+
+    img {
+      max-height: 220px;
+    }
+  }
 }
 
 @media (max-width: 480px) {
@@ -1911,7 +1951,11 @@
   }
 
   .natijalar-marquee-item {
-    width: calc(100vw - 24px);
+    width: min(88vw, 280px);
+
+    img {
+      max-height: 200px;
+    }
   }
 }
 
