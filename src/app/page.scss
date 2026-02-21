@@ -2192,26 +2192,6 @@
   gap: 24px;
 }
 
-.offer-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #FFD700;
-  padding: 8px 16px;
-  border-radius: 6px;
-  width: fit-content;
-}
-
-.offer-badge-icon {
-  font-size: 18px;
-}
-
-.offer-badge-text {
-  color: #171717;
-  font-size: 14px;
-  font-weight: 700;
-}
-
 .offer-title {
   color: #171717;
   font-size: 36px;
@@ -2254,6 +2234,23 @@
   color: #171717;
   font-size: 18px;
   font-weight: 400;
+}
+
+.offer-footer {
+  margin: 0;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(224, 0, 47, 0.06) 0%, rgba(224, 0, 47, 0.02) 100%);
+  border-left: 4px solid #e0002f;
+  border-radius: 0 8px 8px 0;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  @include transition(box-shadow 0.3s ease);
+
+  &:hover {
+    box-shadow: 0 2px 12px rgba(224, 0, 47, 0.08);
+  }
 }
 
 .registration-form-card {
@@ -2455,6 +2452,11 @@
     font-size: 15px;
   }
   
+  .offer-footer {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+  
   .registration-form-card {
     padding: 24px;
   }
@@ -2491,14 +2493,6 @@
     padding: 32px 20px;
   }
   
-  .offer-badge {
-    padding: 6px 12px;
-  }
-  
-  .offer-badge-text {
-    font-size: 12px;
-  }
-  
   .offer-title {
     font-size: 20px;
   }
@@ -2509,6 +2503,12 @@
   
   .benefit-text {
     font-size: 14px;
+  }
+  
+  .offer-footer {
+    padding: 14px 18px;
+    font-size: 14px;
+    border-left-width: 3px;
   }
   
   .registration-form-card {

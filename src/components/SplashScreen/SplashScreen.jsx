@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import SplitText from '@/components/SplitText/SplitText';
 import './SplashScreen.scss';
 
-// Все изображения для предзагрузки
+// Все изображения для предзагрузки (включая сертификаты и визы)
 const IMAGES_TO_PRELOAD = [
   '/images/backgrounds/school_background.webp',
   '/images/backgrounds/abot.webp',
+  '/images/backgrounds/3.webp',
+  '/images/main_pics/main.webp',
   '/images/about_photos/1.jpg',
   '/images/about_photos/2.jpg',
   '/images/about_photos/3.jpg',
@@ -24,6 +26,25 @@ const IMAGES_TO_PRELOAD = [
   '/images/results/oquvchilar-natijalari.png',
   '/images/results/oquvchilar-vizalari.png',
   '/images/companyLogos/mirai_logo_sq.png',
+  // Сертификаты CFR (O'quvchilarimiz natijalari)
+  '/certificates/cfr/DUSILAYEVA_SABINA.webp',
+  '/certificates/cfr/GULCHIRA_SENSEI.webp',
+  '/certificates/cfr/img476.webp',
+  '/certificates/cfr/IMG_0001.webp',
+  '/certificates/cfr/JLPT_N2.webp',
+  '/certificates/cfr/MALIKA.webp',
+  '/certificates/cfr/SAFAROVA_BAKHORA.webp',
+  // Визы (O'quvchilarimiz vizalari)
+  '/certificates/viza/1.webp',
+  '/certificates/viza/2.webp',
+  '/certificates/viza/3.webp',
+  '/certificates/viza/4.webp',
+  '/certificates/viza/5.webp',
+  '/certificates/viza/6.webp',
+  '/certificates/viza/7.webp',
+  '/certificates/viza/8.webp',
+  '/certificates/viza/9.webp',
+  '/certificates/viza/10.webp',
 ];
 
 function preloadImage(src) {

@@ -959,30 +959,29 @@ export default function Home() {
           <div className="registration-container">
             <div className="registration-content">
               <div className={`registration-offer ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="offer-badge">
-                  <span className="offer-badge-icon">🔥</span>
-                  <span className="offer-badge-text">Cheklangan vaqt</span>
-                </div>
                 <h2 className="offer-title">
-                  Hoziroq Ro'yxatdan O'ting va Joylar soni chegaralangan
+                  Kelajagingizni Yaponiya bilan boshlashga tayyormisiz?
                 </h2>
                 <p className="offer-description">
-                  Bu taklif 5 kun ichida dars boshlaydiganlar uchun amal qiladi. Joylar soni cheklangan.
+                  Ro&apos;yxatdan o&apos;ting va bepul konsultatsiya oling.
                 </p>
                 <ul className="offer-benefits">
                   <li className="offer-benefit-item">
-                    <span className="benefit-icon">✓</span>
+                    <span className="benefit-icon">•</span>
                     <span className="benefit-text">Bepul konsultatsiya</span>
                   </li>
                   <li className="offer-benefit-item">
-                    <span className="benefit-icon">✓</span>
-                    <span className="benefit-text">Viza kafolati</span>
+                    <span className="benefit-icon">•</span>
+                    <span className="benefit-text">Viza jarayonida to&apos;liq ko&apos;mak.</span>
                   </li>
                   <li className="offer-benefit-item">
-                    <span className="benefit-icon">✓</span>
-                    <span className="benefit-text">Bonus materiallar</span>
+                    <span className="benefit-icon">•</span>
+                    <span className="benefit-text">Sifatli o&apos;quv materiallar</span>
                   </li>
                 </ul>
+                <p className="offer-footer">
+                  Savol, takliflar va hamkorlik uchun arizani to&apos;ldiring — siz bilan tez orada bog&apos;lanamiz.
+                </p>
               </div>
 
               <div className={`registration-form-card ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
