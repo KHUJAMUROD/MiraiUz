@@ -731,7 +731,7 @@ export default function Home() {
               <p className="konsalting-services-title">Bizning xizmatlarimiz quyidagilarni o&apos;z ichiga oladi:</p>
               <ol className="konsalting-list">
                 <li className="konsalting-list-item">Hujjatlarni Yapon standartlariga mos ravishda tayyorlash va tekshirish</li>
-                <li className="konsalting-list-item">Hujjatlarni o&apos;zbek tilidan yapon tiliga professional va aniq tarjima qilish</li>
+                <li className="konsalting-list-item">Hujjatlarni O&apos;zbek tilidan Yapon tiliga professional va aniq tarjima qilish</li>
                 <li className="konsalting-list-item">Hujjatlarni Yapon maktablariga topshirish va rasmiylashtirish</li>
                 <li className="konsalting-list-item">Hujjatlarni Yaponiyaga pochta orqali yuborish</li>
                 <li className="konsalting-list-item">Student viza uchun hujjatlarni tayyorlash va barcha tegishli ishlarni tashkil etish</li>
@@ -794,11 +794,8 @@ export default function Home() {
           <div className="cta-container">
             <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
               <h2 className="cta-title">
-                Siz ham sifatni tanlamoqchimisiz?
+              Kelajagingiz bugundan boshlanadi — ariza qoldiring va bepul konsultatsiya oling!
               </h2>
-              <p className="cta-subtitle">
-                Unda harakatni bugundan boshlang.
-              </p>
               <button
                 type="button"
                 className="cta-button"
@@ -807,7 +804,7 @@ export default function Home() {
                   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
               >
-                Bepul konsultatsiya olish
+                Ariza qoldirish
               </button>
             </div>
           </div>
