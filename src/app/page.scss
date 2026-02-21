@@ -985,15 +985,28 @@
 
 .courses-block {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border-radius: 28px;
   border: 2px solid #b64536;
   background:
     radial-gradient(circle at 10% 22%, rgba(255, 209, 220, 0.3) 0%, rgba(255, 209, 220, 0) 28%),
     radial-gradient(circle at 88% 12%, rgba(255, 214, 214, 0.34) 0%, rgba(255, 214, 214, 0) 28%),
     linear-gradient(180deg, #fff7f2 0%, #fffdf9 100%);
-  box-shadow: 0 14px 30px rgba(143, 49, 39, 0.12);
+  box-shadow:
+    0 14px 30px rgba(143, 49, 39, 0.12),
+    0 0 40px rgba(220, 38, 38, 0.15),
+    0 0 80px rgba(185, 28, 28, 0.08),
+    inset 0 0 60px rgba(254, 202, 202, 0.06);
   padding: 70px 28px 34px;
+  transition: box-shadow 0.4s ease;
+
+  &:hover {
+    box-shadow:
+      0 14px 30px rgba(143, 49, 39, 0.12),
+      0 0 50px rgba(220, 38, 38, 0.2),
+      0 0 100px rgba(185, 28, 28, 0.1),
+      inset 0 0 80px rgba(254, 202, 202, 0.08);
+  }
 
   &::before {
     content: '';
@@ -1038,8 +1051,12 @@
 }
 
 .course-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 280px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   width: 74%;
   max-width: 500px;
   margin: 0 auto;
@@ -1055,6 +1072,28 @@
   flex-direction: column;
   gap: 12px;
   @include transition(transform 0.25s ease, box-shadow 0.25s ease);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+      rgba(220, 38, 38, calc(var(--glow-intensity) * 0.18)) 0%,
+      rgba(248, 113, 113, calc(var(--glow-intensity) * 0.08)) 35%,
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   &:hover {
     transform: translateY(-5px);

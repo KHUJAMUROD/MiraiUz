@@ -249,6 +249,7 @@ export default function Home() {
   const teachersSectionRef = useRef(null);
   const ctaSectionRef = useRef(null);
   const konsaltingCoursesSectionRef = useRef(null);
+  const coursesBlockRef = useRef(null);
   const natijalarSectionRef = useRef(null);
   const videosSectionRef = useRef(null);
   const registrationSectionRef = useRef(null);
@@ -314,6 +315,45 @@ export default function Home() {
           observer.unobserve(ref.current);
         }
       });
+    };
+  }, []);
+
+  // Эффект свечения за курсором на карточках курсов (Yapon tili kurslari)
+  useEffect(() => {
+    const block = coursesBlockRef.current;
+    if (!block) return;
+
+    const handleMouseMove = (e) => {
+      const cards = block.querySelectorAll('.course-card');
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const inside = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
+        if (inside) {
+          const percentX = (x / rect.width) * 100;
+          const percentY = (y / rect.height) * 100;
+          card.style.setProperty('--glow-x', `${percentX}%`);
+          card.style.setProperty('--glow-y', `${percentY}%`);
+          card.style.setProperty('--glow-intensity', '1');
+        } else {
+          card.style.setProperty('--glow-intensity', '0');
+        }
+      });
+    };
+
+    const handleMouseLeave = () => {
+      const cards = block.querySelectorAll('.course-card');
+      cards.forEach((card) => {
+        card.style.setProperty('--glow-intensity', '0');
+      });
+    };
+
+    block.addEventListener('mousemove', handleMouseMove);
+    block.addEventListener('mouseleave', handleMouseLeave);
+    return () => {
+      block.removeEventListener('mousemove', handleMouseMove);
+      block.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
@@ -658,7 +698,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div id="courses-block" className={`courses-block ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
+            <div
+              id="courses-block"
+              ref={coursesBlockRef}
+              className={`courses-block courses-block--cursor-glow ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`}
+              style={{ transitionDelay: '0.2s' }}
+            >
               <h3 className="courses-block-title">Yapon tili kurslari</h3>
               <div className="courses-grid">
                 <article className="course-card">
