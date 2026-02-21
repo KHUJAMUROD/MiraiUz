@@ -18,7 +18,7 @@ const DEFAULT_CONFIG = {
   overwrite: false, // Whether to overwrite existing output files
   recursive: true, // Whether to process subdirectories
   outputRoot: null, // Optional root directory for converted output files
-  supportedFormats: ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif', '.gif', '.svg']
+  supportedFormats: ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif', '.gif', '.svg', '.webp']
 };
 
 /**
