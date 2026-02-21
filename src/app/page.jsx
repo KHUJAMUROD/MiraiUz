@@ -20,10 +20,10 @@ const natijalarVisaImages = [
 ];
 
 const ABOUT_GALLERY_IMAGES = [
-  '/images/about_photos/1.jpg',
   '/images/about_photos/3.jpg',
-  '/images/about_photos/4.jpg',
+  '/images/about_photos/1.jpg',
   '/images/about_photos/5.jpg',
+  '/images/about_photos/4.jpg',
   '/images/about_photos/123.jpg',
   '/images/about_photos/7.jpg',
 ];
@@ -569,12 +569,13 @@ export default function Home() {
               <div className="about-mirai-content">
                 <h2 className="about-mirai-title">Biz haqimizda</h2>
                 <p className="about-mirai-text">
-                  Mirai yoshlar uchun xalqaro ta'lim va rivojlanish imkoniyatlarini ochish maqsadida tashkil etilgan.
-                  Bizning asosiy maqsadimiz - talabalarni to'g'ri yo'naltirish, ularning maqsadiga aniq reja bilan
-                  olib borish va xorijda muvaffaqiyatli start berishdir.
+                  «Mirai JPN» Yapon tili o‘quv markazi 2023-yildan buyon faoliyat yuritib kelmoqda. Markazimizning asosiy maqsadi — yoshlarga yapon tilini 0 dan boshlab puxta o‘rgatish hamda Yaponiyada ta’lim olishni istagan talabalar uchun ishonchli ko‘prik bo‘lishdir.
                 </p>
                 <p className="about-mirai-text">
-                  Ushbu bo'limdagi matnni keyinchalik o'zingizga mos tarzda to'liq yangilashingiz mumkin.
+                  Markazimizda tajribali Yapon tili o‘qituvchilari faoliyat yuritadi. Ularning aksariyati Yaponiyada ta’lim olgan bo‘lib, JLPT N1–N2 va CEFR C1 darajalariga ega. Shu kungacha 200+ ga yaqin talabalarga yapon tilini 0 dan o‘rgatib, JLPT va NAT-TEST imtihonlarida N5 dan N2 gacha daraja olishlariga yordam berib kelmoqdamiz.
+                </p>
+                <p className="about-mirai-text">
+                  Talabalarimizning bilim va tajribasini oshirish maqsadida markazimizga muntazam ravishda Yaponiyadan hamkorlar va talabalar tashrif buyurib turadi.
                 </p>
               </div>
             </div>
@@ -615,10 +616,11 @@ export default function Home() {
                   <p className="founder-label">Asoschilar</p>
                   <h3 className="founder-name">SAFTAROV OTABEK</h3>
                   <p className="founder-role">Co-Founder & CEO</p>
+                  <blockquote className="founder-quote">
+                    «Yoshlar kelajagini global ta'lim orqali ochish — bizning missiyamiz»
+                  </blockquote>
                   <p className="founder-bio">
-                    Azizbek ta'lim loyihalari ustida ko'p yillik tajribaga ega bo'lgan mutaxassis sifatida Mirai'ni
-                    yoshlarning global salohiyatini ochish uchun yo'lga qo'ygan. Uning maqsadi - har bir talabaga
-                    aniq reja, ishonchli yo'nalish va kuchli natija beradigan tizim yaratish.
+                    Otabek Mirai markazini O‘zbekistonlik yoshlar va Yaponiya ta’limi o‘rtasida ishonchli ko‘prik yaratish g‘oyasi bilan asos solgan. U har bir talabaga 0 dan boshlab aniq strategiya, sifatli ta’lim va real natijaga olib boradigan tizimni shakllantirishni o‘z oldiga maqsad qilgan.
                   </p>
                 </div>
               </article>
@@ -629,10 +631,11 @@ export default function Home() {
                   <p className="founder-label">Asoschilar</p>
                   <h3 className="founder-name">TIMURKHON KHUSENZADE</h3>
                   <p className="founder-role">Co-Founder & Director</p>
+                  <blockquote className="founder-quote">
+                    «Sifatli ta'lim va to'g'ri metodika — barqaror natijaning asosi»
+                  </blockquote>
                   <p className="founder-bio">
-                    Madina xalqaro ta'lim dasturlarini boshqarish tajribasi bilan Mirai ichida akademik sifat va
-                    metodik yo'nalishni nazorat qiladi. U talabalarning moslashuvi, til rivoji va shaxsiy
-                    o'sishiga xizmat qiladigan amaliy o'quv konsepsiyalarini ishlab chiqadi.
+                    Timurkhon Mirai'ning akademik yo'nalishi va ta'lim sifatini rivojlantirishga mas'ul rahbarlardan biridir. Xalqaro ta'lim tajribasiga tayangan holda, u talabalarning til rivoji, moslashuvi va Yaponiyada muvaffaqiyatli ta'lim olishiga xizmat qiladigan zamonaviy va natijaga yo'naltirilgan o'quv tizimini shakllantiradi.
                   </p>
                 </div>
               </article>
