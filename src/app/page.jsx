@@ -224,7 +224,7 @@ export default function Home() {
           // Письмо владельцу уже отправлено успешно
         }
       }
-      
+
       // Очищаем форму
       setFormData({
         name: '',
@@ -234,7 +234,7 @@ export default function Home() {
         email: '',
         comment: ''
       });
-      
+
       // Показываем модальное окно с благодарностью
       setShowThankYouModal(true);
 
@@ -244,16 +244,16 @@ export default function Home() {
       const text = error?.text ?? error?.message ?? (typeof error === 'string' ? error : null);
       const errObj = { status, text, constructor: error?.constructor?.name };
       console.error('Email sending failed. Status:', status, 'Text:', text, 'Full:', errObj);
-      
+
       let errorMessage = 'Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring yoki telefon orqali bog\'laning.';
       if (text) {
         errorMessage = `Xatolik: ${text}`;
       } else if (status) {
         errorMessage = `Xatolik (${status}). Iltimos, qayta urinib ko\'ring.`;
       }
-      
-      setSubmitMessage({ 
-        type: 'error', 
+
+      setSubmitMessage({
+        type: 'error',
         text: errorMessage
       });
     } finally {
@@ -432,7 +432,7 @@ export default function Home() {
   useEffect(() => {
     const el = videosCarouselRef.current;
     if (!el || infiniteVideos.length === 0) return;
-    
+
     // Ждем, пока элементы отрендерятся
     const initScroll = () => {
       const singleSetWidth = getSingleSetWidth();
@@ -459,7 +459,7 @@ export default function Home() {
 
     const handleScroll = () => {
       if (isScrolling.current) return;
-      
+
       // Очищаем предыдущий таймаут
       if (scrollTimeoutRef.current) {
         cancelAnimationFrame(scrollTimeoutRef.current);
@@ -521,23 +521,23 @@ export default function Home() {
   const scrollVideos = useCallback((direction) => {
     const el = videosCarouselRef.current;
     if (!el || infiniteVideos.length === 0) return;
-    
+
     const cardWidth = el.querySelector('.videos-card')?.offsetWidth ?? 280;
     const gap = 24;
     const singleCardWidth = cardWidth + gap;
     const scrollAmount = singleCardWidth * (direction === 'next' ? 1 : -1);
-    
+
     // Прокручиваем ровно на одно видео
     el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    
+
     // Проверяем границы после прокрутки для бесконечности
     setTimeout(() => {
       const singleSetWidth = getSingleSetWidth();
       if (singleSetWidth === 0) return;
-      
+
       const scrollLeft = el.scrollLeft;
       const threshold = singleSetWidth * 0.15; // 15% от ширины одного набора
-      
+
       // Если прокрутили близко к началу, переключаемся на последний набор
       if (scrollLeft < singleSetWidth - threshold) {
         isScrolling.current = true;
@@ -580,7 +580,7 @@ export default function Home() {
     <div className={`page ${isSplashVisible ? 'splash-active' : ''}`}>
       {isSplashVisible && <SplashScreen onLoaded={handleSplashLoaded} />}
       <Header />
-      
+
       <main className="main">
         <HeroPage />
 
@@ -614,9 +614,9 @@ export default function Home() {
                 >
                   <span className="about-mirai-gallery-zoom" aria-hidden="true">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-                      <path d="M21 21L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      <path d="M11 8V14M8 11H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                      <path d="M21 21L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M11 8V14M8 11H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                     </svg>
                   </span>
                 </button>
@@ -632,20 +632,7 @@ export default function Home() {
             </h2>
 
             <div className="founders-list">
-              <article className={`founder-card founder-motion-left ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label="Asoschi 1 fotosurati" />
-                <div className="founder-content">
-                  <p className="founder-label">Asoschilar</p>
-                  <h3 className="founder-name">SAFTAROV OTABEK</h3>
-                  <p className="founder-role">Co-Founder & CEO</p>
-                  <blockquote className="founder-quote">
-                    «Yoshlar kelajagini global ta'lim orqali ochish — bizning missiyamiz»
-                  </blockquote>
-                  <p className="founder-bio">
-                    Otabek Mirai markazini O‘zbekistonlik yoshlar va Yaponiya ta’limi o‘rtasida ishonchli ko‘prik yaratish g‘oyasi bilan asos solgan. U har bir talabaga 0 dan boshlab aniq strategiya, sifatli ta’lim va real natijaga olib boradigan tizimni shakllantirishni o‘z oldiga maqsad qilgan.
-                  </p>
-                </div>
-              </article>
+
 
               <article className={`founder-card founder-card-second founder-motion-right ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.4s' }}>
                 <div className="founder-avatar founder-avatar-two" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[1])}")` }} role="img" aria-label="Asoschi 2 fotosurati" />
@@ -658,6 +645,20 @@ export default function Home() {
                   </blockquote>
                   <p className="founder-bio">
                     Timurkhon Mirai'ning akademik yo'nalishi va ta'lim sifatini rivojlantirishga mas'ul rahbarlardan biridir. Xalqaro ta'lim tajribasiga tayangan holda, u talabalarning til rivoji, moslashuvi va Yaponiyada muvaffaqiyatli ta'lim olishiga xizmat qiladigan zamonaviy va natijaga yo'naltirilgan o'quv tizimini shakllantiradi.
+                  </p>
+                </div>
+              </article>
+              <article className={`founder-card founder-motion-left ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.1s' }}>
+                <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label="Asoschi 1 fotosurati" />
+                <div className="founder-content">
+                  <p className="founder-label">Asoschilar</p>
+                  <h3 className="founder-name">SAFTAROV OTABEK</h3>
+                  <p className="founder-role">Co-Founder & CEO</p>
+                  <blockquote className="founder-quote">
+                    «Yoshlar kelajagini global ta'lim orqali ochish — bizning missiyamiz»
+                  </blockquote>
+                  <p className="founder-bio">
+                    Otabek Mirai markazini O‘zbekistonlik yoshlar va Yaponiya ta’limi o‘rtasida ishonchli ko‘prik yaratish g‘oyasi bilan asos solgan. U har bir talabaga 0 dan boshlab aniq strategiya, sifatli ta’lim va real natijaga olib boradigan tizimni shakllantirishni o‘z oldiga maqsad qilgan.
                   </p>
                 </div>
               </article>
@@ -816,7 +817,7 @@ export default function Home() {
           <div className="cta-container">
             <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
               <h2 className="cta-title">
-              Kelajagingiz bugundan boshlanadi — ariza qoldiring va bepul konsultatsiya oling!
+                Kelajagingiz bugundan boshlanadi — ariza qoldiring va bepul konsultatsiya oling!
               </h2>
               <button
                 type="button"
@@ -854,8 +855,8 @@ export default function Home() {
                       <img src={imageSrc} alt={`O'quvchi sertifikati ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                       </span>
                     </div>
@@ -881,8 +882,8 @@ export default function Home() {
                       <img src={imageSrc} alt={`O'quvchi vizasi ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
-                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                          <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                       </span>
                     </div>
@@ -907,7 +908,7 @@ export default function Home() {
                 aria-label="Oldingi videolar"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               <div
@@ -948,7 +949,7 @@ export default function Home() {
                 aria-label="Keyingi videolar"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
@@ -1012,7 +1013,7 @@ export default function Home() {
                     required
                     disabled={isSubmitting}
                   />
-                 
+
                   <div className="phone-input-wrapper">
                     <span className="phone-prefix">+998</span>
                     <input
@@ -1044,8 +1045,8 @@ export default function Home() {
                     rows="4"
                     disabled={isSubmitting}
                   />
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="form-submit-button"
                     disabled={isSubmitting}
                   >
@@ -1053,8 +1054,8 @@ export default function Home() {
                       <>
                         <svg className="form-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeDasharray="31.416" strokeDashoffset="31.416">
-                            <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416;0 31.416" repeatCount="indefinite"/>
-                            <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416;-31.416" repeatCount="indefinite"/>
+                            <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416;0 31.416" repeatCount="indefinite" />
+                            <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416;-31.416" repeatCount="indefinite" />
                           </circle>
                         </svg>
                         Yuborilmoqda...
@@ -1063,8 +1064,8 @@ export default function Home() {
                       <>
                         Chegirmani Olish
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </>
                     )}
@@ -1094,8 +1095,8 @@ export default function Home() {
             aria-label="Yopish"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           {lightboxIndex > 0 && (
@@ -1106,7 +1107,7 @@ export default function Home() {
               aria-label="Oldingi rasm"
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           )}
@@ -1118,7 +1119,7 @@ export default function Home() {
               aria-label="Keyingi rasm"
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           )}
@@ -1144,8 +1145,8 @@ export default function Home() {
             aria-label="Yopish"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
@@ -1158,21 +1159,21 @@ export default function Home() {
       {showThankYouModal && (
         <div className="thank-you-modal-overlay" onClick={() => setShowThankYouModal(false)}>
           <div className="thank-you-modal" onClick={(e) => e.stopPropagation()}>
-            <button 
+            <button
               className="thank-you-modal-close"
               onClick={() => setShowThankYouModal(false)}
               aria-label="Yopish"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
             <div className="thank-you-modal-content">
               <div className="thank-you-icon">
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="2" fill="#d1fae5"/>
-                  <path d="M8 12L11 15L16 9" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="12" r="10" stroke="#10b981" strokeWidth="2" fill="#d1fae5" />
+                  <path d="M8 12L11 15L16 9" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
               <h2 className="thank-you-title">Rahmat!</h2>
@@ -1182,7 +1183,7 @@ export default function Home() {
               <p className="thank-you-description">
                 Tez orada mutaxassislarimiz siz bilan bog'lanib, barcha savollaringizga javob beradi.
               </p>
-              <button 
+              <button
                 className="thank-you-button"
                 onClick={() => setShowThankYouModal(false)}
               >
