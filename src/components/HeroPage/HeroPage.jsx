@@ -3,9 +3,9 @@
 import './HeroPage.scss';
 
 const HERO_CONTENT = {
-  title: 'Mirai sizning kelajagingiz',
-  subtitle: 'Biz bilan kelajakni quring',
-  description: "Ilhom, sifat va natija — Mirai bilan yangi bosqichni boshlang.",
+  title: 'Mirai JPN - sizning kelajagingiz',
+  subtitle: "Yapon tili va Yaponiyada ta'lim yo'lida ishonchli markaz",
+  description: "Ilhom, sifat va natija - Mirai bilan yangi bosqichni boshlang.",
   image: '/images/main_pics/main.webp',
   imageAlt: 'Mirai students learning'
 };

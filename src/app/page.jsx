@@ -68,6 +68,55 @@ function getInstagramReelId(url) {
   return match ? match[1] : null;
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mirai-jpn.uz';
+const NORMALIZED_SITE_URL = SITE_URL.startsWith('http') ? SITE_URL : `https://${SITE_URL}`;
+
+const SEO_STRUCTURED_DATA = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Mirai JPN',
+    alternateName: ['Mirai', 'MiraiJpn', 'Mirai Uzbekistan'],
+    url: NORMALIZED_SITE_URL,
+    logo: `${NORMALIZED_SITE_URL}/images/companyLogos/mirai_logo_sq.png`,
+    email: 'languagecentermirai.uz@gmail.com',
+    telephone: '+998888930888',
+    sameAs: [
+      'https://www.instagram.com/mirai_uz',
+      'https://t.me/mirai_uzyapontilicenter',
+      'https://wa.me/998888930888',
+    ],
+    foundingDate: '2023',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Mirai Japan Language Centre',
+    url: NORMALIZED_SITE_URL,
+    description:
+      "Mirai JPN - Yapon tili kurslari, student visa konsalting va Yaponiyada o'qish uchun professional o'quv markazi.",
+    areaServed: 'UZ',
+    knowsAbout: ['Japanese language', 'JLPT', 'NAT-TEST', 'Student visa', 'Japan study'],
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        telephone: '+998888930888',
+        areaServed: 'UZ',
+        availableLanguage: ['uz', 'ru'],
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Mirai JPN',
+    alternateName: 'MiraiJpn',
+    url: NORMALIZED_SITE_URL,
+    inLanguage: 'uz',
+  },
+];
+
 export default function Home() {
   const emailjsConfig = {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -578,6 +627,13 @@ export default function Home() {
 
   return (
     <div className={`page ${isSplashVisible ? 'splash-active' : ''}`}>
+      {SEO_STRUCTURED_DATA.map((schema, index) => (
+        <script
+          key={`seo-schema-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       {isSplashVisible && <SplashScreen onLoaded={handleSplashLoaded} />}
       <Header />
 
