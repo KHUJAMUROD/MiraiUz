@@ -2,20 +2,14 @@
 
 import React, { memo, useMemo, useRef, useEffect, useLayoutEffect, useState } from 'react';
 import './CompanyMarquee.scss';
+import { useI18n } from '@/i18n/I18nProvider';
 
 // Логотип Mirai для бегущей строки (путь из public — избегаем импорт для корректной работы на хостинге)
 const MIRAI_LOGO_SRC = '/images/companyLogos/mirai_logo_sq.png';
 
-const COMPANIES = Array.from({ length: 10 }, () => ({
-  name: 'Mirai',
-  Logo: MIRAI_LOGO_SRC,
-  category: 'Education',
-  isUnitSchool: false,
-}));
-
 // Optimized logo rendering component
 const LogoItem = memo(({ company, keyPrefix }) => {
-  const { Logo, name, category, isUnitSchool } = company;
+  const { Logo, name, category, isUnitSchool, logoAltWord } = company;
   
   // Determine logo type once and memoize
   const logoProps = useMemo(() => {
@@ -27,9 +21,9 @@ const LogoItem = memo(({ company, keyPrefix }) => {
       isReactComponent,
       imageSrc,
       className: `company-marquee__logo ${isUnitSchool ? 'company-marquee__logo--unit-school' : ''}`,
-      ariaLabel: `${name} logo`
+      ariaLabel: `${name} ${logoAltWord}`
     };
-  }, [Logo, name, isUnitSchool]);
+  }, [Logo, name, isUnitSchool, logoAltWord]);
 
   return (
     <div 
@@ -59,6 +53,7 @@ const LogoItem = memo(({ company, keyPrefix }) => {
 LogoItem.displayName = 'LogoItem';
 
 const CompanyMarquee = memo(() => {
+  const { t } = useI18n();
   const [isVisible, setIsVisible] = useState(false);
   const marqueeRef = useRef(null);
   const contentRef = useRef(null);
@@ -125,6 +120,16 @@ const CompanyMarquee = memo(() => {
     };
   }, []);
 
+  const companies = useMemo(() => (
+    Array.from({ length: 10 }, () => ({
+      name: t('companyMarquee.companyName'),
+      Logo: MIRAI_LOGO_SRC,
+      category: t('companyMarquee.category'),
+      logoAltWord: t('companyMarquee.logoAlt'),
+      isUnitSchool: false,
+    }))
+  ), [t]);
+
   // Memoize the rendered logo items to prevent recreation
   // Reduced from 3 sets to 2 sets (33% DOM reduction = 16 vs 24 elements)
   const logoItems = useMemo(() => {
@@ -132,7 +137,7 @@ const CompanyMarquee = memo(() => {
     
     // Generate two sets efficiently (reduced from 3)
     for (let set = 0; set < 2; set++) {
-      COMPANIES.forEach((company, index) => {
+      companies.forEach((company, index) => {
         items.push(
           <LogoItem 
             key={`${set}-${index}`}
@@ -144,13 +149,13 @@ const CompanyMarquee = memo(() => {
     }
     
     return items;
-  }, []);
+  }, [companies]);
 
   return (
     <section 
       ref={marqueeRef}
       className="company-marquee" 
-      aria-label="Trusted educational partners"
+      aria-label={t('companyMarquee.sectionAria')}
     >
       <div className="company-marquee__container">
         <div className="company-marquee__track">

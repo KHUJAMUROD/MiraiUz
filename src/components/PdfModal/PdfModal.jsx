@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import './PdfModal.scss';
+import { useI18n } from '@/i18n/I18nProvider';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -12,6 +13,7 @@ const ZOOM_MAX = 2.5;
 const ZOOM_STEP = 0.25;
 
 export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
+  const { t } = useI18n();
   const [pageNumber, setPageNumber] = useState(1);
   const [numPages, setNumPages] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -84,7 +86,7 @@ export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
           <button
             className="pdf-modal-close"
             onClick={onClose}
-            aria-label="Yopish"
+            aria-label={t('pdfModal.closeAria')}
             type="button"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +100,7 @@ export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
           {loading && (
             <div className="pdf-modal-loading">
               <div className="pdf-modal-spinner" />
-              <span>Yuklanmoqda...</span>
+              <span>{t('pdfModal.loading')}</span>
             </div>
           )}
           <div
@@ -134,7 +136,7 @@ export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
               className="pdf-modal-zoom-btn"
               onClick={zoomOut}
               disabled={scale <= ZOOM_MIN}
-              aria-label="Kichiklashtirish"
+              aria-label={t('pdfModal.zoomOutAria')}
             >
               −
             </button>
@@ -144,7 +146,7 @@ export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
               className="pdf-modal-zoom-btn"
               onClick={zoomIn}
               disabled={scale >= ZOOM_MAX}
-              aria-label="Kattalashtirish"
+              aria-label={t('pdfModal.zoomInAria')}
             >
               +
             </button>
@@ -156,21 +158,21 @@ export default function PdfModal({ isOpen, onClose, pdfSrc, title }) {
               className="pdf-modal-nav-btn"
               onClick={prevPage}
               disabled={pageNumber <= 1}
-              aria-label="Oldingi sahifa"
+              aria-label={t('pdfModal.prevPageAria')}
             >
-              ← Oldingi
+              ← {t('pdfModal.prevPage')}
             </button>
             <span className="pdf-modal-page-info">
-              Sahifa {pageNumber} / {numPages}
+              {t('pdfModal.page')} {pageNumber} / {numPages}
             </span>
             <button
               type="button"
               className="pdf-modal-nav-btn"
               onClick={nextPage}
               disabled={pageNumber >= numPages}
-              aria-label="Keyingi sahifa"
+              aria-label={t('pdfModal.nextPageAria')}
             >
-              Keyingi →
+              {t('pdfModal.nextPage')} →
             </button>
             </div>
           )}

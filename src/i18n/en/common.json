@@ -1,0 +1,244 @@
+{
+  "seo": {
+    "title": "Mirai JPN - Japanese Language Courses and Study in Japan",
+    "description": "Mirai JPN is a professional center for Japanese language courses, student visa consulting, and study-in-Japan preparation.",
+    "keywords": [
+      "Mirai JPN",
+      "MiraiJpn",
+      "Mirai",
+      "Japanese language courses",
+      "study in Japan",
+      "student visa",
+      "JLPT",
+      "NAT-TEST"
+    ],
+    "ogTitle": "Mirai JPN - Japanese Language Courses and Study in Japan",
+    "ogDescription": "Get full guidance at Mirai JPN for Japanese language learning, student visa process, and study opportunities in Japan.",
+    "ogLocale": "en_US",
+    "ogImageAlt": "Mirai JPN - Japanese language and study center"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "Select language"
+  },
+  "header": {
+    "logoAria": "Go to homepage",
+    "menu": {
+      "about": "About us",
+      "foundersTeachers": "Founders and teachers",
+      "consultingCourses": "Consulting and courses",
+      "results": "Results"
+    },
+    "cta": "Submit application",
+    "burgerOpen": "Open menu",
+    "burgerClose": "Close"
+  },
+  "hero": {
+    "eyebrow": "Mirai JPN",
+    "title": "Mirai JPN - your future",
+    "subtitle": "A trusted center for Japanese language and studying in Japan",
+    "description": "Inspiration, quality, and real results - start your new chapter with Mirai.",
+    "imageAlt": "Mirai students during study"
+  },
+  "page": {
+    "about": {
+      "title": "About us",
+      "paragraphs": [
+        "Mirai JPN Japanese Language Center has been operating since 2023. Our main goal is to teach Japanese from zero with high quality and become a reliable bridge for students planning to study in Japan.",
+        "Our center has experienced Japanese language teachers. Most of them studied in Japan and hold JLPT N1-N2 and CEFR C1 levels. So far, we have helped 200+ students learn Japanese from zero and achieve levels from N5 to N2 in JLPT and NAT-TEST exams.",
+        "To expand students' knowledge and practical experience, partners and students from Japan regularly visit our center."
+      ],
+      "teamPhotoAria": "Mirai team photo",
+      "zoomAria": "Enlarge image"
+    },
+    "foundersTeachers": {
+      "title": "Founders and teachers",
+      "founderLabel": "Founders",
+      "founderPhotoAria": "Founder photo",
+      "teacherPhotoAria": "Teacher photo",
+      "founders": [
+        {
+          "name": "TIMURKHON KHUSENZADE",
+          "role": "Co-Founder & Director",
+          "quote": "Quality education and the right methodology are the foundation of sustainable results.",
+          "bio": "Timurkhon is one of the leaders responsible for Mirai's academic direction and education quality development. Based on international education experience, he builds a modern, result-oriented learning system that supports students' language growth, adaptation, and successful study in Japan."
+        },
+        {
+          "name": "SAFTAROV OTABEK",
+          "role": "Co-Founder & CEO",
+          "quote": "Our mission is to unlock young people's future through global education.",
+          "bio": "Otabek founded Mirai with the idea of creating a reliable bridge between Uzbek youth and Japanese education. His goal is to build a clear strategy from zero for every student, combined with quality teaching and a system that leads to real outcomes."
+        }
+      ],
+      "teachersTitle": "Teachers",
+      "teachers": [
+        {
+          "name": "Oboloqulova O'g'iloy",
+          "role": "Career mentor",
+          "text": "Japanese language teacher currently holding JLPT N1 and CEFR C1 levels.",
+          "educationLabel": "Education:",
+          "educationItems": [
+            "Samarkand State Institute of Foreign Languages, 2016-2020 - Philology and language teaching (Japanese), bachelor's degree",
+            "Uzbekistan State World Languages University, 2020-2022 - Linguistics (Japanese), master's degree"
+          ]
+        },
+        {
+          "name": "Saftarov Otabek",
+          "role": "Academic advisor",
+          "text": "Studied for 4 years at Osaka Gakuin University and currently holds JLPT N1. He continuously supports students with documentation and study direction selection.",
+          "educationLabel": "Education:",
+          "educationItems": [
+            "Osaka Gakuin University - 4 years",
+            "JLPT N1"
+          ]
+        },
+        {
+          "name": "Bobojonova Feruza",
+          "role": "Japanese language teacher",
+          "text": "Teaches JLPT and NAT-TEST preparation as well as practical speaking classes.",
+          "educationLabel": "Education:",
+          "educationItems": [
+            "Samarkand State Institute of Foreign Languages, 2021-2025 - Philology and language teaching (Japanese), bachelor's degree",
+            "Currently holds NAT-TEST N2 level"
+          ]
+        },
+        {
+          "name": "Mahkamov Shohrux",
+          "role": "Language practice coach",
+          "text": "Focuses on improving everyday speaking and writing skills.",
+          "educationLabel": "Education:",
+          "educationItems": [
+            "Samarkand State Institute of Foreign Languages, 2021-2025 - Philology and language teaching (Japanese), bachelor's degree",
+            "Japanese language proficiency level JLPT N2",
+            "Studied for one year on scholarship at the University of Tsukuba in 2024-2025"
+          ]
+        }
+      ]
+    },
+    "consultingCourses": {
+      "title": "Consulting and courses",
+      "consultingTitle": "Mirai JPN - student visa consulting services",
+      "consultingIntro": "Mirai JPN provides full consulting support for students applying to Japanese language schools and obtaining a student visa.",
+      "consultingServicesTitle": "Our services include:",
+      "consultingList": [
+        "Preparing and reviewing documents according to Japanese standards",
+        "Professional and accurate translation of documents from Uzbek into Japanese",
+        "Submitting and processing documents to Japanese schools",
+        "Sending documents to Japan by post",
+        "Preparing student visa documents and organizing all related procedures",
+        "Support in obtaining the visa sticker from the Japanese embassy after approval"
+      ],
+      "resultLabel": "Result:",
+      "resultText": "All complex steps become easier, faster, and more reliable for our students.",
+      "coursesTitle": "Japanese language courses",
+      "courseCommonBullets": [
+        "Classes 3 days a week",
+        "Classes 5 days a week",
+        "Students receive a personal account in the StudentsApp platform"
+      ],
+      "coursePlanOne": "3 days per week plan: 13 classes per month",
+      "coursePlanTwo": "5 days per week plan: 23 classes per month",
+      "courses": [
+        { "title": "Morning group", "time": "9:00 - 11:00" },
+        { "title": "Day group", "time": "14:00 - 16:00" },
+        { "title": "Evening group", "time": "17:00 - 19:00" }
+      ]
+    },
+    "cta": {
+      "title": "Your future starts today - submit your application and get a free consultation!",
+      "button": "Submit application"
+    },
+    "results": {
+      "title": "RESULTS",
+      "certificatesTitle": "Our students' results",
+      "visasTitle": "Our students' visas",
+      "certificateZoomAria": "Enlarge certificate",
+      "visaZoomAria": "Enlarge visa",
+      "certificateAlt": "Student certificate",
+      "visaAlt": "Student visa"
+    },
+    "videos": {
+      "titleBlack": "MIRAI",
+      "titleRed": "VIDEOS",
+      "prevAria": "Previous videos",
+      "nextAria": "Next videos",
+      "regionAria": "Instagram Reels carousel",
+      "reelTitle": "Reel"
+    },
+    "registration": {
+      "offerTitle": "Are you ready to start your future with Japan?",
+      "offerDescription": "Register and get a free consultation.",
+      "benefits": [
+        "Free consultation",
+        "Full support throughout the visa process",
+        "High-quality study materials"
+      ],
+      "offerFooter": "Fill out the form for questions, proposals, or partnerships - we will contact you shortly.",
+      "formTitle": "Fill out the application",
+      "inputs": {
+        "name": "Full name",
+        "age": "Your age",
+        "phone": "Phone:",
+        "email": "Your email address",
+        "comment": "Comment or question (optional)"
+      },
+      "submit": "Get discount",
+      "submitting": "Sending..."
+    },
+    "messages": {
+      "errorFallback": "An error occurred. Please try again or contact us by phone.",
+      "errorPrefix": "Error:",
+      "errorWithCode": "Error"
+    },
+    "lightbox": {
+      "imageDialogAria": "Enlarge image",
+      "closeAria": "Close",
+      "prevAria": "Previous image",
+      "nextAria": "Next image",
+      "imageAlt": "Mirai image",
+      "docDialogAria": "Enlarge certificate or visa",
+      "docAlt": "Certificate or visa"
+    },
+    "thankYou": {
+      "title": "Thank you!",
+      "message": "Your application has been successfully submitted!",
+      "description": "Our specialists will contact you soon and answer all your questions.",
+      "close": "Close"
+    }
+  },
+  "footer": {
+    "brandTitle": "Mirai Japan Language Centre",
+    "license": "License",
+    "certificate": "Certificate",
+    "contactsTitle": "Contacts",
+    "mapLink": "Location",
+    "mapAria": "Mirai location map",
+    "mapTitle": "Mirai on Yandex map",
+    "copyright": "(c) 2025 Mirai. All rights reserved."
+  },
+  "companyMarquee": {
+    "companyName": "Mirai",
+    "category": "Education",
+    "logoAlt": "logo",
+    "sectionAria": "Trusted educational partners"
+  },
+  "splash": {
+    "subtitle": "Japanese language center",
+    "logoAlt": "Mirai logo"
+  },
+  "pdfModal": {
+    "closeAria": "Close",
+    "loading": "Loading...",
+    "zoomOutAria": "Zoom out",
+    "zoomInAria": "Zoom in",
+    "prevPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "page": "Page"
+  },
+  "notFound": {
+    "subtitle": "Page not found",
+    "description": "It seems you took a wrong turn. Let's return to Japanese mirai - the future.",
+    "backHome": "Back to homepage"
+  }
+}

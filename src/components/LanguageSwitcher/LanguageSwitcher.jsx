@@ -2,15 +2,21 @@
 
 import { useEffect, useRef } from 'react';
 import './LanguageSwitcher.scss';
+import { LOCALE_LABELS, SUPPORTED_LOCALES } from '@/i18n/config';
 
-const LANGUAGES = [
-  { code: 'ru', label: 'Рус' },
-  { code: 'uz', label: "O'zb" },
-  { code: 'en', label: 'Eng' },
-  { code: 'ja', label: '日本語' },
-];
+const LANGUAGES = SUPPORTED_LOCALES.map((code) => ({
+  code,
+  label: LOCALE_LABELS[code],
+}));
 
-export default function LanguageSwitcher({ value, onChange, open, onOpenChange, variant = 'desktop' }) {
+export default function LanguageSwitcher({
+  value,
+  onChange,
+  open,
+  onOpenChange,
+  variant = 'desktop',
+  ariaLabel = 'Select language',
+}) {
   const containerRef = useRef(null);
 
   const currentLabel = LANGUAGES.find((l) => l.code === value)?.label ?? "O'zb";
@@ -48,7 +54,7 @@ export default function LanguageSwitcher({ value, onChange, open, onOpenChange, 
       ref={containerRef}
       className={rootClass}
       role="group"
-      aria-label="Tilni tanlash"
+      aria-label={ariaLabel}
     >
       <button
         type="button"

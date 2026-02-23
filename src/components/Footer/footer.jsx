@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import './Footer.scss';
 import Image from 'next/image';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const PdfModal = dynamic(
   () => import('@/components/PdfModal/PdfModal'),
@@ -21,6 +22,7 @@ function preloadPdf(url) {
 }
 
 export default function Footer() {
+  const { t } = useI18n();
   const [pdfModal, setPdfModal] = useState(null);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function Footer() {
                 />
               </div>
               <div className="footer-brand-info">
-                <h3 className="footer-brand-title">Mirai Japan Language Centre</h3>
+                <h3 className="footer-brand-title">{t('footer.brandTitle')}</h3>
               </div>
             </div>
 
@@ -53,20 +55,20 @@ export default function Footer() {
                 className="footer-doc-button"
                 onClick={() => setPdfModal('litsenziya')}
               >
-                Litsenziya
+                {t('footer.license')}
               </button>
               <button
                 type="button"
                 className="footer-doc-button"
                 onClick={() => setPdfModal('guvohnoma')}
               >
-                Guvohnoma
+                {t('footer.certificate')}
               </button>
             </div>
           </div>
 
           <div className="footer-contacts">
-            <h4 className="footer-contacts-title">Kontaktlar</h4>
+            <h4 className="footer-contacts-title">{t('footer.contactsTitle')}</h4>
             <a href="tel:+998888930888" className="footer-contact-link">
               <span className="footer-contact-icon" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +121,7 @@ export default function Footer() {
                     <circle cx="12" cy="10" r="2.8" stroke="currentColor" strokeWidth="1.7"/>
                   </svg>
                 </span>
-                Location
+                {t('footer.mapLink')}
               </a>
             </div>
             <a href="mailto:languagecentermirai.uz@gmail.com" className="footer-email-link">
@@ -133,11 +135,11 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="footer-map" aria-label="Mirai location map">
+          <div className="footer-map" aria-label={t('footer.mapAria')}>
             <iframe
               className="footer-map-frame"
               src={MAP_EMBED_URL}
-              title="Mirai on Yandex map"
+              title={t('footer.mapTitle')}
               loading="lazy"
               allowFullScreen
             />
@@ -148,7 +150,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copyright">
-            (c) 2025 Mirai. Barcha huquqlar himoyalangan.
+            {t('footer.copyright')}
           </p>
         </div>
       </div>
@@ -158,7 +160,7 @@ export default function Footer() {
           isOpen={true}
           onClose={() => setPdfModal(null)}
           pdfSrc={PDF_LITSENZIYA}
-          title="Litsenziya"
+          title={t('footer.license')}
         />
       )}
       {pdfModal === 'guvohnoma' && (
@@ -166,7 +168,7 @@ export default function Footer() {
           isOpen={true}
           onClose={() => setPdfModal(null)}
           pdfSrc={PDF_GUVOHNOMA}
-          title="Guvohnoma"
+          title={t('footer.certificate')}
         />
       )}
     </footer>

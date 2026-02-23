@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import SplitText from '@/components/SplitText/SplitText';
+import { useI18n } from '@/i18n/I18nProvider';
 import './SplashScreen.scss';
 
 // Все изображения для предзагрузки (включая сертификаты и визы)
@@ -57,6 +58,7 @@ function preloadImage(src) {
 }
 
 export default function SplashScreen({ onLoaded }) {
+  const { t } = useI18n();
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -129,12 +131,12 @@ export default function SplashScreen({ onLoaded }) {
         <div className="splash-screen__logo">
           <img 
             src="/images/companyLogos/mirai_logo_sq.png" 
-            alt="Mirai Logo" 
+            alt={t('splash.logoAlt')} 
             className="splash-screen__logo-img"
           />
         </div>
         <SplitText
-          text="Mirai"
+          text={t('companyMarquee.companyName')}
           className="splash-screen__title"
           tag="div"
           splitType="chars"
@@ -146,7 +148,7 @@ export default function SplashScreen({ onLoaded }) {
           textAlign="center"
         />
         <SplitText
-          text="Japanese language center"
+          text={t('splash.subtitle')}
           className="splash-screen__subtitle"
           tag="div"
           splitType="words"

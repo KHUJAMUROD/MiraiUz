@@ -1,0 +1,244 @@
+{
+  "seo": {
+    "title": "Mirai JPN - 日本語コースと日本留学サポート",
+    "description": "Mirai JPNは、日本語コース、student visaコンサルティング、日本留学準備を提供する専門教育センターです。",
+    "keywords": [
+      "Mirai JPN",
+      "MiraiJpn",
+      "Mirai",
+      "日本語コース",
+      "日本留学",
+      "student visa",
+      "JLPT",
+      "NAT-TEST"
+    ],
+    "ogTitle": "Mirai JPN - 日本語コースと日本留学サポート",
+    "ogDescription": "Mirai JPNで日本語学習、student visa手続き、日本留学までを一貫サポート。",
+    "ogLocale": "ja_JP",
+    "ogImageAlt": "Mirai JPN - 日本語教育と日本留学センター"
+  },
+  "languageSwitcher": {
+    "ariaLabel": "言語を選択"
+  },
+  "header": {
+    "logoAria": "ホームへ",
+    "menu": {
+      "about": "私たちについて",
+      "foundersTeachers": "創設者と講師",
+      "consultingCourses": "コンサルティングとコース",
+      "results": "実績"
+    },
+    "cta": "申し込み",
+    "burgerOpen": "メニューを開く",
+    "burgerClose": "閉じる"
+  },
+  "hero": {
+    "eyebrow": "Mirai JPN",
+    "title": "Mirai JPN - あなたの未来",
+    "subtitle": "日本語学習と日本留学への信頼できる教育センター",
+    "description": "インスピレーション、品質、成果。Miraiと共に新しい一歩を始めましょう。",
+    "imageAlt": "学習中のMiraiの学生"
+  },
+  "page": {
+    "about": {
+      "title": "私たちについて",
+      "paragraphs": [
+        "Mirai JPN日本語センターは2023年から運営しています。私たちの主な目標は、日本語をゼロから質高く指導し、日本留学を目指す学生のための信頼できる架け橋になることです。",
+        "当センターには経験豊富な日本語講師が在籍しています。多くの講師が日本で学び、JLPT N1-N2およびCEFR C1レベルを有しています。これまでに200名以上の学生が日本語をゼロから学び、JLPT・NAT-TESTでN5からN2までの取得を実現しています。",
+        "学生の知識と実践力を高めるため、日本からのパートナーや学生が定期的に当センターを訪問しています。"
+      ],
+      "teamPhotoAria": "Miraiチーム写真",
+      "zoomAria": "画像を拡大"
+    },
+    "foundersTeachers": {
+      "title": "創設者と講師",
+      "founderLabel": "創設者",
+      "founderPhotoAria": "創設者の写真",
+      "teacherPhotoAria": "講師の写真",
+      "founders": [
+        {
+          "name": "TIMURKHON KHUSENZADE",
+          "role": "Co-Founder & Director",
+          "quote": "質の高い教育と正しいメソッドこそ、安定した成果の基盤です。",
+          "bio": "TimurkhonはMiraiの学術方針と教育品質向上を担うリーダーの一人です。国際教育の経験を基に、語学力向上、適応力強化、日本での学業成功につながる現代的で成果重視の学習システムを構築しています。"
+        },
+        {
+          "name": "SAFTAROV OTABEK",
+          "role": "Co-Founder & CEO",
+          "quote": "若者の未来をグローバル教育で切り開くことが私たちの使命です。",
+          "bio": "Otabekは、ウズベキスタンの若者と日本教育を結ぶ信頼の架け橋を作る理念のもとMiraiを設立しました。各学生に対し、ゼロから明確な戦略、質の高い教育、実成果に結びつく学習システムを提供することを目標としています。"
+        }
+      ],
+      "teachersTitle": "講師",
+      "teachers": [
+        {
+          "name": "Oboloqulova O'g'iloy",
+          "role": "キャリアメンター",
+          "text": "現在、JLPT N1およびCEFR C1レベルを持つ日本語講師。",
+          "educationLabel": "学歴:",
+          "educationItems": [
+            "サマルカンド国立外国語大学（2016-2020）日本語教育学 学士",
+            "ウズベキスタン国立世界言語大学（2020-2022）日本語言語学 修士"
+          ]
+        },
+        {
+          "name": "Saftarov Otabek",
+          "role": "アカデミックアドバイザー",
+          "text": "大阪学院大学で4年間学び、現在JLPT N1レベル。書類準備や進路選択で学生を継続的に支援しています。",
+          "educationLabel": "学歴:",
+          "educationItems": [
+            "大阪学院大学 - 4年間",
+            "JLPT N1"
+          ]
+        },
+        {
+          "name": "Bobojonova Feruza",
+          "role": "日本語講師",
+          "text": "JLPT・NAT-TEST対策と実践会話クラスを担当。",
+          "educationLabel": "学歴:",
+          "educationItems": [
+            "サマルカンド国立外国語大学（2021-2025）日本語教育学 学士",
+            "現在NAT-TEST N2レベル"
+          ]
+        },
+        {
+          "name": "Mahkamov Shohrux",
+          "role": "語学実践コーチ",
+          "text": "日常会話と作文スキルの強化に注力しています。",
+          "educationLabel": "学歴:",
+          "educationItems": [
+            "サマルカンド国立外国語大学（2021-2025）日本語教育学 学士",
+            "日本語能力 JLPT N2",
+            "2024-2025年に筑波大学で奨学金留学（1年間）"
+          ]
+        }
+      ]
+    },
+    "consultingCourses": {
+      "title": "コンサルティングとコース",
+      "consultingTitle": "Mirai JPN - student visaコンサルティングサービス",
+      "consultingIntro": "Mirai JPNは、日本語学校への出願からstudent visa取得まで、学生にフルコンサルティングを提供します。",
+      "consultingServicesTitle": "提供サービス:",
+      "consultingList": [
+        "日本基準に沿った書類の準備・確認",
+        "ウズベク語から日本語への正確で専門的な翻訳",
+        "日本語学校への書類提出と手続き代行",
+        "日本への書類郵送",
+        "student visa用書類準備と関連手続き全体のサポート",
+        "ビザ承認後の日本大使館でのビザステッカー取得サポート"
+      ],
+      "resultLabel": "成果:",
+      "resultText": "複雑な手続きを、より簡単に、より迅速に、より確実に進められます。",
+      "coursesTitle": "日本語コース",
+      "courseCommonBullets": [
+        "週3日クラス",
+        "週5日クラス",
+        "StudentsAppで個人アカウントを提供"
+      ],
+      "coursePlanOne": "週3日プラン: 月13回授業",
+      "coursePlanTwo": "週5日プラン: 月23回授業",
+      "courses": [
+        { "title": "午前クラス", "time": "9:00 - 11:00" },
+        { "title": "昼クラス", "time": "14:00 - 16:00" },
+        { "title": "夕方クラス", "time": "17:00 - 19:00" }
+      ]
+    },
+    "cta": {
+      "title": "あなたの未来は今日から始まります。申し込みで無料相談を受けましょう。",
+      "button": "申し込み"
+    },
+    "results": {
+      "title": "実績",
+      "certificatesTitle": "学生の学習成果",
+      "visasTitle": "学生のビザ実績",
+      "certificateZoomAria": "証明書を拡大",
+      "visaZoomAria": "ビザを拡大",
+      "certificateAlt": "学生の証明書",
+      "visaAlt": "学生のビザ"
+    },
+    "videos": {
+      "titleBlack": "MIRAI",
+      "titleRed": "VIDEOS",
+      "prevAria": "前の動画",
+      "nextAria": "次の動画",
+      "regionAria": "Instagram Reelsカルーセル",
+      "reelTitle": "Reel"
+    },
+    "registration": {
+      "offerTitle": "日本と共に未来を始める準備はできていますか？",
+      "offerDescription": "登録して無料相談を受けましょう。",
+      "benefits": [
+        "無料相談",
+        "ビザ手続きの完全サポート",
+        "高品質な学習教材"
+      ],
+      "offerFooter": "ご質問・ご提案・提携のご相談はフォームから。担当者がすぐにご連絡します。",
+      "formTitle": "申込フォーム",
+      "inputs": {
+        "name": "氏名",
+        "age": "年齢",
+        "phone": "電話:",
+        "email": "メールアドレス",
+        "comment": "コメント・質問（任意）"
+      },
+      "submit": "割引を受ける",
+      "submitting": "送信中..."
+    },
+    "messages": {
+      "errorFallback": "エラーが発生しました。もう一度お試しいただくか、お電話でご連絡ください。",
+      "errorPrefix": "エラー:",
+      "errorWithCode": "エラー"
+    },
+    "lightbox": {
+      "imageDialogAria": "画像を拡大",
+      "closeAria": "閉じる",
+      "prevAria": "前の画像",
+      "nextAria": "次の画像",
+      "imageAlt": "Mirai画像",
+      "docDialogAria": "証明書またはビザを拡大",
+      "docAlt": "証明書またはビザ"
+    },
+    "thankYou": {
+      "title": "ありがとうございます！",
+      "message": "申し込みを受け付けました。",
+      "description": "担当スタッフが近日中にご連絡し、すべてのご質問にお答えします。",
+      "close": "閉じる"
+    }
+  },
+  "footer": {
+    "brandTitle": "Mirai Japan Language Centre",
+    "license": "ライセンス",
+    "certificate": "証明書",
+    "contactsTitle": "連絡先",
+    "mapLink": "所在地",
+    "mapAria": "Mirai所在地マップ",
+    "mapTitle": "Yandexマップ上のMirai",
+    "copyright": "(c) 2025 Mirai. All rights reserved."
+  },
+  "companyMarquee": {
+    "companyName": "Mirai",
+    "category": "教育",
+    "logoAlt": "ロゴ",
+    "sectionAria": "信頼できる教育パートナー"
+  },
+  "splash": {
+    "subtitle": "日本語センター",
+    "logoAlt": "Miraiロゴ"
+  },
+  "pdfModal": {
+    "closeAria": "閉じる",
+    "loading": "読み込み中...",
+    "zoomOutAria": "縮小",
+    "zoomInAria": "拡大",
+    "prevPageAria": "前のページ",
+    "nextPageAria": "次のページ",
+    "prevPage": "前へ",
+    "nextPage": "次へ",
+    "page": "ページ"
+  },
+  "notFound": {
+    "subtitle": "ページが見つかりません",
+    "description": "道に迷ったようです。日本語のmirai（未来）へ戻りましょう。",
+    "backHome": "ホームへ戻る"
+  }
+}

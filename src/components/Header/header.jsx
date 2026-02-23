@@ -3,19 +3,66 @@
 import { useState, useEffect, useRef } from 'react';
 import './Header.scss';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
+import { useI18n } from '@/i18n/I18nProvider';
+import { DEFAULT_LOCALE, LOCALE_COOKIE_KEY, LOCALE_STORAGE_KEY, SUPPORTED_LOCALES } from '@/i18n/config';
 
 const MOBILE_BREAKPOINT = 992;
 const SCROLL_DOWN_THRESHOLD = 60;
 const SCROLL_UP_MIN_DELTA = 8;
 
 export default function Header() {
+  const { locale, t } = useI18n();
+  const router = useRouter();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
-  const [activeLang, setActiveLang] = useState('uz');
+  const [activeLang, setActiveLang] = useState(locale || DEFAULT_LOCALE);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const lastScrollY = useRef(0);
   const isMobile = useRef(false);
+
+  useEffect(() => {
+    setActiveLang(locale || DEFAULT_LOCALE);
+  }, [locale]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    if (!storedLocale || !SUPPORTED_LOCALES.includes(storedLocale)) return;
+    if (storedLocale === locale) return;
+    setPersistedLocale(storedLocale);
+    const hash = window.location.hash || '';
+    router.replace(`${buildLocalizedPath(storedLocale)}${hash}`);
+  }, [locale, router, pathname]);
+
+  const setPersistedLocale = (nextLocale) => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale);
+    }
+    document.cookie = `${LOCALE_COOKIE_KEY}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+  };
+
+  const buildLocalizedPath = (nextLocale) => {
+    const segments = pathname.split('/').filter(Boolean);
+    const hasLocaleSegment = segments.length > 0 && SUPPORTED_LOCALES.includes(segments[0]);
+    if (hasLocaleSegment) {
+      segments[0] = nextLocale;
+    } else {
+      segments.unshift(nextLocale);
+    }
+    return `/${segments.join('/')}`;
+  };
+
+  const handleLanguageChange = (nextLocale) => {
+    if (!SUPPORTED_LOCALES.includes(nextLocale)) return;
+    setActiveLang(nextLocale);
+    setPersistedLocale(nextLocale);
+    setLangDropdownOpen(false);
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    router.push(`${buildLocalizedPath(nextLocale)}${hash}`);
+  };
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -105,7 +152,7 @@ export default function Header() {
       className={`header ${headerHidden ? 'header--hidden' : ''}`}
     >
       <div className="header__container">
-        <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label="Bosh sahifaga">
+        <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label={t('header.logoAria')}>
           <div className="header__logo-icon">
             <Image src="/images/companyLogos/mirai_logo_sq.png" alt="logo" width={280} height={135} />
           </div>
@@ -114,35 +161,36 @@ export default function Header() {
         <div className="header__right">
           <nav className="header__nav">
             <a href="#about" className="header__nav-link" onClick={scrollToSection('about')}>
-              Biz Haqimizda
+              {t('header.menu.about')}
             </a>
             <a href="#asoschilar-va-ustozlar" className="header__nav-link" onClick={scrollToSection('asoschilar-va-ustozlar')}>
-              Asoschilar va Ustozlar
+              {t('header.menu.foundersTeachers')}
             </a>
             <a href="#konsalting-courses-section" className="header__nav-link" onClick={scrollToSection('konsalting-courses-section')}>
-              Konsalting va kurslar
+              {t('header.menu.consultingCourses')}
             </a>
             <a href="#natijalar-section" className="header__nav-link" onClick={scrollToSection('natijalar-section')}>
-              Natijalar
+              {t('header.menu.results')}
             </a>
           </nav>
 
           <button className="header__cta" type="button" onClick={scrollToRegistration}>
-            Ariza qoldirish
+            {t('header.cta')}
           </button>
 
           <LanguageSwitcher
             value={activeLang}
-            onChange={setActiveLang}
+            onChange={handleLanguageChange}
             open={langDropdownOpen}
             onOpenChange={setLangDropdownOpen}
             variant="desktop"
+            ariaLabel={t('languageSwitcher.ariaLabel')}
           />
 
           <button
             type="button"
             className={`header__burger ${menuOpen ? 'header__burger--open' : ''}`}
-            aria-label={menuOpen ? 'Yopish' : 'Menyuni ochish'}
+            aria-label={menuOpen ? t('header.burgerClose') : t('header.burgerOpen')}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((o) => !o)}
           >
@@ -161,27 +209,28 @@ export default function Header() {
       <div className={`header__mobile ${menuOpen ? 'header__mobile--open' : ''}`}>
         <nav className="header__mobile-nav">
           <a href="#about" className="header__mobile-link" onClick={scrollToSection('about')}>
-            Biz Haqimizda
+            {t('header.menu.about')}
           </a>
           <a href="#asoschilar-va-ustozlar" className="header__mobile-link" onClick={scrollToSection('asoschilar-va-ustozlar')}>
-            Asoschilar va Ustozlar
+            {t('header.menu.foundersTeachers')}
           </a>
           <a href="#konsalting-courses-section" className="header__mobile-link" onClick={scrollToSection('konsalting-courses-section')}>
-            Konsalting va kurslar
+            {t('header.menu.consultingCourses')}
           </a>
           <a href="#natijalar-section" className="header__mobile-link" onClick={scrollToSection('natijalar-section')}>
-            Natijalar
+            {t('header.menu.results')}
           </a>
         </nav>
         <button className="header__mobile-cta" type="button" onClick={scrollToRegistration}>
-          Ariza qoldirish
+          {t('header.cta')}
         </button>
         <LanguageSwitcher
           value={activeLang}
-          onChange={setActiveLang}
+          onChange={handleLanguageChange}
           open={langDropdownOpen}
           onOpenChange={setLangDropdownOpen}
           variant="mobile"
+          ariaLabel={t('languageSwitcher.ariaLabel')}
         />
       </div>
     </header>

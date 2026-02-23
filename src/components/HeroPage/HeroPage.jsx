@@ -1,30 +1,25 @@
 'use client';
 
 import './HeroPage.scss';
-
-const HERO_CONTENT = {
-  title: 'Mirai JPN - sizning kelajagingiz',
-  subtitle: "Yapon tili va Yaponiyada ta'lim yo'lida ishonchli markaz",
-  description: "Ilhom, sifat va natija - Mirai bilan yangi bosqichni boshlang.",
-  image: '/images/main_pics/main.webp',
-  imageAlt: 'Mirai students learning'
-};
+import { useI18n } from '@/i18n/I18nProvider';
 
 export default function HeroPage() {
+  const { t } = useI18n();
+
   return (
     <section id="hero" className="hero-main">
       <div className="hero-main__background" />
 
       <div className="hero-main__container">
         <div className="hero-main__media">
-          <img src={HERO_CONTENT.image} alt={HERO_CONTENT.imageAlt} />
+          <img src="/images/main_pics/main.webp" alt={t('hero.imageAlt')} />
         </div>
 
         <div className="hero-main__content">
-          <span className="hero-main__eyebrow">"Mirai JPN"</span>
-          <h1 className="hero-main__title">{HERO_CONTENT.title}</h1>
-          <p className="hero-main__subtitle">{HERO_CONTENT.subtitle}</p>
-          <p className="hero-main__description">{HERO_CONTENT.description}</p>
+          <span className="hero-main__eyebrow">{t('hero.eyebrow')}</span>
+          <h1 className="hero-main__title">{t('hero.title')}</h1>
+          <p className="hero-main__subtitle">{t('hero.subtitle')}</p>
+          <p className="hero-main__description">{t('hero.description')}</p>
         </div>
       </div>
     </section>

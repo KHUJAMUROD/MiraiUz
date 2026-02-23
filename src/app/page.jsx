@@ -7,6 +7,9 @@ import Footer from '@/components/Footer/footer';
 import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
 import HeroPage from '@/components/HeroPage/HeroPage';
 import SplashScreen from '@/components/SplashScreen/SplashScreen';
+import { I18nProvider, useI18n } from '@/i18n/I18nProvider';
+import { DEFAULT_LOCALE, normalizeLocale } from '@/i18n/config';
+import { getMessages } from '@/i18n/dictionaries';
 import videosData from '@/store/videos.json';
 import './page.scss';
 
@@ -71,53 +74,57 @@ function getInstagramReelId(url) {
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mirai-jpn.uz';
 const NORMALIZED_SITE_URL = SITE_URL.startsWith('http') ? SITE_URL : `https://${SITE_URL}`;
 
-const SEO_STRUCTURED_DATA = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Mirai JPN',
-    alternateName: ['Mirai', 'MiraiJpn', 'Mirai Uzbekistan'],
-    url: NORMALIZED_SITE_URL,
-    logo: `${NORMALIZED_SITE_URL}/images/companyLogos/mirai_logo_sq.png`,
-    email: 'languagecentermirai.uz@gmail.com',
-    telephone: '+998888930888',
-    sameAs: [
-      'https://www.instagram.com/mirai_uz',
-      'https://t.me/mirai_uzyapontilicenter',
-      'https://wa.me/998888930888',
-    ],
-    foundingDate: '2023',
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
-    name: 'Mirai Japan Language Centre',
-    url: NORMALIZED_SITE_URL,
-    description:
-      "Mirai JPN - Yapon tili kurslari, student visa konsalting va Yaponiyada o'qish uchun professional o'quv markazi.",
-    areaServed: 'UZ',
-    knowsAbout: ['Japanese language', 'JLPT', 'NAT-TEST', 'Student visa', 'Japan study'],
-    contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        contactType: 'customer support',
-        telephone: '+998888930888',
-        areaServed: 'UZ',
-        availableLanguage: ['uz', 'ru'],
-      },
-    ],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Mirai JPN',
-    alternateName: 'MiraiJpn',
-    url: NORMALIZED_SITE_URL,
-    inLanguage: 'uz',
-  },
-];
+function getStructuredData(locale, seoDescription) {
+  const localizedUrl = `${NORMALIZED_SITE_URL}/${locale}`;
 
-export default function Home() {
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Mirai JPN',
+      alternateName: ['Mirai', 'MiraiJpn', 'Mirai Uzbekistan'],
+      url: localizedUrl,
+      logo: `${NORMALIZED_SITE_URL}/images/companyLogos/mirai_logo_sq.png`,
+      email: 'languagecentermirai.uz@gmail.com',
+      telephone: '+998888930888',
+      sameAs: [
+        'https://www.instagram.com/mirai_uz',
+        'https://t.me/mirai_uzyapontilicenter',
+        'https://wa.me/998888930888'
+      ],
+      foundingDate: '2023'
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'EducationalOrganization',
+      name: 'Mirai Japan Language Centre',
+      url: localizedUrl,
+      description: seoDescription,
+      areaServed: 'UZ',
+      knowsAbout: ['Japanese language', 'JLPT', 'NAT-TEST', 'Student visa', 'Japan study'],
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          telephone: '+998888930888',
+          areaServed: 'UZ',
+          availableLanguage: ['uz', 'ru', 'en', 'ja']
+        }
+      ]
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Mirai JPN',
+      alternateName: 'MiraiJpn',
+      url: localizedUrl,
+      inLanguage: locale
+    }
+  ];
+}
+
+function HomeContent({ locale }) {
+  const { t, messages } = useI18n();
   const emailjsConfig = {
     serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
     templateOwner: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_OWNER,
@@ -224,7 +231,7 @@ export default function Home() {
         region: formData.region,
         phone: `+998${formData.phone}`,
         email: formData.email,
-        comment: formData.comment || 'Izoh yo\'q',
+        comment: formData.comment || '-',
         date: new Date().toLocaleString('uz-UZ', {
           year: 'numeric',
           month: 'long',
@@ -294,11 +301,11 @@ export default function Home() {
       const errObj = { status, text, constructor: error?.constructor?.name };
       console.error('Email sending failed. Status:', status, 'Text:', text, 'Full:', errObj);
 
-      let errorMessage = 'Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring yoki telefon orqali bog\'laning.';
+      let errorMessage = t('page.messages.errorFallback');
       if (text) {
-        errorMessage = `Xatolik: ${text}`;
+        errorMessage = `${t('page.messages.errorPrefix')} ${text}`;
       } else if (status) {
-        errorMessage = `Xatolik (${status}). Iltimos, qayta urinib ko\'ring.`;
+        errorMessage = `${t('page.messages.errorWithCode')} (${status}).`;
       }
 
       setSubmitMessage({
@@ -624,10 +631,23 @@ export default function Home() {
     }, 400); // Даем время для завершения плавной прокрутки
   }, [infiniteVideos.length, getSingleSetWidth]);
 
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
+  const pageT = messages.page;
+  const seoStructuredData = useMemo(
+    () => getStructuredData(locale, messages.seo.description),
+    [locale, messages.seo.description]
+  );
+  const founders = pageT.foundersTeachers.founders;
+  const teachers = pageT.foundersTeachers.teachers;
+  const courses = pageT.consultingCourses.courses;
+
 
   return (
     <div className={`page ${isSplashVisible ? 'splash-active' : ''}`}>
-      {SEO_STRUCTURED_DATA.map((schema, index) => (
+      {seoStructuredData.map((schema, index) => (
         <script
           key={`seo-schema-${index}`}
           type="application/ld+json"
@@ -643,18 +663,14 @@ export default function Home() {
         <section id="about" ref={whyJapanRef} className="about">
           <div className="why-japan-container">
             <div className={`about-mirai-main ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`}>
-              <div className="about-mirai-hero-photo" role="img" aria-label="Mirai jamoasi rasmi" />
+              <div className="about-mirai-hero-photo" role="img" aria-label={pageT.about.teamPhotoAria} />
               <div className="about-mirai-content">
-                <h2 className="about-mirai-title">Biz haqimizda</h2>
-                <p className="about-mirai-text">
-                  «Mirai JPN» Yapon tili o‘quv markazi 2023-yildan buyon faoliyat yuritib kelmoqda. Markazimizning asosiy maqsadi — yoshlarga yapon tilini 0 dan boshlab puxta o‘rgatish hamda Yaponiyada ta’lim olishni istagan talabalar uchun ishonchli ko‘prik bo‘lishdir.
-                </p>
-                <p className="about-mirai-text">
-                  Markazimizda tajribali Yapon tili o‘qituvchilari faoliyat yuritadi. Ularning aksariyati Yaponiyada ta’lim olgan bo‘lib, JLPT N1–N2 va CEFR C1 darajalariga ega. Shu kungacha 200+ ga yaqin talabalarga yapon tilini 0 dan o‘rgatib, JLPT va NAT-TEST imtihonlarida N5 dan N2 gacha daraja olishlariga yordam berib kelmoqdamiz.
-                </p>
-                <p className="about-mirai-text">
-                  Talabalarimizning bilim va tajribasini oshirish maqsadida markazimizga muntazam ravishda Yaponiyadan hamkorlar va talabalar tashrif buyurib turadi.
-                </p>
+                <h2 className="about-mirai-title">{pageT.about.title}</h2>
+                {pageT.about.paragraphs.map((paragraph) => (
+                  <p key={paragraph} className="about-mirai-text">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
 
@@ -666,7 +682,7 @@ export default function Home() {
                   className={`about-mirai-gallery-item ${visibleSections.whyJapan ? 'card-fade-in' : 'card-fade-out'}`}
                   style={{ backgroundImage: `url(${src})`, transitionDelay: `${0.1 + index * 0.1}s` }}
                   onClick={() => setLightboxImage(src)}
-                  aria-label="Rasmni kattalashtirish"
+                  aria-label={pageT.about.zoomAria}
                 >
                   <span className="about-mirai-gallery-zoom" aria-hidden="true">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -684,37 +700,37 @@ export default function Home() {
         <section id="asoschilar-va-ustozlar" ref={whyStudytokyoRef} className="why-studytokyo">
           <div className="why-studytokyo-container">
             <h2 className={`founders-section-title ${visibleSections.whyStudytokyo ? 'card-fade-in' : 'card-fade-out'}`}>
-              Asoschilar va Ustozlar
+              {pageT.foundersTeachers.title}
             </h2>
 
             <div className="founders-list">
 
 
               <article className={`founder-card founder-card-second founder-motion-right ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.4s' }}>
-                <div className="founder-avatar founder-avatar-two" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[1])}")` }} role="img" aria-label="Asoschi 2 fotosurati" />
+                <div className="founder-avatar founder-avatar-two" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[1])}")` }} role="img" aria-label={`${pageT.foundersTeachers.founderPhotoAria}: ${founders[0].name}`} />
                 <div className="founder-content">
-                  <p className="founder-label">Asoschilar</p>
-                  <h3 className="founder-name">TIMURKHON KHUSENZADE</h3>
-                  <p className="founder-role">Co-Founder & Director</p>
+                  <p className="founder-label">{pageT.foundersTeachers.founderLabel}</p>
+                  <h3 className="founder-name">{founders[0].name}</h3>
+                  <p className="founder-role">{founders[0].role}</p>
                   <blockquote className="founder-quote">
-                    «Sifatli ta'lim va to'g'ri metodika — barqaror natijaning asosi»
+                    {founders[0].quote}
                   </blockquote>
                   <p className="founder-bio">
-                    Timurkhon Mirai'ning akademik yo'nalishi va ta'lim sifatini rivojlantirishga mas'ul rahbarlardan biridir. Xalqaro ta'lim tajribasiga tayangan holda, u talabalarning til rivoji, moslashuvi va Yaponiyada muvaffaqiyatli ta'lim olishiga xizmat qiladigan zamonaviy va natijaga yo'naltirilgan o'quv tizimini shakllantiradi.
+                    {founders[0].bio}
                   </p>
                 </div>
               </article>
               <article className={`founder-card founder-motion-left ${visibleSections.whyStudytokyo ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.1s' }}>
-                <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label="Asoschi 1 fotosurati" />
+                <div className="founder-avatar founder-avatar-one" style={{ backgroundImage: `url("${getImageUrl(FOUNDERS_IMAGES[0])}")` }} role="img" aria-label={`${pageT.foundersTeachers.founderPhotoAria}: ${founders[1].name}`} />
                 <div className="founder-content">
-                  <p className="founder-label">Asoschilar</p>
-                  <h3 className="founder-name">SAFTAROV OTABEK</h3>
-                  <p className="founder-role">Co-Founder & CEO</p>
+                  <p className="founder-label">{pageT.foundersTeachers.founderLabel}</p>
+                  <h3 className="founder-name">{founders[1].name}</h3>
+                  <p className="founder-role">{founders[1].role}</p>
                   <blockquote className="founder-quote">
-                    «Yoshlar kelajagini global ta'lim orqali ochish — bizning missiyamiz»
+                    {founders[1].quote}
                   </blockquote>
                   <p className="founder-bio">
-                    Otabek Mirai markazini O‘zbekistonlik yoshlar va Yaponiya ta’limi o‘rtasida ishonchli ko‘prik yaratish g‘oyasi bilan asos solgan. U har bir talabaga 0 dan boshlab aniq strategiya, sifatli ta’lim va real natijaga olib boradigan tizimni shakllantirishni o‘z oldiga maqsad qilgan.
+                    {founders[1].bio}
                   </p>
                 </div>
               </article>
@@ -722,69 +738,64 @@ export default function Home() {
 
             <div ref={teachersSectionRef} className="teachers-section">
               <h3 className={`teachers-title ${visibleSections.teachersSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.05s' }}>
-                O'qituvchilar
+                {pageT.foundersTeachers.teachersTitle}
               </h3>
               <div className="teachers-grid">
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.12s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label="Oboloqulova O'g'iloy fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[0])}")` }} role="img" aria-label={`${pageT.foundersTeachers.teacherPhotoAria}: ${teachers[0].name}`} />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Oboloqulova O'g'iloy</h4>
-                    <p className="teacher-role">Karyera mentori</p>
-                    <p className="teacher-text">Hozirda <span className="teacher-cert">JLPT N1</span> va <span className="teacher-cert">CEFR C1</span> darajaga ega Yapon tili o'qituvchisi.</p>
+                    <h4 className="teacher-name">{teachers[0].name}</h4>
+                    <p className="teacher-role">{teachers[0].role}</p>
+                    <p className="teacher-text">{teachers[0].text}</p>
                     <div className="teacher-edu">
-                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <span className="teacher-edu-label">{teachers[0].educationLabel}</span>
                       <ul>
-                        <li>«Samarqand Davlat chet tillar Instituti» 2016–2020 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
-                        <li>«O'zbekiston Davlat jahon tillar Universiteti» 2020–2022 — Lingvistika (Yapon tili), magistratura</li>
+                        {teachers[0].educationItems.map((item) => <li key={item}>{item}</li>)}
                       </ul>
                     </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.24s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label="Saftarov Otabek fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[1])}")` }} role="img" aria-label={`${pageT.foundersTeachers.teacherPhotoAria}: ${teachers[1].name}`} />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Saftarov Otabek</h4>
-                    <p className="teacher-role">Akademik maslahatchi</p>
-                    <p className="teacher-text">Osaka Gakuin University (大阪学院大学) da 4 yil ta'lim olgan, hozirda <span className="teacher-cert">JLPT N1</span> darajaga ega. Talabalarga hujjat va o'quv yo'nalish tanlovida doimiy yordam berib keladi.</p>
+                    <h4 className="teacher-name">{teachers[1].name}</h4>
+                    <p className="teacher-role">{teachers[1].role}</p>
+                    <p className="teacher-text">{teachers[1].text}</p>
                     <div className="teacher-edu">
-                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <span className="teacher-edu-label">{teachers[1].educationLabel}</span>
                       <ul>
-                        <li>Osaka Gakuin University 大阪学院大学 — 4 yil</li>
-                        <li><span className="teacher-cert">JLPT N1</span></li>
+                        {teachers[1].educationItems.map((item) => <li key={item}>{item}</li>)}
                       </ul>
                     </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.36s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label="Bobojonova Feruza fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[2])}")` }} role="img" aria-label={`${pageT.foundersTeachers.teacherPhotoAria}: ${teachers[2].name}`} />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Bobojonova Feruza</h4>
-                    <p className="teacher-role">Yapon tili ustoz</p>
-                    <p className="teacher-text"><span className="teacher-cert">JLPT</span> va <span className="teacher-cert">NAT-TEST</span> tayyorgarligi hamda amaliy gaplashuv bo'yicha darslar olib boradi.</p>
+                    <h4 className="teacher-name">{teachers[2].name}</h4>
+                    <p className="teacher-role">{teachers[2].role}</p>
+                    <p className="teacher-text">{teachers[2].text}</p>
                     <div className="teacher-edu">
-                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <span className="teacher-edu-label">{teachers[2].educationLabel}</span>
                       <ul>
-                        <li>«Samarqand Davlat chet tillar Instituti» 2021–2025 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
-                        <li>Hozirda <span className="teacher-cert">NAT-TEST N2</span> darajaga ega</li>
+                        {teachers[2].educationItems.map((item) => <li key={item}>{item}</li>)}
                       </ul>
                     </div>
                   </div>
                 </article>
 
                 <article className={`teacher-card teacher-motion ${visibleSections.teachersSection ? 'is-visible' : 'is-hidden'}`} style={{ transitionDelay: '0.48s' }}>
-                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label="Mahkamov Shohrux fotosurati" />
+                  <div className="teacher-card-photo" style={{ backgroundImage: `url("${getImageUrl(TEACHERS_IMAGES[3])}")` }} role="img" aria-label={`${pageT.foundersTeachers.teacherPhotoAria}: ${teachers[3].name}`} />
                   <div className="teacher-card-info">
-                    <h4 className="teacher-name">Mahkamov Shohrux</h4>
-                    <p className="teacher-role">Til amaliyoti murabbiyi</p>
-                    <p className="teacher-text">Kunlik nutq va yozuv ko'nikmalarini kuchaytirishga e'tibor qaratadi.</p>
+                    <h4 className="teacher-name">{teachers[3].name}</h4>
+                    <p className="teacher-role">{teachers[3].role}</p>
+                    <p className="teacher-text">{teachers[3].text}</p>
                     <div className="teacher-edu">
-                      <span className="teacher-edu-label">Ta'lim:</span>
+                      <span className="teacher-edu-label">{teachers[3].educationLabel}</span>
                       <ul>
-                        <li>«Samarqand Davlat chet tillar Instituti» 2021–2025 — Filologiya va tillarni o'qitish (Yapon tili), bakalavriat</li>
-                        <li>Yapon tili bilim darajasi <span className="teacher-cert">JLPT N2</span></li>
-                        <li>Tsukuba Universitetida 2024–2025 yillarda grant asosida 1 yil ta'lim olgan</li>
+                        {teachers[3].educationItems.map((item) => <li key={item}>{item}</li>)}
                       </ul>
                     </div>
                   </div>
@@ -799,26 +810,23 @@ export default function Home() {
         <section id="konsalting-courses-section" ref={konsaltingCoursesSectionRef} className="konsalting-courses-section">
           <div className="konsalting-courses-container">
             <h2 className={`konsalting-courses-title ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`}>
-              Konsalting va kurslar
+              {pageT.consultingCourses.title}
             </h2>
 
             <div className={`konsalting-block ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-              <h3 className="konsalting-block-title">Mirai JPN – Student Viza Consalting Xizmatlari</h3>
+              <h3 className="konsalting-block-title">{pageT.consultingCourses.consultingTitle}</h3>
               <p className="konsalting-intro">
-                &quot;Mirai JPN&quot; Yapon tili o&apos;quv markazi talabalarga Yaponiyaning til maktablariga o&apos;qishga kirish va student viza olish jarayonida to&apos;liq consalting xizmatini taqdim etadi.
+                {pageT.consultingCourses.consultingIntro}
               </p>
-              <p className="konsalting-services-title">Bizning xizmatlarimiz quyidagilarni o&apos;z ichiga oladi:</p>
+              <p className="konsalting-services-title">{pageT.consultingCourses.consultingServicesTitle}</p>
               <ol className="konsalting-list">
-                <li className="konsalting-list-item">Hujjatlarni Yapon standartlariga mos ravishda tayyorlash va tekshirish</li>
-                <li className="konsalting-list-item">Hujjatlarni O&apos;zbek tilidan Yapon tiliga professional va aniq tarjima qilish</li>
-                <li className="konsalting-list-item">Hujjatlarni Yapon maktablariga topshirish va rasmiylashtirish</li>
-                <li className="konsalting-list-item">Hujjatlarni Yaponiyaga pochta orqali yuborish</li>
-                <li className="konsalting-list-item">Student viza uchun hujjatlarni tayyorlash va barcha tegishli ishlarni tashkil etish</li>
-                <li className="konsalting-list-item">Viza tasdiqlangandan so&apos;ng Yaponiyaning elchixonasidan viza stikeri olish xizmatlari</li>
+                {pageT.consultingCourses.consultingList.map((item) => (
+                  <li key={item} className="konsalting-list-item">{item}</li>
+                ))}
               </ol>
               <div className="konsalting-result">
-                <span className="konsalting-result-label">Natija:</span>{' '}
-                Talabalarimiz uchun barcha murakkab jarayonlar oson, tez va ishonchli amalga oshiriladi.
+                <span className="konsalting-result-label">{pageT.consultingCourses.resultLabel}</span>{' '}
+                {pageT.consultingCourses.resultText}
               </div>
             </div>
 
@@ -828,43 +836,19 @@ export default function Home() {
               className={`courses-block courses-block--cursor-glow ${visibleSections.konsaltingCoursesSection ? 'card-fade-in' : 'card-fade-out'}`}
               style={{ transitionDelay: '0.2s' }}
             >
-              <h3 className="courses-block-title">Yapon tili kurslari</h3>
+              <h3 className="courses-block-title">{pageT.consultingCourses.coursesTitle}</h3>
               <div className="courses-grid">
-                <article className="course-card">
-                  <h4 className="course-card-title">Ertalabgi guruh</h4>
-                  <div className="course-card-time">9:00 - 11:00</div>
-                  <ul className="course-card-list">
-                    <li>Haftada 3 kun dars</li>
-                    <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
-                  </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
-                </article>
-
-                <article className="course-card">
-                  <h4 className="course-card-title">Kunduzgi guruh</h4>
-                  <div className="course-card-time">14:00 - 16:00</div>
-                  <ul className="course-card-list">
-                    <li>Haftada 3 kun dars</li>
-                    <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
-                  </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
-                </article>
-
-                <article className="course-card">
-                  <h4 className="course-card-title">Kechgi guruh</h4>
-                  <div className="course-card-time">17:00 - 19:00</div>
-                  <ul className="course-card-list">
-                    <li>Haftada 3 kun dars</li>
-                    <li>Haftada 5 kun dars</li>
-                    <li>Talabalarga StudentsApp dasturida shaxsiy akount ochib beriladi</li>
-                  </ul>
-                  <p className="course-card-price">Haftada 3 kunlik, 1 oyda 13 dars</p>
-                  <p className="course-card-price">Haftada 5 kunlik, 1 oyda 23 dars</p>
-                </article>
+                {courses.map((course) => (
+                  <article key={course.title} className="course-card">
+                    <h4 className="course-card-title">{course.title}</h4>
+                    <div className="course-card-time">{course.time}</div>
+                    <ul className="course-card-list">
+                      {pageT.consultingCourses.courseCommonBullets.map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                    <p className="course-card-price">{pageT.consultingCourses.coursePlanOne}</p>
+                    <p className="course-card-price">{pageT.consultingCourses.coursePlanTwo}</p>
+                  </article>
+                ))}
               </div>
             </div>
           </div>
@@ -873,7 +857,7 @@ export default function Home() {
           <div className="cta-container">
             <div className={`cta-card ${visibleSections.ctaSection ? 'card-fade-in' : 'card-fade-out'}`}>
               <h2 className="cta-title">
-                Kelajagingiz bugundan boshlanadi — ariza qoldiring va bepul konsultatsiya oling!
+                {pageT.cta.title}
               </h2>
               <button
                 type="button"
@@ -883,7 +867,7 @@ export default function Home() {
                   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
               >
-                Ariza qoldirish
+                {pageT.cta.button}
               </button>
             </div>
           </div>
@@ -891,12 +875,12 @@ export default function Home() {
         <section id="natijalar-section" ref={natijalarSectionRef} className="natijalar-section">
           <div className="natijalar-container">
             <h2 className={`natijalar-title ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`}>
-              NATIJALAR
+              {pageT.results.title}
             </h2>
 
             <div className={`natijalar-marquee-block ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
-              <h3 className="natijalar-marquee-title">O'quvchilarimiz natijalari</h3>
-              <div className="natijalar-marquee natijalar-marquee-left" aria-label="O'quvchilarimiz sertifikatlari karuseli">
+              <h3 className="natijalar-marquee-title">{pageT.results.certificatesTitle}</h3>
+              <div className="natijalar-marquee natijalar-marquee-left" aria-label={pageT.results.certificatesTitle}>
                 <div className="natijalar-marquee-track">
                   {[...natijalarCertificateImages, ...natijalarCertificateImages, ...natijalarCertificateImages].map((imageSrc, index) => (
                     <div
@@ -906,9 +890,9 @@ export default function Home() {
                       tabIndex={0}
                       onClick={() => setNatijalarLightbox(imageSrc)}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
-                      aria-label="Sertifikatni kattalashtirish"
+                      aria-label={pageT.results.certificateZoomAria}
                     >
-                      <img src={imageSrc} alt={`O'quvchi sertifikati ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
+                      <img src={imageSrc} alt={`${pageT.results.certificateAlt} ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
@@ -922,8 +906,8 @@ export default function Home() {
             </div>
 
             <div className={`natijalar-marquee-block ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
-              <h3 className="natijalar-marquee-title">O'quvchilarimiz vizalari</h3>
-              <div className="natijalar-marquee natijalar-marquee-right" aria-label="O'quvchilarimiz vizalari karuseli">
+              <h3 className="natijalar-marquee-title">{pageT.results.visasTitle}</h3>
+              <div className="natijalar-marquee natijalar-marquee-right" aria-label={pageT.results.visasTitle}>
                 <div className="natijalar-marquee-track">
                   {[...natijalarVisaImages, ...natijalarVisaImages, ...natijalarVisaImages].map((imageSrc, index) => (
                     <div
@@ -933,9 +917,9 @@ export default function Home() {
                       tabIndex={0}
                       onClick={() => setNatijalarLightbox(imageSrc)}
                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
-                      aria-label="Vizani kattalashtirish"
+                      aria-label={pageT.results.visaZoomAria}
                     >
-                      <img src={imageSrc} alt={`O'quvchi vizasi ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />
+                      <img src={imageSrc} alt={`${pageT.results.visaAlt} ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
@@ -953,15 +937,15 @@ export default function Home() {
         <section ref={videosSectionRef} className="videos-section">
           <div className="videos-container">
             <h2 className={`videos-title ${visibleSections.videosSection ? 'card-fade-in' : 'card-fade-out'}`}>
-              <span className="videos-title-black">MIRAI</span>{' '}
-              <span className="videos-title-red">VIDEOS</span>
+              <span className="videos-title-black">{pageT.videos.titleBlack}</span>{' '}
+              <span className="videos-title-red">{pageT.videos.titleRed}</span>
             </h2>
             <div className={`videos-carousel-wrapper ${visibleSections.videosSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
               <button
                 type="button"
                 className="videos-carousel-btn videos-carousel-btn-prev"
                 onClick={() => scrollVideos('prev')}
-                aria-label="Oldingi videolar"
+                aria-label={pageT.videos.prevAria}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -971,7 +955,7 @@ export default function Home() {
                 className="videos-carousel"
                 ref={videosCarouselRef}
                 role="region"
-                aria-label="Instagram Reels karuseli"
+                aria-label={pageT.videos.regionAria}
               >
                 <div className="videos-track">
                   {infiniteVideos.map((video, index) => {
@@ -988,7 +972,7 @@ export default function Home() {
                         <div className="videos-card-iframe-wrapper">
                           <iframe
                             src={`https://www.instagram.com/reel/${reelId}/embed/?autoplay=1`}
-                            title={video.title || `Reel ${index + 1}`}
+                            title={video.title || `${pageT.videos.reelTitle} ${index + 1}`}
                             allow="encrypted-media; autoplay; fullscreen"
                             allowFullScreen
                           />
@@ -1002,7 +986,7 @@ export default function Home() {
                 type="button"
                 className="videos-carousel-btn videos-carousel-btn-next"
                 onClick={() => scrollVideos('next')}
-                aria-label="Keyingi videolar"
+                aria-label={pageT.videos.nextAria}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1017,32 +1001,26 @@ export default function Home() {
             <div className="registration-content">
               <div className={`registration-offer ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.1s' }}>
                 <h2 className="offer-title">
-                  Kelajagingizni Yaponiya bilan boshlashga tayyormisiz?
+                  {pageT.registration.offerTitle}
                 </h2>
                 <p className="offer-description">
-                  Ro&apos;yxatdan o&apos;ting va bepul konsultatsiya oling.
+                  {pageT.registration.offerDescription}
                 </p>
                 <ul className="offer-benefits">
-                  <li className="offer-benefit-item">
-                    <span className="benefit-icon">•</span>
-                    <span className="benefit-text">Bepul konsultatsiya</span>
-                  </li>
-                  <li className="offer-benefit-item">
-                    <span className="benefit-icon">•</span>
-                    <span className="benefit-text">Viza jarayonida to&apos;liq ko&apos;mak.</span>
-                  </li>
-                  <li className="offer-benefit-item">
-                    <span className="benefit-icon">•</span>
-                    <span className="benefit-text">Sifatli o&apos;quv materiallar</span>
-                  </li>
+                  {pageT.registration.benefits.map((benefit) => (
+                    <li key={benefit} className="offer-benefit-item">
+                      <span className="benefit-icon">•</span>
+                      <span className="benefit-text">{benefit}</span>
+                    </li>
+                  ))}
                 </ul>
                 <p className="offer-footer">
-                  Savol, takliflar va hamkorlik uchun arizani to&apos;ldiring — siz bilan tez orada bog&apos;lanamiz.
+                  {pageT.registration.offerFooter}
                 </p>
               </div>
 
               <div className={`registration-form-card ${visibleSections.registrationSection ? 'card-fade-in' : 'card-fade-out'}`} style={{ transitionDelay: '0.2s' }}>
-                <h3 className="form-title">Arizani To'ldiring</h3>
+                <h3 className="form-title">{pageT.registration.formTitle}</h3>
                 <form className="registration-form" onSubmit={handleSubmit}>
                   {submitMessage.text && (
                     <div className={`form-message form-message-${submitMessage.type}`}>
@@ -1052,7 +1030,7 @@ export default function Home() {
                   <input
                     type="text"
                     name="name"
-                    placeholder="I.F.O"
+                    placeholder={pageT.registration.inputs.name}
                     value={formData.name}
                     onChange={handleInputChange}
                     className="form-input"
@@ -1062,7 +1040,7 @@ export default function Home() {
                   <input
                     type="number"
                     name="age"
-                    placeholder="Yoshingiz"
+                    placeholder={pageT.registration.inputs.age}
                     value={formData.age}
                     onChange={handleInputChange}
                     className="form-input"
@@ -1075,7 +1053,7 @@ export default function Home() {
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="Tel:"
+                      placeholder={pageT.registration.inputs.phone}
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="form-input form-input-phone"
@@ -1085,7 +1063,7 @@ export default function Home() {
                   <input
                     type="email"
                     name="email"
-                    placeholder="Email manzilingiz"
+                    placeholder={pageT.registration.inputs.email}
                     value={formData.email}
                     onChange={handleInputChange}
                     className="form-input"
@@ -1094,7 +1072,7 @@ export default function Home() {
                   />
                   <textarea
                     name="comment"
-                    placeholder="Izoh yoki savolingiz (ixtiyoriy)"
+                    placeholder={pageT.registration.inputs.comment}
                     value={formData.comment}
                     onChange={handleInputChange}
                     className="form-input form-textarea"
@@ -1114,11 +1092,11 @@ export default function Home() {
                             <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416;-31.416" repeatCount="indefinite" />
                           </circle>
                         </svg>
-                        Yuborilmoqda...
+                        {pageT.registration.submitting}
                       </>
                     ) : (
                       <>
-                        Chegirmani Olish
+                        {pageT.registration.submit}
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M5 12H19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M12 5L19 12L12 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1142,13 +1120,13 @@ export default function Home() {
           onClick={() => setLightboxImage(null)}
           role="dialog"
           aria-modal="true"
-          aria-label="Rasmni kattalashtirish"
+          aria-label={pageT.lightbox.imageDialogAria}
         >
           <button
             type="button"
             className="about-gallery-lightbox-close"
             onClick={() => setLightboxImage(null)}
-            aria-label="Yopish"
+            aria-label={pageT.lightbox.closeAria}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1160,7 +1138,7 @@ export default function Home() {
               type="button"
               className="about-gallery-lightbox-prev"
               onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
-              aria-label="Oldingi rasm"
+              aria-label={pageT.lightbox.prevAria}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1172,7 +1150,7 @@ export default function Home() {
               type="button"
               className="about-gallery-lightbox-next"
               onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
-              aria-label="Keyingi rasm"
+              aria-label={pageT.lightbox.nextAria}
             >
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1180,7 +1158,7 @@ export default function Home() {
             </button>
           )}
           <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={lightboxImage} alt="Mirai rasmi" className="about-gallery-lightbox-img" />
+            <img src={lightboxImage} alt={pageT.lightbox.imageAlt} className="about-gallery-lightbox-img" />
           </div>
         </div>
       )}
@@ -1192,13 +1170,13 @@ export default function Home() {
           onClick={() => setNatijalarLightbox(null)}
           role="dialog"
           aria-modal="true"
-          aria-label="Sertifikat yoki vizani kattalashtirish"
+          aria-label={pageT.lightbox.docDialogAria}
         >
           <button
             type="button"
             className="about-gallery-lightbox-close"
             onClick={() => setNatijalarLightbox(null)}
-            aria-label="Yopish"
+            aria-label={pageT.lightbox.closeAria}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1206,7 +1184,7 @@ export default function Home() {
             </svg>
           </button>
           <div className="about-gallery-lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={natijalarLightbox} alt="Sertifikat yoki viza" className="about-gallery-lightbox-img" />
+            <img src={natijalarLightbox} alt={pageT.lightbox.docAlt} className="about-gallery-lightbox-img" />
           </div>
         </div>
       )}
@@ -1218,7 +1196,7 @@ export default function Home() {
             <button
               className="thank-you-modal-close"
               onClick={() => setShowThankYouModal(false)}
-              aria-label="Yopish"
+              aria-label={pageT.lightbox.closeAria}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -1232,23 +1210,34 @@ export default function Home() {
                   <path d="M8 12L11 15L16 9" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h2 className="thank-you-title">Rahmat!</h2>
+              <h2 className="thank-you-title">{pageT.thankYou.title}</h2>
               <p className="thank-you-message">
-                Arizangiz muvaffaqiyatli qabul qilindi!
+                {pageT.thankYou.message}
               </p>
               <p className="thank-you-description">
-                Tez orada mutaxassislarimiz siz bilan bog'lanib, barcha savollaringizga javob beradi.
+                {pageT.thankYou.description}
               </p>
               <button
                 className="thank-you-button"
                 onClick={() => setShowThankYouModal(false)}
               >
-                Yopish
+                {pageT.thankYou.close}
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+export default function Home({ locale = DEFAULT_LOCALE }) {
+  const normalizedLocale = normalizeLocale(locale);
+  const messages = getMessages(normalizedLocale);
+
+  return (
+    <I18nProvider locale={normalizedLocale} messages={messages}>
+      <HomeContent locale={normalizedLocale} />
+    </I18nProvider>
   );
 }
