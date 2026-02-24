@@ -22,6 +22,7 @@ const natijalarCertificateImages = [
   '/certificates/cfr/IMG_0001.webp',
   '/certificates/cfr/JLPT_N2.webp',
   '/certificates/cfr/MALIKA.webp',
+  '/certificates/cfr/SEVINCHN4.webp',
   '/certificates/cfr/SAFAROVA_BAKHORA.webp',
 ];
 
@@ -69,6 +70,16 @@ function getInstagramReelId(url) {
   // Поддерживаем форматы: /reel/VIDEO_ID/, /p/VIDEO_ID/, /reels/VIDEO_ID/
   const match = url.match(/(?:\/reel\/|\/p\/|\/reels\/)([a-zA-Z0-9_-]+)/);
   return match ? match[1] : null;
+}
+
+function highlightCertificateTerms(text) {
+  const CERT_PATTERN = /(JLPT(?:\s*N[1-5])?|NAT-TEST(?:\s*N[1-5])?|CEFR\s*C[12])/g;
+  const CERT_SINGLE = /^(JLPT(?:\s*N[1-5])?|NAT-TEST(?:\s*N[1-5])?|CEFR\s*C[12])$/;
+  return text.split(CERT_PATTERN).map((part, index) => (
+    CERT_SINGLE.test(part)
+      ? <span key={`${part}-${index}`} className="teacher-cert">{part}</span>
+      : part
+  ));
 }
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://mirai-jpn.uz';
@@ -168,6 +179,21 @@ function HomeContent({ locale }) {
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(null);
   const [natijalarLightbox, setNatijalarLightbox] = useState(null); // URL открытого сертификата/визы
+  const natijalarLastOpenRef = useRef(0);
+
+  const openNatijalarLightbox = useCallback((event, imageSrc) => {
+    if (!imageSrc) return;
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // На мобильных предотвращаем двойной триггер pointer/click в очень коротком интервале.
+    const now = Date.now();
+    if (now - natijalarLastOpenRef.current < 280) return;
+    natijalarLastOpenRef.current = now;
+    setNatijalarLightbox(imageSrc);
+  }, []);
 
   const lightboxIndex = lightboxImage ? ABOUT_GALLERY_IMAGES.indexOf(lightboxImage) : -1;
   const lightboxPrev = useCallback(() => {
@@ -746,11 +772,11 @@ function HomeContent({ locale }) {
                   <div className="teacher-card-info">
                     <h4 className="teacher-name">{teachers[0].name}</h4>
                     <p className="teacher-role">{teachers[0].role}</p>
-                    <p className="teacher-text">{teachers[0].text}</p>
+                    <p className="teacher-text">{highlightCertificateTerms(teachers[0].text)}</p>
                     <div className="teacher-edu">
                       <span className="teacher-edu-label">{teachers[0].educationLabel}</span>
                       <ul>
-                        {teachers[0].educationItems.map((item) => <li key={item}>{item}</li>)}
+                        {teachers[0].educationItems.map((item) => <li key={item}>{highlightCertificateTerms(item)}</li>)}
                       </ul>
                     </div>
                   </div>
@@ -761,11 +787,11 @@ function HomeContent({ locale }) {
                   <div className="teacher-card-info">
                     <h4 className="teacher-name">{teachers[1].name}</h4>
                     <p className="teacher-role">{teachers[1].role}</p>
-                    <p className="teacher-text">{teachers[1].text}</p>
+                    <p className="teacher-text">{highlightCertificateTerms(teachers[1].text)}</p>
                     <div className="teacher-edu">
                       <span className="teacher-edu-label">{teachers[1].educationLabel}</span>
                       <ul>
-                        {teachers[1].educationItems.map((item) => <li key={item}>{item}</li>)}
+                        {teachers[1].educationItems.map((item) => <li key={item}>{highlightCertificateTerms(item)}</li>)}
                       </ul>
                     </div>
                   </div>
@@ -776,11 +802,11 @@ function HomeContent({ locale }) {
                   <div className="teacher-card-info">
                     <h4 className="teacher-name">{teachers[2].name}</h4>
                     <p className="teacher-role">{teachers[2].role}</p>
-                    <p className="teacher-text">{teachers[2].text}</p>
+                    <p className="teacher-text">{highlightCertificateTerms(teachers[2].text)}</p>
                     <div className="teacher-edu">
                       <span className="teacher-edu-label">{teachers[2].educationLabel}</span>
                       <ul>
-                        {teachers[2].educationItems.map((item) => <li key={item}>{item}</li>)}
+                        {teachers[2].educationItems.map((item) => <li key={item}>{highlightCertificateTerms(item)}</li>)}
                       </ul>
                     </div>
                   </div>
@@ -791,11 +817,11 @@ function HomeContent({ locale }) {
                   <div className="teacher-card-info">
                     <h4 className="teacher-name">{teachers[3].name}</h4>
                     <p className="teacher-role">{teachers[3].role}</p>
-                    <p className="teacher-text">{teachers[3].text}</p>
+                    <p className="teacher-text">{highlightCertificateTerms(teachers[3].text)}</p>
                     <div className="teacher-edu">
                       <span className="teacher-edu-label">{teachers[3].educationLabel}</span>
                       <ul>
-                        {teachers[3].educationItems.map((item) => <li key={item}>{item}</li>)}
+                        {teachers[3].educationItems.map((item) => <li key={item}>{highlightCertificateTerms(item)}</li>)}
                       </ul>
                     </div>
                   </div>
@@ -872,7 +898,11 @@ function HomeContent({ locale }) {
             </div>
           </div>
         </section>
-        <section id="natijalar-section" ref={natijalarSectionRef} className="natijalar-section">
+        <section
+          id="natijalar-section"
+          ref={natijalarSectionRef}
+          className={`natijalar-section ${natijalarLightbox ? 'natijalar-section--modal-open' : ''}`}
+        >
           <div className="natijalar-container">
             <h2 className={`natijalar-title ${visibleSections.natijalarSection ? 'card-fade-in' : 'card-fade-out'}`}>
               {pageT.results.title}
@@ -888,8 +918,16 @@ function HomeContent({ locale }) {
                       key={`cert-${imageSrc}-${index}`}
                       role="button"
                       tabIndex={0}
-                      onClick={() => setNatijalarLightbox(imageSrc)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
+                      onPointerUp={(e) => {
+                        if (e.pointerType === 'mouse' && e.button !== 0) return;
+                        openNatijalarLightbox(e, imageSrc);
+                      }}
+                      onClick={(e) => e.preventDefault()}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          openNatijalarLightbox(e, imageSrc);
+                        }
+                      }}
                       aria-label={pageT.results.certificateZoomAria}
                     >
                       <img src={imageSrc} alt={`${pageT.results.certificateAlt} ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
@@ -915,8 +953,16 @@ function HomeContent({ locale }) {
                       key={`viza-${imageSrc}-${index}`}
                       role="button"
                       tabIndex={0}
-                      onClick={() => setNatijalarLightbox(imageSrc)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setNatijalarLightbox(imageSrc); } }}
+                      onPointerUp={(e) => {
+                        if (e.pointerType === 'mouse' && e.button !== 0) return;
+                        openNatijalarLightbox(e, imageSrc);
+                      }}
+                      onClick={(e) => e.preventDefault()}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          openNatijalarLightbox(e, imageSrc);
+                        }
+                      }}
                       aria-label={pageT.results.visaZoomAria}
                     >
                       <img src={imageSrc} alt={`${pageT.results.visaAlt} ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />

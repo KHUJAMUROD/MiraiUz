@@ -127,6 +127,10 @@ export default function Header() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           ticking = false;
+          if (menuOpen) {
+            setHeaderHidden(false);
+            return;
+          }
           if (!isMobile.current) return;
           const y = window.scrollY;
           if (y <= SCROLL_DOWN_THRESHOLD) {
@@ -144,12 +148,18 @@ export default function Header() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      setHeaderHidden(false);
+    }
+  }, [menuOpen]);
 
   return (
     <header
       id="header"
-      className={`header ${headerHidden ? 'header--hidden' : ''}`}
+      className={`header ${headerHidden && !menuOpen ? 'header--hidden' : ''}`}
     >
       <div className="header__container">
         <a href="#hero" className="header__logo" onClick={scrollToHero} aria-label={t('header.logoAria')}>
@@ -221,17 +231,19 @@ export default function Header() {
             {t('header.menu.results')}
           </a>
         </nav>
-        <button className="header__mobile-cta" type="button" onClick={scrollToRegistration}>
-          {t('header.cta')}
-        </button>
-        <LanguageSwitcher
-          value={activeLang}
-          onChange={handleLanguageChange}
-          open={langDropdownOpen}
-          onOpenChange={setLangDropdownOpen}
-          variant="mobile"
-          ariaLabel={t('languageSwitcher.ariaLabel')}
-        />
+        <div className="header__mobile-bottom">
+          <button className="header__mobile-cta" type="button" onClick={scrollToRegistration}>
+            {t('header.cta')}
+          </button>
+          <LanguageSwitcher
+            value={activeLang}
+            onChange={handleLanguageChange}
+            open={langDropdownOpen}
+            onOpenChange={setLangDropdownOpen}
+            variant="mobile"
+            ariaLabel={t('languageSwitcher.ariaLabel')}
+          />
+        </div>
       </div>
     </header>
   );

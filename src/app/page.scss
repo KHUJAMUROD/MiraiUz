@@ -169,6 +169,7 @@
   align-items: center;
   justify-content: center;
   padding: 40px;
+  touch-action: manipulation;
   animation: fadeIn 0.25s ease-out;
   cursor: zoom-out;
 }
@@ -348,7 +349,12 @@
   }
 
   .about-mirai-gallery {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .about-mirai-gallery-item {
+    min-height: 160px;
   }
 }
 
@@ -1743,6 +1749,16 @@
   background-color: rgba(255, 255, 255, 0.62);
 }
 
+.natijalar-section--modal-open {
+  .natijalar-marquee {
+    pointer-events: none;
+  }
+
+  .natijalar-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
 .natijalar-container {
   width: 100%;
   display: flex;
@@ -1767,7 +1783,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 36px;
 }
 
 .natijalar-marquee-title {
@@ -1810,6 +1826,9 @@
   border: 1px solid rgba(71, 85, 105, 0.22);
   background-color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 
   &:hover {
@@ -1846,6 +1865,26 @@
     width: 48px;
     height: 48px;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .natijalar-marquee-item {
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.14);
+    transition: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.14);
+
+      .natijalar-marquee-item-zoom {
+        opacity: 0;
+      }
+    }
+  }
+
+  .natijalar-marquee-item-zoom {
+    display: none;
   }
 }
 
@@ -1901,7 +1940,7 @@
   }
 
   .natijalar-marquee-item {
-    width: min(80vw, 340px);
+    width: min(75vw, 130px);
 
     img {
       max-height: 240px;
@@ -1933,7 +1972,7 @@
   }
 
   .natijalar-marquee-item {
-    width: min(72vw, 300px);
+    width: min(65vw, 130px);
 
     img {
       max-height: 220px;
@@ -1951,7 +1990,7 @@
   }
 
   .natijalar-marquee-item {
-    width: min(88vw, 280px);
+    width: min(80vw, 130px);
 
     img {
       max-height: 200px;
