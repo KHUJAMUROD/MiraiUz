@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useLowEndDevice } from '@/hooks/useLowEndDevice';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
  * Анимация появления текста по буквам/словам.
  * Для SplashScreen: useScrollTrigger={false} — анимация при монтировании.
  * Для страницы: useScrollTrigger={true} (по умолчанию) — при появлении в viewport.
+ * На слабых устройствах (low-end) анимация отключена — текст показывается сразу.
  */
 const SplitText = ({
   text,
@@ -28,6 +30,7 @@ const SplitText = ({
 }) => {
   const ref = useRef(null);
   const completedRef = useRef(false);
+  const { isLowEnd } = useLowEndDevice();
   const [fontsLoaded, setFontsLoaded] = useState(!!useScrollTrigger ? false : true);
 
   useEffect(() => {
@@ -46,6 +49,13 @@ const SplitText = ({
       const el = ref.current;
       const targets = el.querySelectorAll('.split-char, .split-word');
       if (!targets.length) return;
+
+      if (isLowEnd) {
+        gsap.set(targets, to);
+        completedRef.current = true;
+        onLetterAnimationComplete?.();
+        return;
+      }
 
       if (!useScrollTrigger) {
         gsap.set(targets, from);
@@ -83,7 +93,7 @@ const SplitText = ({
       };
     },
     {
-      dependencies: [text, delay, duration, ease, splitType, fontsLoaded, useScrollTrigger],
+      dependencies: [text, delay, duration, ease, splitType, fontsLoaded, useScrollTrigger, isLowEnd],
       scope: ref,
     }
   );
@@ -94,7 +104,7 @@ const SplitText = ({
     overflow: 'hidden',
     display: 'inline-block',
     whiteSpace: splitType === 'words' ? 'normal' : 'nowrap',
-    willChange: 'transform, opacity',
+    ...(isLowEnd ? {} : { willChange: 'transform, opacity' }),
   };
 
   return (

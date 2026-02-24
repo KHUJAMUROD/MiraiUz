@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import LowEndDetector from "@/components/LowEndDetector/LowEndDetector";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mirai-jpn.uz";
@@ -85,6 +86,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="uz">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <LowEndDetector />
         {children}
         <Analytics />
       </body>

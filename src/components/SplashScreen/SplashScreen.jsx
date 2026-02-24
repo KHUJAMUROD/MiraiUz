@@ -1,11 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import SplitText from '@/components/SplitText/SplitText';
 import { useI18n } from '@/i18n/I18nProvider';
+import { useLowEndDevice } from '@/hooks/useLowEndDevice';
 import './SplashScreen.scss';
 
-// Все изображения для предзагрузки (включая сертификаты и визы)
+// Критичные для LCP (hero, фон about, логотип) — для слабых устройств грузим только их
+const IMAGES_CRITICAL = [
+  '/images/main_pics/main.webp',
+  '/images/backgrounds/abot.webp',
+  '/images/companyLogos/mirai_logo_sq.png',
+];
+
+// Все изображения для предзагрузки (обычный режим)
 const IMAGES_TO_PRELOAD = [
   '/images/backgrounds/school_background.webp',
   '/images/backgrounds/abot.webp',
@@ -27,7 +36,6 @@ const IMAGES_TO_PRELOAD = [
   '/images/results/oquvchilar-natijalari.png',
   '/images/results/oquvchilar-vizalari.png',
   '/images/companyLogos/mirai_logo_sq.png',
-  // Сертификаты CFR (O'quvchilarimiz natijalari)
   '/certificates/cfr/DUSILAYEVA_SABINA.webp',
   '/certificates/cfr/GULCHIRA_SENSEI.webp',
   '/certificates/cfr/img476.webp',
@@ -35,7 +43,6 @@ const IMAGES_TO_PRELOAD = [
   '/certificates/cfr/JLPT_N2.webp',
   '/certificates/cfr/MALIKA.webp',
   '/certificates/cfr/SAFAROVA_BAKHORA.webp',
-  // Визы (O'quvchilarimiz vizalari)
   '/certificates/viza/1.webp',
   '/certificates/viza/2.webp',
   '/certificates/viza/3.webp',
@@ -48,6 +55,9 @@ const IMAGES_TO_PRELOAD = [
   '/certificates/viza/10.webp',
 ];
 
+const MAX_SPLASH_MS = 5000;
+const MIN_SPLASH_MS = 500;
+
 function preloadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -59,56 +69,52 @@ function preloadImage(src) {
 
 export default function SplashScreen({ onLoaded }) {
   const { t } = useI18n();
+  const { isLowEnd, isLowEndKnown } = useLowEndDevice();
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!isLowEndKnown) return;
     let isMounted = true;
 
     async function loadAllResources() {
-      try {
-        const totalImages = IMAGES_TO_PRELOAD.length;
-        let loadedCount = 0;
+      const imagesToLoad = isLowEnd ? IMAGES_CRITICAL : IMAGES_TO_PRELOAD;
+      const totalImages = imagesToLoad.length;
+      let loadedCount = 0;
 
-        // Предзагрузка всех изображений
-        const loadPromises = IMAGES_TO_PRELOAD.map((src) =>
+      const updateProgress = () => {
+        if (isMounted) {
+          loadedCount++;
+          setProgress(Math.round((loadedCount / totalImages) * 100));
+        }
+      };
+
+      try {
+        const loadPromises = imagesToLoad.map((src) =>
           preloadImage(src)
-            .then(() => {
-              if (isMounted) {
-                loadedCount++;
-                setProgress(Math.round((loadedCount / totalImages) * 100));
-              }
-            })
-            .catch(() => {
-              // Игнорируем ошибки загрузки отдельных изображений
-              if (isMounted) {
-                loadedCount++;
-                setProgress(Math.round((loadedCount / totalImages) * 100));
-              }
-            })
+            .then(updateProgress)
+            .catch(updateProgress)
         );
 
-        await Promise.all(loadPromises);
+        const timeoutPromise = new Promise((resolve) => {
+          setTimeout(resolve, MAX_SPLASH_MS);
+        });
 
-        // Минимальное время показа splash screen (для плавности)
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await Promise.race([Promise.all(loadPromises), timeoutPromise]);
+
+        await new Promise((resolve) => setTimeout(resolve, MIN_SPLASH_MS));
 
         if (isMounted) {
           setIsLoading(false);
           setTimeout(() => {
-            if (isMounted && onLoaded) {
-              onLoaded();
-            }
-          }, 300); // Небольшая задержка для плавного исчезновения
+            if (isMounted && onLoaded) onLoaded();
+          }, 300);
         }
       } catch (error) {
-        console.error('Error preloading images:', error);
         if (isMounted) {
           setIsLoading(false);
           setTimeout(() => {
-            if (isMounted && onLoaded) {
-              onLoaded();
-            }
+            if (isMounted && onLoaded) onLoaded();
           }, 300);
         }
       }
@@ -119,7 +125,7 @@ export default function SplashScreen({ onLoaded }) {
     return () => {
       isMounted = false;
     };
-  }, [onLoaded]);
+  }, [onLoaded, isLowEnd, isLowEndKnown]);
 
   if (!isLoading) {
     return null;
@@ -129,10 +135,13 @@ export default function SplashScreen({ onLoaded }) {
     <div className={`splash-screen ${!isLoading ? 'splash-screen--hidden' : ''}`}>
       <div className="splash-screen__content">
         <div className="splash-screen__logo">
-          <img 
-            src="/images/companyLogos/mirai_logo_sq.png" 
-            alt={t('splash.logoAlt')} 
+          <Image
+            src="/images/companyLogos/mirai_logo_sq.png"
+            alt={t('splash.logoAlt')}
+            width={280}
+            height={135}
             className="splash-screen__logo-img"
+            priority
           />
         </div>
         <SplitText

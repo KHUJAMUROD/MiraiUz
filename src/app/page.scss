@@ -1819,6 +1819,7 @@
 .natijalar-marquee-item {
   flex: 0 0 auto;
   width: min(75vw, 200px);
+  min-height: 44px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -1827,8 +1828,15 @@
   background-color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.12);
   -webkit-user-select: none;
   user-select: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
   @include transition(transform 0.3s ease, box-shadow 0.3s ease);
 
   &:hover {
@@ -1840,6 +1848,10 @@
     }
   }
 
+  &:active {
+    opacity: 0.95;
+  }
+
   img {
     width: 100%;
     height: auto;
@@ -1847,6 +1859,7 @@
     object-fit: contain;
     object-position: top;
     display: block;
+    pointer-events: none;
   }
 }
 
@@ -2857,5 +2870,22 @@
 
   .thank-you-description {
     font-size: 14px;
+  }
+}
+
+// Режим слабого устройства: меньше композит-слоёв и отрисовки
+body.low-end {
+  .founder-motion-left,
+  .founder-motion-right,
+  .teacher-motion {
+    will-change: auto;
+  }
+
+  .videos-container,
+  .natijalar-container,
+  .registration-container,
+  .konsalting-courses-container {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
   }
 }

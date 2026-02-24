@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import emailjs from '@emailjs/browser';
 import Header from '@/components/Header/header';
-import Footer from '@/components/Footer/footer';
-import CompanyMarquee from '@/components/CompanyMarquee/CompanyMarquee';
 import HeroPage from '@/components/HeroPage/HeroPage';
 import SplashScreen from '@/components/SplashScreen/SplashScreen';
 import { I18nProvider, useI18n } from '@/i18n/I18nProvider';
@@ -12,6 +11,16 @@ import { DEFAULT_LOCALE, normalizeLocale } from '@/i18n/config';
 import { getMessages } from '@/i18n/dictionaries';
 import videosData from '@/store/videos.json';
 import './page.scss';
+
+const CompanyMarquee = dynamic(
+  () => import('@/components/CompanyMarquee/CompanyMarquee'),
+  { ssr: true, loading: () => <div className="company-marquee-placeholder" aria-hidden="true" style={{ minHeight: 1 }} /> }
+);
+
+const Footer = dynamic(
+  () => import('@/components/Footer/footer'),
+  { ssr: true }
+);
 
 
 // Сертификаты CFR (O'quvchilarimiz natijalari) — бесконечная карусель
@@ -913,31 +922,35 @@ function HomeContent({ locale }) {
               <div className="natijalar-marquee natijalar-marquee-left" aria-label={pageT.results.certificatesTitle}>
                 <div className="natijalar-marquee-track">
                   {[...natijalarCertificateImages, ...natijalarCertificateImages, ...natijalarCertificateImages].map((imageSrc, index) => (
-                    <div
+                    <button
+                      type="button"
                       className="natijalar-marquee-item"
                       key={`cert-${imageSrc}-${index}`}
-                      role="button"
-                      tabIndex={0}
+                      onPointerDown={(e) => e.preventDefault()}
                       onPointerUp={(e) => {
                         if (e.pointerType === 'mouse' && e.button !== 0) return;
                         openNatijalarLightbox(e, imageSrc);
                       }}
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openNatijalarLightbox(e, imageSrc);
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
                           openNatijalarLightbox(e, imageSrc);
                         }
                       }}
                       aria-label={pageT.results.certificateZoomAria}
                     >
-                      <img src={imageSrc} alt={`${pageT.results.certificateAlt} ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" />
+                      <img src={imageSrc} alt={`${pageT.results.certificateAlt} ${(index % natijalarCertificateImages.length) + 1}`} loading="lazy" draggable="false" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
                           <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                       </span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -948,31 +961,35 @@ function HomeContent({ locale }) {
               <div className="natijalar-marquee natijalar-marquee-right" aria-label={pageT.results.visasTitle}>
                 <div className="natijalar-marquee-track">
                   {[...natijalarVisaImages, ...natijalarVisaImages, ...natijalarVisaImages].map((imageSrc, index) => (
-                    <div
+                    <button
+                      type="button"
                       className="natijalar-marquee-item"
                       key={`viza-${imageSrc}-${index}`}
-                      role="button"
-                      tabIndex={0}
+                      onPointerDown={(e) => e.preventDefault()}
                       onPointerUp={(e) => {
                         if (e.pointerType === 'mouse' && e.button !== 0) return;
                         openNatijalarLightbox(e, imageSrc);
                       }}
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        openNatijalarLightbox(e, imageSrc);
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
                           openNatijalarLightbox(e, imageSrc);
                         }
                       }}
                       aria-label={pageT.results.visaZoomAria}
                     >
-                      <img src={imageSrc} alt={`${pageT.results.visaAlt} ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" />
+                      <img src={imageSrc} alt={`${pageT.results.visaAlt} ${(index % natijalarVisaImages.length) + 1}`} loading="lazy" draggable="false" />
                       <span className="natijalar-marquee-item-zoom" aria-hidden="true">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
                           <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                       </span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>

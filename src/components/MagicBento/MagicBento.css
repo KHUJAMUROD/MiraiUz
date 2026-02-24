@@ -215,3 +215,7 @@
   position: relative;
   user-select: none;
 }
+
+body.low-end .global-spotlight {
+  will-change: auto;
+}
