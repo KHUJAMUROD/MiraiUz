@@ -1,21 +1,21 @@
 {
   "seo": {
-    "title": "Mirai JPN - 日本語コースと日本留学サポート",
-    "description": "Mirai JPNは、日本語コース、student visaコンサルティング、日本留学準備を提供する専門教育センターです。",
+    "title": "MIRAI JPN - 日本語コースと日本留学サポート",
+    "description": "MIRAI JPNは、日本語コース、student visaコンサルティング、日本留学準備を提供する専門教育センターです。",
     "keywords": [
-      "Mirai JPN",
-      "MiraiJpn",
-      "Mirai",
+      "MIRAI JPN",
+      "MIRAIJpn",
+      "MIRAI",
       "日本語コース",
       "日本留学",
       "student visa",
       "JLPT",
       "NAT-TEST"
     ],
-    "ogTitle": "Mirai JPN - 日本語コースと日本留学サポート",
-    "ogDescription": "Mirai JPNで日本語学習、student visa手続き、日本留学までを一貫サポート。",
+    "ogTitle": "MIRAI JPN - 日本語コースと日本留学サポート",
+    "ogDescription": "MIRAI JPNで日本語学習、student visa手続き、日本留学までを一貫サポート。",
     "ogLocale": "ja_JP",
-    "ogImageAlt": "Mirai JPN - 日本語教育と日本留学センター"
+    "ogImageAlt": "MIRAI JPN - 日本語教育と日本留学センター"
   },
   "languageSwitcher": {
     "ariaLabel": "言語を選択"
@@ -33,21 +33,21 @@
     "burgerClose": "閉じる"
   },
   "hero": {
-    "eyebrow": "Mirai JPN",
-    "title": "Mirai JPN - あなたの未来",
+    "eyebrow": "MIRAI JPN",
+    "title": "MIRAI JPN - あなたの未来",
     "subtitle": "日本語学習と日本留学への信頼できる教育センター",
-    "description": "インスピレーション、品質、成果。Miraiと共に新しい一歩を始めましょう。",
-    "imageAlt": "学習中のMiraiの学生"
+    "description": "インスピレーション、品質、成果。MIRAIと共に新しい一歩を始めましょう。",
+    "imageAlt": "学習中のMIRAIの学生"
   },
   "page": {
     "about": {
       "title": "私たちについて",
       "paragraphs": [
-        "Mirai JPN日本語センターは2023年から運営しています。私たちの主な目標は、日本語をゼロから質高く指導し、日本留学を目指す学生のための信頼できる架け橋になることです。",
+        "MIRAI JPN日本語センターは2023年から運営しています。私たちの主な目標は、日本語をゼロから質高く指導し、日本留学を目指す学生のための信頼できる架け橋になることです。",
         "当センターには経験豊富な日本語講師が在籍しています。多くの講師が日本で学び、JLPT N1-N2およびCEFR C1レベルを有しています。これまでに200名以上の学生が日本語をゼロから学び、JLPT・NAT-TESTでN5からN2までの取得を実現しています。",
         "学生の知識と実践力を高めるため、日本からのパートナーや学生が定期的に当センターを訪問しています。"
       ],
-      "teamPhotoAria": "Miraiチーム写真",
+      "teamPhotoAria": "MIRAIチーム写真",
       "zoomAria": "画像を拡大"
     },
     "foundersTeachers": {
@@ -60,13 +60,13 @@
           "name": "TIMURKHON KHUSENZADE",
           "role": "Co-Founder & Director",
           "quote": "質の高い教育と正しいメソッドこそ、安定した成果の基盤です。",
-          "bio": "TimurkhonはMiraiの学術方針と教育品質向上を担うリーダーの一人です。国際教育の経験を基に、語学力向上、適応力強化、日本での学業成功につながる現代的で成果重視の学習システムを構築しています。"
+          "bio": "TimurkhonはMIRAIの学術方針と教育品質向上を担うリーダーの一人です。国際教育の経験を基に、語学力向上、適応力強化、日本での学業成功につながる現代的で成果重視の学習システムを構築しています。"
         },
         {
           "name": "SAFTAROV OTABEK",
           "role": "Co-Founder & CEO",
           "quote": "若者の未来をグローバル教育で切り開くことが私たちの使命です。",
-          "bio": "Otabekは、ウズベキスタンの若者と日本教育を結ぶ信頼の架け橋を作る理念のもとMiraiを設立しました。各学生に対し、ゼロから明確な戦略、質の高い教育、実成果に結びつく学習システムを提供することを目標としています。"
+          "bio": "Otabekは、ウズベキスタンの若者と日本教育を結ぶ信頼の架け橋を作る理念のもとMIRAIを設立しました。各学生に対し、ゼロから明確な戦略、質の高い教育、実成果に結びつく学習システムを提供することを目標としています。"
         }
       ],
       "teachersTitle": "講師",
@@ -116,8 +116,8 @@
     },
     "consultingCourses": {
       "title": "コンサルティングとコース",
-      "consultingTitle": "Mirai JPN - student visaコンサルティングサービス",
-      "consultingIntro": "Mirai JPNは、日本語学校への出願からstudent visa取得まで、学生にフルコンサルティングを提供します。",
+      "consultingTitle": "MIRAI JPN - student visaコンサルティングサービス",
+      "consultingIntro": "MIRAI JPNは、日本語学校への出願からstudent visa取得まで、学生にフルコンサルティングを提供します。",
       "consultingServicesTitle": "提供サービス:",
       "consultingList": [
         "日本基準に沿った書類の準備・確認",
@@ -194,7 +194,7 @@
       "closeAria": "閉じる",
       "prevAria": "前の画像",
       "nextAria": "次の画像",
-      "imageAlt": "Mirai画像",
+      "imageAlt": "MIRAI画像",
       "docDialogAria": "証明書またはビザを拡大",
       "docAlt": "証明書またはビザ"
     },
@@ -206,24 +206,24 @@
     }
   },
   "footer": {
-    "brandTitle": "Mirai Japan Language Centre",
+    "brandTitle": "MIRAI Japanese Language Center",
     "license": "ライセンス",
     "certificate": "証明書",
     "contactsTitle": "連絡先",
     "mapLink": "所在地",
-    "mapAria": "Mirai所在地マップ",
-    "mapTitle": "Yandexマップ上のMirai",
-    "copyright": "(c) 2025 Mirai. All rights reserved."
+    "mapAria": "MIRAI所在地マップ",
+    "mapTitle": "Yandexマップ上のMIRAI",
+    "copyright": "(c) 2025 MIRAI. All rights reserved."
   },
   "companyMarquee": {
-    "companyName": "Mirai",
+    "companyName": "MIRAI",
     "category": "教育",
     "logoAlt": "ロゴ",
     "sectionAria": "信頼できる教育パートナー"
   },
   "splash": {
     "subtitle": "日本語センター",
-    "logoAlt": "Miraiロゴ"
+    "logoAlt": "MIRAIロゴ"
   },
   "pdfModal": {
     "closeAria": "閉じる",
@@ -238,7 +238,7 @@
   },
   "notFound": {
     "subtitle": "ページが見つかりません",
-    "description": "道に迷ったようです。日本語のmirai（未来）へ戻りましょう。",
+    "description": "道に迷ったようです。日本語のMIRAI（未来）へ戻りましょう。",
     "backHome": "ホームへ戻る"
   }
 }

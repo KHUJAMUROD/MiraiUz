@@ -19,13 +19,12 @@ const geistMono = Geist_Mono({
 export const metadata = {
   metadataBase: new URL(NORMALIZED_SITE_URL),
   title: {
-    default: "Mirai JPN - Yapon tili kurslari va Yaponiyada o'qish",
-    template: "%s | Mirai JPN",
+    default: "Mirai Uzbekistan - Yaponiyada o'qish",
+    template: "%s | Mirai Uzbekistan",
   },
-  description:
-    "Mirai JPN - Yapon tili kurslari, student visa konsalting va Yaponiyada ta'lim bo'yicha professional markaz. Mirai bilan Yaponiyaga o'qishga tayyorlaning.",
+  description: "Yaponiyada ta'limni Miari bilan boshlang.",
   keywords: [
-    "Mirai JPN",
+    "MIRAI JPN",
     "MiraiJpn",
     "Mirai",
     "Yapon tili kurslari",
@@ -45,9 +44,8 @@ export const metadata = {
     apple: ["/icon.svg"],
   },
   openGraph: {
-    title: "Mirai JPN - Yapon tili kurslari va Yaponiyada o'qish",
-    description:
-      "Mirai JPN markazida Yapon tili, student visa jarayoni va Yaponiyada ta'lim uchun to'liq yo'nalish oling.",
+    title: "Mirai Uzbekistan - Yaponiyada o'qish",
+    description: "Yaponiyada ta'limni Miari bilan boshlang.",
     url: "/",
     siteName: "Mirai JPN",
     locale: "uz_UZ",
@@ -57,15 +55,14 @@ export const metadata = {
         url: "/images/main_pics/main.webp",
         width: 1200,
         height: 630,
-        alt: "Mirai JPN - Yapon tili va Yaponiyada ta'lim markazi",
+        alt: "Mirai Uzbekistan - Yaponiyada ta'lim markazi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mirai JPN - Yapon tili kurslari va Yaponiyada o'qish",
-    description:
-      "Mirai JPN: Yapon tili kurslari, student visa konsalting va Yaponiyada ta'lim yo'nalishi.",
+    title: "Mirai Uzbekistan - Yaponiyada o'qish",
+    description: "Yaponiyada ta'limni Miari bilan boshlang.",
     images: ["/images/main_pics/main.webp"],
   },
   robots: {

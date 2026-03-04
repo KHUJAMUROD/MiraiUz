@@ -1,21 +1,21 @@
 {
   "seo": {
-    "title": "Mirai JPN - Japanese Language Courses and Study in Japan",
-    "description": "Mirai JPN is a professional center for Japanese language courses, student visa consulting, and study-in-Japan preparation.",
+    "title": "MIRAI JPN - Japanese Language Courses and Study in Japan",
+    "description": "MIRAI JPN is a professional center for Japanese language courses, student visa consulting, and study-in-Japan preparation.",
     "keywords": [
-      "Mirai JPN",
-      "MiraiJpn",
-      "Mirai",
+      "MIRAI JPN",
+      "MIRAI JPN",
+      "MIRAI",
       "Japanese language courses",
       "study in Japan",
       "student visa",
       "JLPT",
       "NAT-TEST"
     ],
-    "ogTitle": "Mirai JPN - Japanese Language Courses and Study in Japan",
-    "ogDescription": "Get full guidance at Mirai JPN for Japanese language learning, student visa process, and study opportunities in Japan.",
+    "ogTitle": "MIRAI JPN - Japanese Language Courses and Study in Japan",
+    "ogDescription": "Get full guidance at MIRAI JPN for Japanese language learning, student visa process, and study opportunities in Japan.",
     "ogLocale": "en_US",
-    "ogImageAlt": "Mirai JPN - Japanese language and study center"
+    "ogImageAlt": "MIRAI JPN - Japanese language and study center"
   },
   "languageSwitcher": {
     "ariaLabel": "Select language"
@@ -33,21 +33,21 @@
     "burgerClose": "Close"
   },
   "hero": {
-    "eyebrow": "Mirai JPN",
-    "title": "Mirai JPN - your future",
+    "eyebrow": "MIRAI JPN",
+    "title": "MIRAI JPN - your future",
     "subtitle": "A trusted center for Japanese language and studying in Japan",
-    "description": "Inspiration, quality, and real results - start your new chapter with Mirai.",
-    "imageAlt": "Mirai students during study"
+    "description": "Inspiration, quality, and real results - start your new chapter with MIRAI.",
+    "imageAlt": "MIRAI students during study"
   },
   "page": {
     "about": {
       "title": "About us",
       "paragraphs": [
-        "Mirai JPN Japanese Language Center has been operating since 2023. Our main goal is to teach Japanese from zero with high quality and become a reliable bridge for students planning to study in Japan.",
+        "MIRAI JPN Japanese Language Center has been operating since 2023. Our main goal is to teach Japanese from zero with high quality and become a reliable bridge for students planning to study in Japan.",
         "Our center has experienced Japanese language teachers. Most of them studied in Japan and hold JLPT N1-N2 and CEFR C1 levels. So far, we have helped 200+ students learn Japanese from zero and achieve levels from N5 to N2 in JLPT and NAT-TEST exams.",
         "To expand students' knowledge and practical experience, partners and students from Japan regularly visit our center."
       ],
-      "teamPhotoAria": "Mirai team photo",
+      "teamPhotoAria": "MIRAI team photo",
       "zoomAria": "Enlarge image"
     },
     "foundersTeachers": {
@@ -60,13 +60,13 @@
           "name": "TIMURKHON KHUSENZADE",
           "role": "Co-Founder & Director",
           "quote": "Quality education and the right methodology are the foundation of sustainable results.",
-          "bio": "Timurkhon is one of the leaders responsible for Mirai's academic direction and education quality development. Based on international education experience, he builds a modern, result-oriented learning system that supports students' language growth, adaptation, and successful study in Japan."
+          "bio": "Timurkhon is one of the leaders responsible for MIRAI's academic direction and education quality development. Based on international education experience, he builds a modern, result-oriented learning system that supports students' language growth, adaptation, and successful study in Japan."
         },
         {
           "name": "SAFTAROV OTABEK",
           "role": "Co-Founder & CEO",
           "quote": "Our mission is to unlock young people's future through global education.",
-          "bio": "Otabek founded Mirai with the idea of creating a reliable bridge between Uzbek youth and Japanese education. His goal is to build a clear strategy from zero for every student, combined with quality teaching and a system that leads to real outcomes."
+          "bio": "Otabek founded MIRAI with the idea of creating a reliable bridge between Uzbek youth and Japanese education. His goal is to build a clear strategy from zero for every student, combined with quality teaching and a system that leads to real outcomes."
         }
       ],
       "teachersTitle": "Teachers",
@@ -116,8 +116,8 @@
     },
     "consultingCourses": {
       "title": "Consulting and courses",
-      "consultingTitle": "Mirai JPN - student visa consulting services",
-      "consultingIntro": "Mirai JPN provides full consulting support for students applying to Japanese language schools and obtaining a student visa.",
+      "consultingTitle": "MIRAI JPN - student visa consulting services",
+      "consultingIntro": "MIRAI JPN provides full consulting support for students applying to Japanese language schools and obtaining a student visa.",
       "consultingServicesTitle": "Our services include:",
       "consultingList": [
         "Preparing and reviewing documents according to Japanese standards",
@@ -194,7 +194,7 @@
       "closeAria": "Close",
       "prevAria": "Previous image",
       "nextAria": "Next image",
-      "imageAlt": "Mirai image",
+      "imageAlt": "MIRAI image",
       "docDialogAria": "Enlarge certificate or visa",
       "docAlt": "Certificate or visa"
     },
@@ -206,24 +206,24 @@
     }
   },
   "footer": {
-    "brandTitle": "Mirai Japan Language Centre",
+    "brandTitle": "MIRAI Japanese Language Center",
     "license": "License",
     "certificate": "Certificate",
     "contactsTitle": "Contacts",
     "mapLink": "Location",
-    "mapAria": "Mirai location map",
-    "mapTitle": "Mirai on Yandex map",
-    "copyright": "(c) 2025 Mirai. All rights reserved."
+    "mapAria": "MIRAI location map",
+    "mapTitle": "MIRAI on Yandex map",
+    "copyright": "(c) 2025 MIRAI. All rights reserved."
   },
   "companyMarquee": {
-    "companyName": "Mirai",
+    "companyName": "MIRAI",
     "category": "Education",
     "logoAlt": "logo",
     "sectionAria": "Trusted educational partners"
   },
   "splash": {
     "subtitle": "Japanese language center",
-    "logoAlt": "Mirai logo"
+    "logoAlt": "MIRAI logo"
   },
   "pdfModal": {
     "closeAria": "Close",
@@ -238,7 +238,7 @@
   },
   "notFound": {
     "subtitle": "Page not found",
-    "description": "It seems you took a wrong turn. Let's return to Japanese mirai - the future.",
+    "description": "It seems you took a wrong turn. Let's return to Japanese MIRAI - the future.",
     "backHome": "Back to homepage"
   }
 }

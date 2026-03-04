@@ -117,7 +117,7 @@ function getStructuredData(locale, seoDescription) {
     {
       '@context': 'https://schema.org',
       '@type': 'EducationalOrganization',
-      name: 'Mirai Japan Language Centre',
+      name: 'MIRAI Japanese Language Center',
       url: localizedUrl,
       description: seoDescription,
       areaServed: 'UZ',
